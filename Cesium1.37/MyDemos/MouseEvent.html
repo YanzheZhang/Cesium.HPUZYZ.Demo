@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>Cesium鼠标事件</title>
+    <link href="../Cesium/Widgets/widgets.css" rel="stylesheet"/>
+    <script src="../Cesium/Cesium.js"></script>
+    <style>
+        html, body, #cesiumContainer
+        {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        #menu{
+            position:absolute;
+            top: 50px;
+            left: 50px;
+        }
+    </style>
+</head>
+<body  >
+<div id="cesiumContainer"  class="fullSize"></div>
+<div id="creditContainer" style="display: none;"></div>
+<div id="menu">
+</div>
+<script >
+    var viewer = new Cesium.Viewer('cesiumContainer',{
+        creditContainer: "creditContainer",
+        selectionIndicator: false,
+        animation: false,  //是否显示动画控件
+        baseLayerPicker: true, //是否显示图层选择控件
+        geocoder: false, //是否显示地名查找控件
+        timeline: false, //是否显示时间线控件
+        sceneModePicker: true, //是否显示投影方式控件
+        navigationHelpButton: false, //是否显示帮助信息控件
+        infoBox: false,  //是否显示点击要素之后显示的信息
+        fullscreenButton:true
+    });
+    //取消双击事件
+    viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
+    //设置默认地图源
+    viewer.baseLayerPicker.viewModel.selectedImagery = viewer.baseLayerPicker.viewModel.imageryProviderViewModels[6];
+    //设置homebutton的位置
+    Cesium.Camera.DEFAULT_VIEW_RECTANGLE=
+            Cesium.Rectangle.fromDegrees(110.15,34.54,110.25,34.56);//Rectangle(west, south, east, north)
+    //设置初始位置
+    viewer.camera.setView( {
+        destination  : Cesium.Cartesian3.fromDegrees( 110.20, 34.55, 3000000 )
+    } );
+    var scene = viewer.scene;
+    var handler = new Cesium.ScreenSpaceEventHandler(scene.canvas);
+
+    //得到当前三维场景的椭球体
+    var ellipsoid = scene.globe.ellipsoid;
+    //提示标牌
+    var entity = viewer.entities.add({
+        label : {
+            show : false,
+            scale:0.6
+        }
+    });
+    var longitudeString = null;
+    var latitudeString = null;
+    var height = null;
+    var cartesian = null;
+
+    //鼠标MOUSE_MOVE
+//    handler.setInputAction(function(movement) {
+//        //通过指定的椭球或者地图对应的坐标系，将鼠标的二维坐标转换为对应椭球体三维坐标
+//        cartesian = viewer.camera.pickEllipsoid(movement.endPosition, ellipsoid);
+//        if (cartesian) {
+//            //将笛卡尔坐标转换为地理坐标
+//            var cartographic = ellipsoid.cartesianToCartographic(cartesian);
+//            //将弧度转为度的十进制度表示
+//            longitudeString = Cesium.Math.toDegrees(cartographic.longitude).toFixed(3);
+//            latitudeString = Cesium.Math.toDegrees(cartographic.latitude).toFixed(3);
+//            //获取相机高度
+//            height = Math.ceil(viewer.camera.positionCartographic.height).toFixed(3);
+//            entity.position = cartesian;
+//            entity.label.show = true;
+//            entity.label.text = '移动：(' +   longitudeString + ', ' + latitudeString + "," + height + ')' ;
+//        }else {
+//            entity.label.show = false;
+//        }
+//    }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+
+    // LEFT_CLICK
+//    handler.setInputAction(function(movement) {
+//        cartesian =   viewer.camera.pickEllipsoid(movement.position, ellipsoid);//movement.endPosition
+//        if (cartesian) {
+//            //将笛卡尔坐标转换为地理坐标
+//             var cartographic = Cesium.Cartographic.fromCartesian(cartesian);
+//             longitudeString = Cesium.Math.toDegrees(cartographic.longitude).toFixed(3);
+//             latitudeString = Cesium.Math.toDegrees(cartographic.latitude).toFixed(3);
+////            var heightString = cartographic.height.toFixed(2);
+//            //获取相机高度
+//            height = Math.ceil(viewer.camera.positionCartographic.height);
+//            entity.position = cartesian;
+//            entity.label.show = true;
+//            entity.label.text = 'LEFT_CLICK：(' + longitudeString + ', ' + latitudeString + "," + height + ')' ;
+//        }else {
+//            entity.label.show = false;
+//        }
+//     }, Cesium.ScreenSpaceEventType.LEFT_CLICK );
+//
+//    // LEFT_DOUBLE_CLICK
+//    handler.setInputAction(function(movement) {
+//        cartesian =   viewer.camera.pickEllipsoid(movement.position, ellipsoid);//movement.endPosition
+//        if (cartesian) {
+//            //将笛卡尔坐标转换为地理坐标
+//            var cartographic = Cesium.Cartographic.fromCartesian(cartesian);
+//            longitudeString = Cesium.Math.toDegrees(cartographic.longitude).toFixed(3);
+//            latitudeString = Cesium.Math.toDegrees(cartographic.latitude).toFixed(3);
+////            var heightString = cartographic.height.toFixed(2);
+//            //获取相机高度
+//            height = Math.ceil(viewer.camera.positionCartographic.height);
+//            entity.position = cartesian;
+//            entity.label.show = true;
+//            entity.label.text = 'LEFT_DOUBLE_CLICK：(' + longitudeString + ', ' + latitudeString + "," + height + ')' ;
+//        }else {
+//            entity.label.show = false;
+//        }
+//    }, Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK  );
+
+    // LEFT_DOWN
+    handler.setInputAction(function(movement) {
+        cartesian =   viewer.camera.pickEllipsoid(movement.position, ellipsoid);//movement.endPosition
+        if (cartesian) {
+            //将笛卡尔坐标转换为地理坐标
+            var cartographic = Cesium.Cartographic.fromCartesian(cartesian);
+            longitudeString = Cesium.Math.toDegrees(cartographic.longitude).toFixed(3);
+            latitudeString = Cesium.Math.toDegrees(cartographic.latitude).toFixed(3);
+//            var heightString = cartographic.height.toFixed(2);
+            //获取相机高度
+            height = Math.ceil(viewer.camera.positionCartographic.height);
+            entity.position = cartesian;
+            entity.label.show = true;
+            entity.label.text = 'LEFT_DOWN ：(' + longitudeString + ', ' + latitudeString + "," + height + ')' ;
+        }else {
+            entity.label.show = false;
+        }
+    }, Cesium.ScreenSpaceEventType.LEFT_DOWN   );
+
+    // LEFT_UP
+    handler.setInputAction(function(movement) {
+        cartesian =   viewer.camera.pickEllipsoid(movement.position, ellipsoid);//movement.endPosition
+        if (cartesian) {
+            //将笛卡尔坐标转换为地理坐标
+            var cartographic = Cesium.Cartographic.fromCartesian(cartesian);
+            longitudeString = Cesium.Math.toDegrees(cartographic.longitude).toFixed(3);
+            latitudeString = Cesium.Math.toDegrees(cartographic.latitude).toFixed(3);
+//            var heightString = cartographic.height.toFixed(2);
+            //获取相机高度
+            height = Math.ceil(viewer.camera.positionCartographic.height);
+            entity.position = cartesian;
+            entity.label.show = true;
+            entity.label.text = 'LEFT_UP ：(' + longitudeString + ', ' + latitudeString + "," + height + ')' ;
+        }else {
+            entity.label.show = false;
+        }
+    }, Cesium.ScreenSpaceEventType.LEFT_UP   );
+
+    //鼠标WHEEL
+    handler.setInputAction(function(wheelment) {
+        height = Math.ceil(viewer.camera.positionCartographic.height);
+        entity.position = cartesian;
+        entity.label.show = true;
+        entity.label.text = '远近(' + "," + height + ')' ;// longitudeString + ', ' + latitudeString +
+    }, Cesium.ScreenSpaceEventType.WHEEL);
+
+</script>
+</body>
+</html>
