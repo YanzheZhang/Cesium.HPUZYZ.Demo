@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head lang="en">
     <meta charset="UTF-8">
@@ -25,7 +25,6 @@
 <span style="white-space:pre"></span>
 
 <script >
-
     var terrainProvider = new Cesium.CesiumTerrainProvider({
         url : './sampledata/terrain/beijing30m/'
     });
@@ -44,7 +43,7 @@
         animation: false,  //是否显示动画控件
 //        baseLayerPicker: false, //是否显示图层选择控件
 //        imageryProviderViewModels:providerViewModels,//自定义扩展
-        terrainProviderViewModels:[],//去除dem选择框
+        //terrainProviderViewModels:[],//去除dem选择框
         geocoder: false, //是否显示地名查找控件
         timeline: false, //是否显示时间线控件
         sceneModePicker: true, //是否显示投影方式控件
@@ -69,7 +68,7 @@
 
     viewer.scene.fxaa = false;//抗锯齿
     viewer.scene.fog.enabled = false;
-    viewer.scene.skyAtmosphere.show = false;
+    //viewer.scene.skyAtmosphere.show = false;
 
 </script>
 </body>
