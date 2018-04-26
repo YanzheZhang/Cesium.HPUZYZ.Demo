@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>动态画矩形</title>
+    <script src="../Cesium/Cesium.js"></script>
+    <script src="5-1DynamicDrawTool.js"></script>
+    <style>
+        @import url(../Cesium/Widgets/widgets.css);
+
+        html, body, #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        #menu {
+            position: absolute;
+            top: 50px;
+            left: 50px;
+        }
+        #menu p {
+            background-color:#808080;
+            color:#ff0000;
+            height:30px;
+            line-height:30px;
+            font-size:20px;
+            padding:4px 10px 4px 10px;
+        }
+    </style>
+
+</head>
+<body>
+    <div id="cesiumContainer" class="fullSize"></div>
+    <div id="creditContainer" style="display: none;"></div>
+    <div id="menu">
+        <p onclick="drawPoint()">画点</p>
+        <p onclick="drawLine()">画线</p>
+        <p onclick="drawPolygon()">画面</p>
+    </div>
+     
+<script>
+    var viewer = new Cesium.Viewer('cesiumContainer', {
+        creditContainer: "creditContainer",
+        TerrainProvider: null,
+        selectionIndicator: false,
+        animation: false,  //是否显示动画控件
+        baseLayerPicker: true, //是否显示图层选择控件
+        geocoder: false, //是否显示地名查找控件
+        timeline: false, //是否显示时间线控件
+        sceneModePicker: true, //是否显示投影方式控件
+        navigationHelpButton: false, //是否显示帮助信息控件
+        infoBox: false,  //是否显示点击要素之后显示的信息
+        fullscreenButton: true
+    });
+    //取消双击事件
+    viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
+    //设置默认地图源
+    viewer.baseLayerPicker.viewModel.selectedImagery = viewer.baseLayerPicker.viewModel.imageryProviderViewModels[6];
+    //设置homebutton的位置
+    Cesium.Camera.DEFAULT_VIEW_RECTANGLE =
+            Cesium.Rectangle.fromDegrees(110.15, 34.54, 110.25, 34.56);//Rectangle(west, south, east, north)
+    //设置初始位置
+    viewer.camera.setView({
+        destination: Cesium.Cartesian3.fromDegrees(110.20, 34.55, 3000000)
+    });
+   
+    function drawPoint() {
+        DynamicDrawTool.startDrawingMarker(viewer, "点击添加项目中心点", function (cartesian) {
+            //下面对处理代码
+            //....
+            var cartographic = Cesium.Cartographic.fromCartesian(cartesian);
+            var lonlat = [Cesium.Math.toDegrees(cartographic.longitude), Cesium.Math.toDegrees(cartographic.latitude)];
+            alert(lonlat);
+        });
+    }
+    function drawLine() {
+        var lineOption = {
+            width: 5,
+            geodesic: true
+        };
+        DynamicDrawTool.startDrawingPolyshape(viewer, false, lineOption, function (cartesians) {
+            //下面对处理代码
+            //.... 
+        });
+    }
+    function drawPolygon() {
+        var gonOption = {
+            width: 5,
+            geodesic: true
+        };
+        DynamicDrawTool.startDrawingPolyshape(viewer, true, gonOption, function (cartesians) {
+            //下面对处理代码
+            //....
+        });
+    }
+</script>
+</body>
+</html>
