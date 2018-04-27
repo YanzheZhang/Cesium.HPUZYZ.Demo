@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>Cesium影像服务--在线服务</title>
+    <link href="../Cesium/Widgets/widgets.css" rel="stylesheet" />
+    <script src="../Cesium/Cesium.js"></script>
+    <style>
+        html, body, #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+
+</head>
+<body>
+    <div id="cesiumContainer" class="fullSize"></div>
+    <div id="creditContainer" style="display: none;"></div>
+
+    <script>
+ 
+    //一： ArcGisMapServerImageryProvider 
+    var esri = new Cesium.ArcGisMapServerImageryProvider({
+        url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer',
+        enablePickFeatures: false
+    });
+    //二： BingMapsImageryProvider 不可用！
+    var bing = new Cesium.BingMapsImageryProvider({
+        url: 'https://dev.virtualearth.net',
+        key: 'get-yours-at-https://www.bingmapsportal.com/',
+        mapStyle: Cesium.BingMapsStyle.AERIAL
+    });
+    //三： createOpenStreetMapImageryProvider 
+    var osm = Cesium.createOpenStreetMapImageryProvider({
+        url: 'https://a.tile.openstreetmap.org/'
+    });
+    //四： MapboxImageryProvider  提供了mapbox.satellite、mapbox.streets、mapbox.streets-basic 三种风格 basic不行
+    var mbox = new Cesium.MapboxImageryProvider({
+        mapId: 'mapbox.satellite'
+    });
+ 
+    var viewer = new Cesium.Viewer('cesiumContainer', {
+        imageryProvider: mbox,
+        contextOptions: {
+            webgl: {
+                alpha: true
+            }
+        },
+        creditContainer: "creditContainer",
+        selectionIndicator: false,
+        animation: false,  //是否显示动画控件
+        baseLayerPicker: false, //是否显示图层选择控件
+        geocoder: false, //是否显示地名查找控件
+        timeline: false, //是否显示时间线控件
+        sceneModePicker: true, //是否显示投影方式控件
+        navigationHelpButton: false, //是否显示帮助信息控件
+        infoBox: false,  //是否显示点击要素之后显示的信息
+        fullscreenButton: true
+    });
+     
+    //取消双击事件
+    viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
+    //设置homebutton的位置
+    Cesium.Camera.DEFAULT_VIEW_RECTANGLE =
+            Cesium.Rectangle.fromDegrees(110.15, 34.54, 110.25, 34.56);//Rectangle(west, south, east, north)
+    //设置初始位置
+    viewer.camera.setView({
+        destination: Cesium.Cartesian3.fromDegrees(110.20, 34.55, 3000000)
+    });
+
+    </script>
+</body>
+</html>
