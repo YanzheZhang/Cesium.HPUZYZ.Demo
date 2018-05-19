@@ -22,10 +22,10 @@
     <div id="creditContainer" style="display: none;"></div>
 
     <script>
-
         //自己处理瓦片数据
         var globemap = Cesium.createTileMapServiceImageryProvider({
-            url: 'sampledata/imagery/ceshi/tiles'
+            url: 'sampledata/imagery/ceshi/tiles',
+            fileExtension: 'png'
         });
        
         var viewer = new Cesium.Viewer('cesiumContainer', {

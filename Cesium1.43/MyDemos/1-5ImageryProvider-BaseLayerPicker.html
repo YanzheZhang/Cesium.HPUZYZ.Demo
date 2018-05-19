@@ -22,7 +22,7 @@
     <div id="creditContainer" style="display: none;"></div>
 
     <script>
-        //一：使用cesium内置数据源选择工具： BaseLayerPicker
+        ////一：使用cesium内置数据源选择工具： BaseLayerPicker
         //var viewer = new Cesium.Viewer('cesiumContainer', {
         //    creditContainer: "creditContainer",
         //    TerrainProvider: null,
@@ -64,7 +64,7 @@
         });
 
         //WebMapTileServiceImageryProvider--天地图
-        tdtMap = new Cesium.WebMapTileServiceImageryProvider({
+        var tdtMap = new Cesium.WebMapTileServiceImageryProvider({
             url: 'http://t0.tianditu.com/img_w/wmts?',
             layer: 'img',
             style: 'default',
