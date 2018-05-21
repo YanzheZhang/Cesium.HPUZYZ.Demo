@@ -64,10 +64,10 @@
     viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
     //设置homebutton的位置
     Cesium.Camera.DEFAULT_VIEW_RECTANGLE=
-            Cesium.Rectangle.fromDegrees( 117.20, 40.00, 117.60, 40.4);//Rectangle(west, south, east, north)
+            Cesium.Rectangle.fromDegrees( 127.0, 41.0, 129.0, 43.0);//Rectangle(west, south, east, north)
     //设置初始位置
     viewer.camera.setView( {
-        destination  : Cesium.Cartesian3.fromDegrees( 117.20, 40.05, 30000 )
+        destination: Cesium.Cartesian3.fromDegrees(128.055, 42.006, 30000)
     } );
 
     viewer.scene.fxaa = false;//抗锯齿
