@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>Cesium学习笔记9--Cesium地形服务--高程采样</title>
+    <link href="../Cesium/Widgets/widgets.css" rel="stylesheet" />
+    <script src="../Cesium/Cesium.js"></script>
+    <style>
+        html, body, #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div id="cesiumContainer" class="fullSize"></div>
+    <div id="creditContainer" style="display: none;"></div>
+    <span style="white-space:pre"></span>
+
+    <script>
+    //自己处理瓦片数据
+    var mtdt = new Cesium.WebMapTileServiceImageryProvider({
+        url: 'http://t0.tianditu.com/img_w/wmts?',
+        layer: 'img',
+        style: 'default',
+        format: 'tiles',
+        tileMatrixSetID: 'w',
+        credit: new Cesium.Credit('天地图全球影像服务'),
+        maximumLevel: 18
+    });
+    var terrainProvider = new Cesium.CesiumTerrainProvider({
+        url : './sampledata/terrain/ctb-merger/'
+    });
+   
+    var viewer = new Cesium.Viewer('cesiumContainer',{
+        skyBox:false,
+        skyAtmosphere:false,
+        imageryProvider: mtdt, //指定此项 则必须设置： baseLayerPicker: false
+        contextOptions:{
+            webgl:{
+                alpha:true
+            }
+        },
+        creditContainer: "creditContainer",
+        selectionIndicator: false,
+        animation: false,  //是否显示动画控件
+        baseLayerPicker: false, //是否显示图层选择控件
+        geocoder: false, //是否显示地名查找控件
+        timeline: false, //是否显示时间线控件
+        sceneModePicker: true, //是否显示投影方式控件
+        navigationHelpButton: false, //是否显示帮助信息控件
+        infoBox: false,  //是否显示点击要素之后显示的信息
+        fullscreenButton:true
+    });
+
+    viewer.terrainProvider = terrainProvider;//地形数据源 terrainProvider
+
+    //取消双击事件
+    viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
+    //设置homebutton的位置
+    Cesium.Camera.DEFAULT_VIEW_RECTANGLE=
+            Cesium.Rectangle.fromDegrees( 127.0, 41.0, 129.0, 43.0);//Rectangle(west, south, east, north)
+    //设置初始位置
+    viewer.camera.setView( {
+        destination: Cesium.Cartesian3.fromDegrees(128.055, 42.006, 30000)
+    } );
+
+    viewer.scene.fxaa = false;//抗锯齿
+    viewer.scene.fog.enabled = false;
+    //viewer.scene.skyAtmosphere.show = false;
+
+    var CesiumEventHandler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
+    //得到当前三维场景的椭球体
+    var ellipsoid = viewer.scene.globe.ellipsoid;
+    CesiumEventHandler.setInputAction(function (movement) {
+        cartesian = viewer.camera.pickEllipsoid(movement.position, ellipsoid);//movement.endPosition
+        if (cartesian) {
+            //将笛卡尔坐标转换为地理坐标
+            var cartographic = Cesium.Cartographic.fromCartesian(cartesian);
+            var longitudeDegree = Cesium.Math.toDegrees(cartographic.longitude);
+            var latitudeDegree = Cesium.Math.toDegrees(cartographic.latitude);
+            TerrainTool.LonlatPointsTerrainData([{ 'lon': longitudeDegree, 'lat': latitudeDegree }],
+                function (terrainData) {
+                    if (terrainData.length > 0) {
+                        alert('lon:' + Cesium.Math.toDegrees(terrainData[0].longitude) +
+                            '\nlat:' + Cesium.Math.toDegrees(terrainData[0].latitude) +
+                            '\nheight:' +  (terrainData[0].height ? terrainData[0].height : 0)
+                            );
+                    } else {
+                        alert('nodata');
+                    }
+                    
+            });
+        }  
+    }, Cesium.ScreenSpaceEventType.LEFT_UP);
+    </script>
+
+    <script>
+        var TerrainTool=(
+            function () {
+                var terrainProvider = new Cesium.CesiumTerrainProvider({
+                    url: './sampledata/terrain/ctb-merger/'
+                });
+                var terrainLevel = 14;//数据等级
+
+                function _() {
+                }
+
+                _.LonlatPointsTerrainData = function (lonlats, callback) {
+                    //请求高程
+                    var pointArrInput = [];
+                    for (var i = 0; i < lonlats.length; i++) {
+                        pointArrInput.push(Cesium.Cartographic.fromDegrees(lonlats[i].lon, lonlats[i].lat));
+                    }
+                    var promise = Cesium.sampleTerrain(terrainProvider, terrainLevel, pointArrInput);//pointArrInput
+                    Cesium.when(promise, function (updatedPositions) {
+                        callback(updatedPositions);
+                    });
+                };
+
+                return _;
+            }
+        )();
+    </script>
+</body>
+</html>
