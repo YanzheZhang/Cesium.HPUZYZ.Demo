@@ -97,8 +97,26 @@
         //    }
         //});
 
-        //垂直拉伸
+        ////垂直拉伸
+        //viewer.entities.add({
+        //    position: Cesium.Cartesian3.fromDegrees(103.0, 40.0),
+        //    name: 'Red ellipse on surface with outline',
+        //    ellipse: {
+        //        semiMinorAxis: 250000.0,
+        //        semiMajorAxis: 400000.0,
+        //        height: 200000.0,
+        //        extrudedHeight: 400000.0,
+        //        fill:true,
+        //        material: Cesium.Color.RED.withAlpha(0.5),
+        //        outline: true, //必须设置height，否则ouline无法显示
+        //        outlineColor: Cesium.Color.BLUE.withAlpha(0.5),
+        //        outlineWidth:10.0//windows系统下不能设置固定为1
+        //    }
+        //});
+
+        //选择
         viewer.entities.add({
+            id:'obj_id_110',
             position: Cesium.Cartesian3.fromDegrees(103.0, 40.0),
             name: 'Red ellipse on surface with outline',
             ellipse: {
@@ -106,14 +124,21 @@
                 semiMajorAxis: 400000.0,
                 height: 200000.0,
                 extrudedHeight: 400000.0,
-                fill:true,
+                fill: true,
                 material: Cesium.Color.RED.withAlpha(0.5),
                 outline: true, //必须设置height，否则ouline无法显示
                 outlineColor: Cesium.Color.BLUE.withAlpha(0.5),
-                outlineWidth:10.0//windows系统下不能设置固定为1
+                outlineWidth: 10.0//windows系统下不能设置固定为1
             }
         });
 
+        var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
+        handler.setInputAction(function (movement) {
+            var pick = viewer.scene.pick(movement.position);
+            if (Cesium.defined(pick) && (pick.id.id === 'obj_id_110')) {
+                alert('picked!');
+            }
+        }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
     </script>
 </body>
 </html>
