@@ -75,7 +75,7 @@
         //    })
         //}));
 
-
+        ////设置不同颜色
         //var instance = new Cesium.GeometryInstance({
         //    geometry: new Cesium.RectangleGeometry({
         //        rectangle: Cesium.Rectangle.fromDegrees(105.20, 30.55, 106.20, 31.55),
@@ -122,27 +122,27 @@
         //}));
 
         ////2选取几何图形
-        //var instance = new Cesium.GeometryInstance({
-        //    geometry: new Cesium.RectangleGeometry({
-        //        rectangle: Cesium.Rectangle.fromDegrees(107.20, 30.55, 108.20, 31.55)
-        //    }),
-        //    id: 'rectangle-1',
-        //    attributes: {
-        //        color: Cesium.ColorGeometryInstanceAttribute.fromColor(Cesium.Color.RED)
-        //    }
-        //});
-        //viewer.scene.primitives.add(new Cesium.Primitive({
-        //    geometryInstances: instance,
-        //    appearance: new Cesium.PerInstanceColorAppearance()
-        //}));
-        //var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
-        ////设置单击事件的处理句柄
-        //handler.setInputAction(function (movement) {
-        //    var pick = viewer.scene.pick(movement.position);
-        //    if (Cesium.defined(pick) && (pick.id === 'rectangle-1')) {
-        //        alert('矩形被选取');
-        //    }
-        //}, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+        var instance = new Cesium.GeometryInstance({
+            geometry: new Cesium.RectangleGeometry({
+                rectangle: Cesium.Rectangle.fromDegrees(107.20, 30.55, 108.20, 31.55)
+            }),
+            id: 'rectangle-1',
+            attributes: {
+                color: Cesium.ColorGeometryInstanceAttribute.fromColor(Cesium.Color.RED)
+            }
+        });
+        viewer.scene.primitives.add(new Cesium.Primitive({
+            geometryInstances: instance,
+            appearance: new Cesium.PerInstanceColorAppearance()
+        }));
+        var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
+        //设置单击事件的处理句柄
+        handler.setInputAction(function (movement) {
+            var pick = viewer.scene.pick(movement.position);
+            if (Cesium.defined(pick) && (pick.id === 'rectangle-1')) {
+                alert('矩形被选取');
+            }
+        }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 
         //3几何实例
         //var ellipsoidGeometry = new Cesium.EllipsoidGeometry({
