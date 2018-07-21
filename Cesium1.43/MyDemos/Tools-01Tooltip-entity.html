@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>Cesium学习笔记-工具篇01-Tooltip-entity方式</title>
+    <link href="../Cesium/Widgets/widgets.css" rel="stylesheet" />
+    <script src="../Cesium/Cesium.js"></script>
+    <script src="Tools-01Tooltip-entity.js"></script>
+    <style>
+        html, body, #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div id="cesiumContainer" class="fullSize"></div>
+    <div id="creditContainer" style="display: none;"></div>
+    <script>
+        var esri = new Cesium.ArcGisMapServerImageryProvider({
+            url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer',
+            enablePickFeatures: false
+        });
+
+        var viewer = new Cesium.Viewer('cesiumContainer', {
+            imageryProvider: esri,
+            contextOptions: {
+                webgl: {
+                    alpha: true
+                }
+            },
+            creditContainer: "creditContainer",
+            selectionIndicator: false,
+            animation: false,  
+            baseLayerPicker: false, 
+            geocoder: false, 
+            timeline: false, 
+            sceneModePicker: true, 
+            navigationHelpButton: false, 
+            infoBox: false, 
+            fullscreenButton: true
+        });
+
+        viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
+        viewer.camera.setView({
+            destination: Cesium.Cartesian3.fromDegrees(110.20, 34.55, 3000000)
+        });
+        var scene = viewer.scene;
+        var handler = new Cesium.ScreenSpaceEventHandler(scene.canvas);
+        var ellipsoid = scene.globe.ellipsoid; 
+        var cartesian = null;
+
+        TooltipCesium.initTool(viewer);
+
+        //一 鼠标MOUSE_MOVE
+        handler.setInputAction(function (movement) {
+            cartesian = viewer.camera.pickEllipsoid(movement.endPosition, ellipsoid);
+            if (cartesian) {
+                TooltipCesium.showAt(movement.endPosition, 'MOUSE_MOVE');
+            } else {
+                TooltipCesium.setVisible(false);
+            }
+        }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+
+        //二 LEFT_CLICK
+        handler.setInputAction(function (movement) {
+            cartesian = viewer.camera.pickEllipsoid(movement.position, ellipsoid);
+            if (cartesian) {
+                TooltipCesium.showAt(movement.position, 'LEFT_CLICK');
+            } else {
+                TooltipCesium.setVisible(false);
+            }
+        }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+
+        //三 LEFT_DOUBLE_CLICK
+        handler.setInputAction(function (movement) {
+            cartesian = viewer.camera.pickEllipsoid(movement.position, ellipsoid);
+            if (cartesian) {
+                TooltipCesium.showAt(movement.position, 'LEFT_DOUBLE_CLICK');
+            } else {
+                TooltipCesium.setVisible(false);
+            }
+        }, Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
+
+        //四 LEFT_DOWN
+        handler.setInputAction(function (movement) {
+            cartesian = viewer.camera.pickEllipsoid(movement.position, ellipsoid);
+            if (cartesian) {
+                TooltipCesium.showAt(movement.position, 'LEFT_DOWN');
+            } else {
+                TooltipCesium.setVisible(false);
+            }
+        }, Cesium.ScreenSpaceEventType.LEFT_DOWN);
+
+        //五 LEFT_UP
+        handler.setInputAction(function (movement) {
+            cartesian = viewer.camera.pickEllipsoid(movement.position, ellipsoid);
+            if (cartesian) {
+                TooltipCesium.showAt(movement.position, 'LEFT_UP');
+            } else {
+                TooltipCesium.setVisible(false);
+            }
+        }, Cesium.ScreenSpaceEventType.LEFT_UP);
+ 
+    </script>
+</body>
+</html>
