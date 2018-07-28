@@ -762,7 +762,7 @@
                 eyeOffset: new Cesium.Cartesian3(0.0, 0.0, 0.0),
                 horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
                 verticalOrigin: Cesium.VerticalOrigin.CENTER,
-                scale: 1.0,
+                scale: 2.0,
                 image: this._options.iconUrl,
                 color: new Cesium.Color(1.0, 1.0, 1.0, 1.0)
             });

@@ -1,0 +1,103 @@
+/*
+    initial twipsy code taken from bootstrap
+*/
+.twipsy {
+    display: block;
+    position: absolute;
+    visibility: visible;
+    max-width: 200px;
+    min-width: 100px;
+    padding: 5px;
+    font-size: 11px;
+    z-index: 1000;
+    opacity: 0.8;
+    -khtml-opacity: 0.8;
+    -moz-opacity: 0.8;
+    filter: alpha(opacity=80);
+}
+.twipsy.left .twipsy-arrow {
+    top: 50%;
+    right: 0;
+    margin-top: -5px;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 5px solid #000000;
+}
+.twipsy.right .twipsy-arrow {
+    top: 50%;
+    left: 0;
+    margin-top: -5px;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-right: 5px solid #000000;
+}
+.twipsy-inner {
+    padding: 3px 8px;
+    background-color: #000000;
+    color: white;
+    text-align: center;
+    max-width: 200px;
+    text-decoration: none;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+.twipsy-arrow {
+    position: absolute;
+    width: 0;
+    height: 0;
+}
+
+/*
+css rules for the draw helper components
+*/
+
+.toolbar {
+    margin: 0px;
+    padding: 0px;
+    background: white;
+    /*float:right;*/
+}
+
+.toolbar > .button {
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid #eee;
+    cursor: pointer;
+}
+
+.toolbar > .button:hover {
+    background: #eee;
+}
+
+/*
+css rules for the infowindow
+*/
+
+.infoWindow {
+    position: absolute;
+    min-width: 100px;
+    max-width: 300px;
+}
+.infoWindow #frame {
+    padding: 10px;
+    border: 1px solid black;
+    background: white;
+}
+.infoWindow #close {
+    float: right;
+    margin: 5px 2px;
+    font-size: small;
+    color: gray;
+    cursor: pointer;
+}
+.infoWindow #arrow {
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    margin-left: -10px;
+    border-right: 10px solid transparent;
+    border-left: 10px solid transparent;
+    border-top: 10px solid white;
+}
+

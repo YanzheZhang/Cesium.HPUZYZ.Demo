@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>Tools-03DrawHelper</title>
+    <link href="Tools-03DrawHelper.css" rel="stylesheet" type="text/css" />
+    <script src="../Cesium/Cesium.js"></script>
+    <script src="./Tools-03DrawHelper.js"></script>
+    <style>
+        @import url(../Cesium/Widgets/widgets.css);
+        #cesiumContainer {
+            position: absolute;
+            top: 0px;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            overflow: hidden;
+            padding: 0;
+            font-family: sans-serif;
+        }
+        #toolbar {
+            position: absolute;
+            top: 0px;
+            left: 0;
+            display: inline;
+            margin: 10px;
+            padding: 0px;
+            background: white;
+        }
+        #logging {
+            position: absolute;
+            bottom: 0px;
+            right: 0;
+            display: inline;
+            margin: 10px;
+            padding: 10px;
+            background: white;
+        }
+
+        body {
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body onload="start()">
+
+<div id="cesiumContainer"></div>
+<div id="toolbar">
+</div>
+<div id="logging">
+</div>
+
+<script>
+
+    function start() {
+        var esri =
+                new Cesium.WebMapTileServiceImageryProvider({
+                    url:'http://t0.tianditu.com/img_w/wmts?',
+                    layer:'img',
+                    style:'default',
+                    format:'tiles',
+                    tileMatrixSetID:'w',
+                    credit:new Cesium.Credit('天地图全球影像服务'),
+                    maximumLevel:18
+                });
+        var terrainProvider = new Cesium.CesiumTerrainProvider({
+            url : '../../OtherDemo/sampledata/terrain/beijing30m/'
+        });
+       // create the almighty cesium widget
+        var cesiumWidget = new Cesium.CesiumWidget('cesiumContainer', {   imageryProvider:esri,scene3DOnly: true});
+        var scene = cesiumWidget.scene;
+        scene.globe.depthTestAgainstTerrain = true;//地形遮挡
+        // add terrain elevation
+//        var cesiumTerrainProviderHeightmaps = new Cesium.CesiumTerrainProvider({
+//            url : 'https://cesiumjs.org/tilesets/terrain/smallterrain',
+//            credit : 'Terrain data courtesy Analytical Graphics, Inc.'
+//        });
+//
+//        scene.terrainProvider = terrainProvider;
+
+        // start the draw helper to enable shape creation and editing
+        var drawHelper = new DrawHelper(cesiumWidget);
+        var toolbar = drawHelper.addToolbar(document.getElementById("toolbar"), {
+            buttons: ['marker', 'polyline', 'polygon', 'circle', 'extent']
+        });
+        toolbar.addListener('markerCreated', function(event) {
+            loggingMessage('Marker created at ' + event.position.toString());
+            // create one common billboard collection for all billboards
+            var b = new Cesium.BillboardCollection();
+            scene.primitives.add(b);
+            var billboard = b.add({
+                show : true,
+                position : event.position,
+                pixelOffset : new Cesium.Cartesian2(0, 0),
+                eyeOffset : new Cesium.Cartesian3(0.0, 0.0, 0.0),
+                horizontalOrigin : Cesium.HorizontalOrigin.CENTER,
+                verticalOrigin : Cesium.VerticalOrigin.CENTER,
+                scale : 1.0,
+                image: './sampledata/images/DrawHelper/glyphicons_242_google_maps.png',
+                color : new Cesium.Color(1.0, 1.0, 1.0, 1.0)
+            });
+            billboard.setEditable();
+        });
+        toolbar.addListener('polylineCreated', function(event) {
+            loggingMessage('Polyline created with ' + event.positions.length + ' points');
+            var polyline = new DrawHelper.PolylinePrimitive({
+                positions: event.positions,
+                width: 5,
+                geodesic: true
+            });
+            scene.primitives.add(polyline);
+            polyline.setEditable();
+            polyline.addListener('onEdited', function(event) {
+                loggingMessage('Polyline edited, ' + event.positions.length + ' points');
+            });
+
+        });
+        toolbar.addListener('polygonCreated', function(event) {
+            loggingMessage('Polygon created with ' + event.positions.length + ' points');
+            var polygon = new DrawHelper.PolygonPrimitive({
+                positions: event.positions,
+                material : Cesium.Material.fromType('Checkerboard')//内置材质
+            });
+            scene.primitives.add(polygon);
+            polygon.setEditable();
+            polygon.addListener('onEdited', function(event) {
+                loggingMessage('Polygon edited, ' + event.positions.length + ' points');
+            });
+
+        });
+        toolbar.addListener('circleCreated', function(event) {
+            loggingMessage('Circle created: center is ' + event.center.toString() + ' and radius is ' + event.radius.toFixed(1) + ' meters');
+            var circle = new DrawHelper.CirclePrimitive({
+                center: event.center,
+                radius: event.radius,
+                material: Cesium.Material.fromType(Cesium.Material.RimLightingType)
+            });
+            scene.primitives.add(circle);
+            circle.setEditable();
+            circle.addListener('onEdited', function(event) {
+                loggingMessage('Circle edited: radius is ' + event.radius.toFixed(1) + ' meters');
+            });
+        });
+        toolbar.addListener('extentCreated', function(event) {
+            var extent = event.extent;
+            loggingMessage('Extent created (N: ' + extent.north.toFixed(3) + ', E: ' + extent.east.toFixed(3) + ', S: ' + extent.south.toFixed(3) + ', W: ' + extent.west.toFixed(3) + ')');
+            var extentPrimitive = new DrawHelper.ExtentPrimitive({
+                extent: extent,
+                material: Cesium.Material.fromType(Cesium.Material.StripeType)
+            });
+            scene.primitives.add(extentPrimitive);
+            extentPrimitive.setEditable();
+            extentPrimitive.addListener('onEdited', function(event) {
+                loggingMessage('Extent edited: extent is (N: ' + event.extent.north.toFixed(3) + ', E: ' + event.extent.east.toFixed(3) + ', S: ' + event.extent.south.toFixed(3) + ', W: ' + event.extent.west.toFixed(3) + ')');
+            });
+        });
+
+        var logging = document.getElementById('logging');
+        function loggingMessage(message) {
+            logging.innerHTML = message;
+        }
+
+    }
+
+</script>
+</body>
+</html>
