@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <title>5-1DynamicDrawTool</title>
+    <title>Tools-05DynamicDrawTool</title>
     <script src="../Cesium/Cesium.js"></script>
-    <script src="5-1DynamicDrawTool.js"></script>
+    <script src="./Tools-05DynamicDrawTool.js"></script>
     <style>
         @import url(../Cesium/Widgets/widgets.css);
 
@@ -23,13 +23,14 @@
             top: 50px;
             left: 50px;
         }
+
         #menu p {
-            background-color:#808080;
-            color:#ff0000;
-            height:30px;
-            line-height:30px;
-            font-size:20px;
-            padding:4px 10px 4px 10px;
+            background-color: #808080;
+            color: #ff0000;
+            height: 30px;
+            line-height: 30px;
+            font-size: 20px;
+            padding: 4px 10px 4px 10px;
         }
     </style>
 
@@ -42,8 +43,8 @@
         <p onclick="drawLine()">画线</p>
         <p onclick="drawPolygon()">画面</p>
     </div>
-     
-<script>
+
+    <script>
     var viewer = new Cesium.Viewer('cesiumContainer', {
         creditContainer: "creditContainer",
         TerrainProvider: null,
@@ -68,7 +69,7 @@
     viewer.camera.setView({
         destination: Cesium.Cartesian3.fromDegrees(110.20, 34.55, 3000000)
     });
-   
+
     function drawPoint() {
         DynamicDrawTool.startDrawingMarker(viewer, "点击添加项目中心点", function (cartesian) {
             //下面对处理代码
@@ -85,7 +86,7 @@
         };
         DynamicDrawTool.startDrawingPolyshape(viewer, false, lineOption, function (cartesians) {
             //下面对处理代码
-            //.... 
+            //....
         });
     }
     function drawPolygon() {
@@ -98,6 +99,6 @@
             //....
         });
     }
-</script>
+    </script>
 </body>
 </html>
