@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>11-GroundPush</title>
+    <script src="../../Cesium1.22/Cesium/Cesium.js"></script>
+    <script type="text/javascript" src="./Libs/GroundPush/GroundPushGlobeSurfaceShaderSet.js"></script>
+    <script type="text/javascript" src="./Libs/GroundPush/GroundPushGlobeVS.js"></script>
+    <script type="text/javascript" src="./Libs/GroundPush/GroundPushGlobeFS.js"></script>
+    <script type="text/javascript" src="./Libs/GroundPush/GroundPush.js"></script>
+    <style>
+         @import url(../Cesium/Widgets/widgets.css);
+
+        html, body, #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div id="cesiumContainer" class="fullWindow"></div>
+    <script type="text/javascript">
+
+    var lat = 42.006; // Sydney
+    var lon = 128.055;
+    var width = 0.002;
+    var pushRectangle = new Cesium.Rectangle(
+        Cesium.Math.toRadians(lon - width),
+        Cesium.Math.toRadians(lat - width),
+        Cesium.Math.toRadians(lon + width),
+        Cesium.Math.toRadians(lat + width)
+    );
+    var pushDepth = 2500;
+    options = {
+        pushRectangle : pushRectangle,
+        pushDepth : pushDepth,
+        pushSidesTint : new Cesium.Cartesian3(0.7, 0.6, 0.5)
+    };
+    // Initialise the ground push.
+    var gp = new GroundPush(Cesium, options);
+
+    var imageryProvider = new Cesium.ArcGisMapServerImageryProvider({
+        url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer',
+        enablePickFeatures: false,
+        rectangle: gp.getOuterRectangle()
+    });
+    // url: './terrain/beijing30m/'
+    var terrainProvider = new Cesium.CesiumTerrainProvider({
+        url: './sampledata/terrain/ctb-merger/'
+    });
+    var viewer = new Cesium.Viewer('cesiumContainer', {
+        //skyBox: false,
+        //skyAtmosphere: false,
+        imageryProvider: imageryProvider,
+        contextOptions: {
+            webgl: {
+                alpha: true
+            }
+        },
+        terrainProvider: terrainProvider,
+        //creditContainer: "creditContainer",
+        selectionIndicator: false,
+        animation: false,
+        baseLayerPicker: false,
+        geocoder: false,
+        timeline: false,
+        sceneModePicker: true,
+        navigationHelpButton: false,
+        infoBox: false,
+        fullscreenButton: true
+    });
+
+    var cesiumWidget = viewer.cesiumWidget;
+    var globe = viewer.scene.globe;
+
+    // Set the camera to view the push rectangle.
+    cesiumWidget.scene.camera.viewRectangle(pushRectangle);
+
+    // Add an imagery provider to show in the pushed region
+    //var imageryLayers = globe.imageryLayers;
+    //var imageryProvider = new Cesium.TileMapServiceImageryProvider({
+    //    url : '//cesiumjs.org/blackmarble',
+    //    maximumLevel : 8,
+    //    credit : 'Black Marble imagery courtesy NASA Earth Observatory',
+
+    //    // Limit the rectangle of the imagery layer so that tiles
+    //    // that will never be visible aren't loaded.
+    //    rectangle : gp.getOuterRectangle()
+    //});
+
+    //imageryLayers.addImageryProvider(imageryProvider);
+
+    // Set this property to limit the ImageryLayer to the push region.
+    imageryLayers.get(1).showOnlyInPushedRegion = true;
+    </script>
+</body>
+</html>
