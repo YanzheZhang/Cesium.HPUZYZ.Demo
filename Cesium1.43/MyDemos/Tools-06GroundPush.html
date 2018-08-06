@@ -11,7 +11,7 @@
     <script type="text/javascript" src="./Libs/GroundPush/GroundPushGlobeFS.js"></script>
     <script type="text/javascript" src="./Libs/GroundPush/GroundPush.js"></script>
     <style>
-         @import url(../Cesium/Widgets/widgets.css);
+        @import url(../Cesium/Widgets/widgets.css);
 
         html, body, #cesiumContainer {
             width: 100%;
@@ -25,82 +25,63 @@
 <body>
     <div id="cesiumContainer" class="fullWindow"></div>
     <script type="text/javascript">
+        var lat = 42.006; // Sydney
+        var lon = 128.055;
+        var width = 0.02;
+        var pushRectangle = new Cesium.Rectangle(
+            Cesium.Math.toRadians(lon),
+            Cesium.Math.toRadians(lat - width),
+            Cesium.Math.toRadians(lon + 2 * width),
+            Cesium.Math.toRadians(lat + width)
+        );
+        var pushDepth = 2550;
+        options = {
+            pushRectangle: pushRectangle,
+            pushDepth: pushDepth,
+            pushSidesTint: new Cesium.Cartesian3(0.7, 0.6, 0.5)
+        };
+        // Initialise the ground push.
+        var gp = new GroundPush(Cesium, options);
 
-    var lat = 42.006; // Sydney
-    var lon = 128.055;
-    var width = 0.02;
-    var pushRectangle = new Cesium.Rectangle(
-        Cesium.Math.toRadians(lon ),
-        Cesium.Math.toRadians(lat - width),
-        Cesium.Math.toRadians(lon + 2 * width),
-        Cesium.Math.toRadians(lat + width)
-    );
-    var pushDepth = -2550;
-    options = {
-        pushRectangle : pushRectangle,
-        pushDepth : pushDepth,
-        pushSidesTint : new Cesium.Cartesian3(0.7, 0.6, 0.5)
-    };
-    // Initialise the ground push.
-    var gp = new GroundPush(Cesium, options);
+        var imageryProvider = new Cesium.WebMapTileServiceImageryProvider({
+            url: 'http://t0.tianditu.com/img_w/wmts?',
+            layer: 'img',
+            style: 'default',
+            format: 'tiles',
+            tileMatrixSetID: 'w',
+            credit: new Cesium.Credit('天地图全球影像服务'),
+            maximumLevel: 18
+        });
+        // url: './terrain/beijing30m/'
+        var terrainProvider = new Cesium.CesiumTerrainProvider({
+            url: './sampledata/terrain/ctb-merger/'
+        });
+        var viewer = new Cesium.Viewer('cesiumContainer', {
+            //skyBox: false,
+            //skyAtmosphere: false,
+            imageryProvider: imageryProvider,
+            contextOptions: {
+                webgl: {
+                    alpha: true
+                }
+            },
+            terrainProvider: terrainProvider,
+            //creditContainer: "creditContainer",
+            selectionIndicator: false,
+            animation: false,
+            baseLayerPicker: false,
+            geocoder: false,
+            timeline: false,
+            sceneModePicker: true,
+            navigationHelpButton: false,
+            infoBox: false,
+            fullscreenButton: true
+        });
 
-    var imageryProvider = new Cesium.WebMapTileServiceImageryProvider({
-        url: 'http://t0.tianditu.com/img_w/wmts?',
-        layer: 'img',
-        style: 'default',
-        format: 'tiles',
-        tileMatrixSetID: 'w',
-        credit: new Cesium.Credit('天地图全球影像服务'),
-        maximumLevel: 18
-    });
-    // url: './terrain/beijing30m/'
-    var terrainProvider = new Cesium.CesiumTerrainProvider({
-        url: './sampledata/terrain/ctb-merger/'
-    });
-    var viewer = new Cesium.Viewer('cesiumContainer', {
-        //skyBox: false,
-        //skyAtmosphere: false,
-        imageryProvider: imageryProvider,
-        contextOptions: {
-            webgl: {
-                alpha: true
-            }
-        },
-        terrainProvider: terrainProvider,
-        //creditContainer: "creditContainer",
-        selectionIndicator: false,
-        animation: false,
-        baseLayerPicker: false,
-        geocoder: false,
-        timeline: false,
-        sceneModePicker: true,
-        navigationHelpButton: false,
-        infoBox: false,
-        fullscreenButton: true
-    });
-
-    var cesiumWidget = viewer.cesiumWidget;
-    var globe = viewer.scene.globe;
-
-    // Set the camera to view the push rectangle.
-    cesiumWidget.scene.camera.viewRectangle(pushRectangle);
-
-    // Add an imagery provider to show in the pushed region
-    //var imageryLayers = globe.imageryLayers;
-    //var imageryProvider = new Cesium.TileMapServiceImageryProvider({
-    //    url : '//cesiumjs.org/blackmarble',
-    //    maximumLevel : 8,
-    //    credit : 'Black Marble imagery courtesy NASA Earth Observatory',
-
-    //    // Limit the rectangle of the imagery layer so that tiles
-    //    // that will never be visible aren't loaded.
-    //    rectangle : gp.getOuterRectangle()
-    //});
-
-    //imageryLayers.addImageryProvider(imageryProvider);
-
-    // Set this property to limit the ImageryLayer to the push region.
-    imageryLayers.get(1).showOnlyInPushedRegion = true;
+        var cesiumWidget = viewer.cesiumWidget;
+         
+        // Set the camera to view the push rectangle.
+        cesiumWidget.scene.camera.viewRectangle(pushRectangle);
     </script>
 </body>
 </html>

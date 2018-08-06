@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="tools/TooltipDiv.css" />
+    <title>Tools-07CesiumNavigation</title>
+    <script src="../Cesium/Cesium.js"></script>
+    <script src="Libs/viewerCesiumNavigationMixin.min.js"></script>
+    <style>
+        @import url(../Cesium/Widgets/widgets.css);
+
+        html, body, #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div id="cesiumContainer">
+        <div id="creditContainer" style="display: none;"></div>
+    </div>
+    <script>
+    'use strict';
+    var mtdt = new Cesium.WebMapTileServiceImageryProvider({
+        url: 'http://t0.tianditu.com/img_w/wmts?',
+        layer: 'img',
+        style: 'default',
+        format: 'tiles',
+        tileMatrixSetID: 'w',
+        credit: new Cesium.Credit('天地图全球影像服务'),
+        maximumLevel: 18
+    });
+     
+    var cesiumViewer = new Cesium.Viewer('cesiumContainer', {
+        imageryProvider: mtdt,
+        contextOptions: {
+            webgl: {
+                alpha: true
+            }
+        },
+        creditContainer: "creditContainer",
+        selectionIndicator: false,
+        homeButton:false,
+        animation: false,   
+        baseLayerPicker: false,  
+        geocoder: false,  
+        timeline: false,  
+        sceneModePicker: false,  
+        navigationHelpButton: false, 
+        infoBox: false,   
+        fullscreenButton: false
+    });
+
+    // extend our view by the cesium navigation mixin
+    cesiumViewer.extend(Cesium.viewerCesiumNavigationMixin, {});
+    // you can access the cesium navigation by cesiumViewer.cesiumNavigation or cesiumViewer.cesiumWidget.cesiumNavigation
+
+    </script>
+    <script type="text/javascript">
+    // show info if accessed directly from disk
+    if (window.location.protocol === 'file:') {
+        document.body.innerHTML = "";
+        document.write('<p><b>This file must be hosted in a web server.</br>');
+        document.write('See our <a href="https://cesiumjs.org/tutorials/cesium-up-and-running/#setting-up-a-web-server">Getting Started</a> ');
+        document.write('tutorial for a step-by-step guide.</b></p>');
+    }
+    </script>
+</body>
+</html>
