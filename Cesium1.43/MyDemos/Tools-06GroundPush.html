@@ -1,10 +1,10 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <title>11-GroundPush</title>
+    <title>Tools-06GroundPush</title>
     <script src="../../Cesium1.22/Cesium/Cesium.js"></script>
     <script type="text/javascript" src="./Libs/GroundPush/GroundPushGlobeSurfaceShaderSet.js"></script>
     <script type="text/javascript" src="./Libs/GroundPush/GroundPushGlobeVS.js"></script>
@@ -28,14 +28,14 @@
 
     var lat = 42.006; // Sydney
     var lon = 128.055;
-    var width = 0.002;
+    var width = 0.02;
     var pushRectangle = new Cesium.Rectangle(
-        Cesium.Math.toRadians(lon - width),
+        Cesium.Math.toRadians(lon ),
         Cesium.Math.toRadians(lat - width),
-        Cesium.Math.toRadians(lon + width),
+        Cesium.Math.toRadians(lon + 2 * width),
         Cesium.Math.toRadians(lat + width)
     );
-    var pushDepth = 2500;
+    var pushDepth = -2550;
     options = {
         pushRectangle : pushRectangle,
         pushDepth : pushDepth,
@@ -44,10 +44,14 @@
     // Initialise the ground push.
     var gp = new GroundPush(Cesium, options);
 
-    var imageryProvider = new Cesium.ArcGisMapServerImageryProvider({
-        url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer',
-        enablePickFeatures: false,
-        rectangle: gp.getOuterRectangle()
+    var imageryProvider = new Cesium.WebMapTileServiceImageryProvider({
+        url: 'http://t0.tianditu.com/img_w/wmts?',
+        layer: 'img',
+        style: 'default',
+        format: 'tiles',
+        tileMatrixSetID: 'w',
+        credit: new Cesium.Credit('天地图全球影像服务'),
+        maximumLevel: 18
     });
     // url: './terrain/beijing30m/'
     var terrainProvider = new Cesium.CesiumTerrainProvider({
