@@ -1,0 +1,281 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <title>Tools-08CesiumVectorTile</title>
+    <meta charset="utf-8" />
+    <style>
+        @import url(../Cesium/Widgets/widgets.css);
+        html, body, #cesiumContainer {
+            width: calc(100%);
+            height: calc(100%);
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div id="cesiumContainer">
+    </div>
+    <div id="creditContainer" style="display: none;">
+    </div>
+    
+    <script src="../Cesium/Cesium.js"></script>
+    <script src="./Libs/CesiumVectorTile/CesiumVectorTile.min.js" type="text/javascript"></script>
+    
+    <script>
+        VectorTileImageryProvider = Cesium.VectorTileImageryProvider;
+        var mtdt = new Cesium.WebMapTileServiceImageryProvider({
+            url: 'http://t0.tianditu.com/img_w/wmts?',
+            layer: 'img',
+            style: 'default',
+            format: 'tiles',
+            tileMatrixSetID: 'w',
+            credit: new Cesium.Credit('天地图全球影像服务'),
+            maximumLevel: 18
+        });
+        var terrainProvider = new Cesium.CesiumTerrainProvider({
+            url: './sampledata/terrain/ctb-merger/'
+        });
+
+         
+        var viewer = new Cesium.Viewer('cesiumContainer', {
+            skyBox: false,
+            skyAtmosphere: false,
+            imageryProvider: mtdt,  
+            contextOptions: {
+                webgl: {
+                    alpha: true
+                }
+            },
+            creditContainer: "creditContainer",
+            selectionIndicator: false,
+            animation: false,   
+            baseLayerPicker: false,  
+            geocoder: false,  
+            timeline: false,  
+            sceneModePicker: true,  
+            navigationHelpButton: false,  
+            infoBox: false,   
+            fullscreenButton: true
+        });
+        viewer.terrainProvider = terrainProvider;
+        //设置homebutton的位置
+        Cesium.Camera.DEFAULT_VIEW_RECTANGLE =
+                Cesium.Rectangle.fromDegrees(127.0, 41.0, 129.0, 43.0);//Rectangle(west, south, east, north)
+        //设置初始位置
+        viewer.camera.setView({
+            destination: Cesium.Cartesian3.fromDegrees(128.055, 42.006, 30000)
+        });
+         
+        viewer.scene.debugShowFramesPerSecond = true;//显示帧数
+
+        var provinceLayer = null;
+        Cesium.loadText("./sampledata/vector/bj.json").then(function (geojson) {
+            geojson = eval("(" + geojson + ")");
+            var provinceProvider = new VectorTileImageryProvider({
+                source: geojson,
+                defaultStyle: {
+                    outlineColor: "rgb(255,255,255)",
+                    lineWidth: 2,
+                    fill: true,
+                    tileCacheSize: 200,
+                    showMaker: false,
+                    showCenterLabel: true,
+                    fontColor: "rgba(255,0,0,1)",
+                    labelOffsetX: -10,
+                    labelOffsetY: -5,
+                    fontSize: 13,
+                    fontFamily: "黑体",
+                    centerLabelPropertyName: "NAME"
+                },
+                maximumLevel: 20,
+                minimumLevel: 3,
+                simplify: false
+            });
+            provinceProvider.readyPromise.then(function () {
+                provinceLayer = viewer.imageryLayers.addImageryProvider(provinceProvider);
+
+            });
+        })
+
+
+        //Cesium.loadText("./sampledata/vector/bjsx.json").then(function (geojson) {
+        //    geojson = eval("(" + geojson + ")");
+        //    viewer.imageryLayers.addImageryProvider(new VectorTileImageryProvider({
+        //        source: geojson,
+        //        defaultStyle: {
+        //            outlineColor: "rgb(255,255,255)",
+        //            lineWidth: 2,
+        //            fill: false,
+        //            tileCacheSize: 200,
+        //            showMaker: false,
+        //            showCenterLabel: true,
+        //            fontColor: "rgba(255,0,0,1)",
+        //            labelOffsetX: -10,
+        //            labelOffsetY: -5,
+        //            fontSize: 13,
+        //            fontFamily: "黑体",
+        //            centerLabelPropertyName: "NAME"
+        //        },
+        //        maximumLevel: 20,
+        //        minimumLevel: 4,
+        //        simplify: false
+        //    }));
+        //})
+
+
+
+        //var shpPromises = [
+        //  Cesium.loadBlob("./sampledata/vector/hubei/市界/市界.shp"),
+        //  Cesium.loadBlob("./sampledata/vector/hubei/市界/市界.dbf"),
+        //  Cesium.loadBlob("./sampledata/vector/hubei/市界/市界.prj"),
+        //];
+        //var chinaLayer = null;
+        //Cesium.when.all(shpPromises, function (files) {
+        //    files[0].name = "市界.shp";
+        //    files[1].name = "市界.dbf";
+        //    files[2].name = "市界.prj";
+
+
+        //    var shpProvider = new VectorTileImageryProvider({
+        //        source: files,
+        //        //defaultStyle: {
+        //        //    outlineColor: Cesium.Color.WHITE,
+        //        //    fill: false
+        //        //},
+        //        defaultStyle: {
+        //            outlineColor: "rgb(255,0,0)",
+        //            fillColor: "rgba(255,0,0,0.6)",
+        //            lineWidth: 2,
+        //            fill: false,
+        //            tileCacheSize: 200,
+        //            showMaker: false,
+        //            showCenterLabel: true,
+        //            fontColor: "rgba(255,0,0,1)",
+        //            labelOffsetX: -10,
+        //            labelOffsetY: -5,
+        //            fontSize: 13,
+        //            fontFamily: "黑体",
+        //            centerLabelPropertyName: "XZQMC",
+        //            lineCap: "round",
+        //            shadowColor: "black",
+        //            shadowOffsetX: 1,
+        //            shadowOffsetY: -1,
+        //            shadowBlur: 1,
+        //            lineJoin: "round"
+        //        },
+        //        maximumLevel: 15,
+        //        minimumLevel: 1,
+        //        simplify: true,
+        //        simplifyTolerance:0.01
+        //    });
+        //    shpProvider.readyPromise.then(function () {
+        //        chinaLayer = viewer.imageryLayers.addImageryProvider(shpProvider);
+        //        viewer.imageryLayers.raiseToTop(chinaLayer);
+
+        //        viewer.flyTo(chinaLayer);
+        //        Cesium.Camera.DEFAULT_VIEW_RECTANGLE = shpProvider.rectangle;
+        //    });
+
+        //});
+
+
+
+       //var shpPromises1 = [
+        //    Cesium.loadBlob("./sampledata/vector/china/国界线.shp"),
+        //    Cesium.loadBlob("./sampledata/vector/china/国界线.dbf"),
+        //    Cesium.loadBlob("./sampledata/vector/china/国界线.prj"),
+       // ];
+       // var chinaLayer = null;
+       // Cesium.when.all(shpPromises1, function (files) {
+       //     files[0].name = "国界线.shp";
+       //     files[1].name = "国界线.dbf";
+       //     files[2].name = "国界线.prj";
+
+
+       //     var shpProvider = new VectorTileImageryProvider({
+       //         source: files,
+       //         defaultStyle: {
+       //             outlineColor: "rgb(255,0,0)",
+       //             fillColor: "rgba(255,0,0,0.6)",
+       //             lineWidth: 2,
+       //             fill: true,
+       //             tileCacheSize: 200,
+       //             showMaker: false,
+       //             showCenterLabel: true,
+       //             fontColor: "rgba(255,0,0,1)",
+       //             labelOffsetX: -10,
+       //             labelOffsetY: -5,
+       //             fontSize: 13,
+       //             fontFamily: "黑体",
+       //             centerLabelPropertyName: "NAME",
+       //             lineCap: "round",
+       //             shadowColor: "black",
+       //             shadowOffsetX: 1,
+       //             shadowOffsetY: -1,
+       //             shadowBlur: 1,
+       //             lineJoin: "round"
+       //         },
+       //         maximumLevel: 10,
+       //         minimumLevel: 1,
+       //         simplify: false
+       //     });
+       //     shpProvider.readyPromise.then(function () {
+       //         chinaLayer = viewer.imageryLayers.addImageryProvider(shpProvider);
+       //         viewer.imageryLayers.raiseToTop(chinaLayer);
+
+       //         viewer.flyTo(chinaLayer);
+       //         Cesium.Camera.DEFAULT_VIEW_RECTANGLE = shpProvider.rectangle;
+       //     });
+
+       // });
+
+
+
+        var shpPromises2 = [
+                Cesium.loadBlob("./sampledata/vector/world/国家简化边界.shp"),
+                Cesium.loadBlob("./sampledata/vector/world/国家简化边界.dbf"),
+                Cesium.loadBlob("./sampledata/vector/world/国家简化边界.prj"),
+        ];
+        Cesium.when.all(shpPromises2, function (files) {
+            files[0].name = "国家简化边界.shp";
+            files[1].name = "国家简化边界.dbf";
+            files[2].name = "国家简化边界.prj";
+
+            var shpLayer = null;
+            var shpProvider = new VectorTileImageryProvider({
+                source: files,
+                defaultStyle: {
+                    outlineColor: "rgb(255,255,0)",
+                    lineWidth: 1.5,
+                    fill: false,
+                    tileCacheSize: 200,
+                    showMaker: false,
+                    showCenterLabel: true,
+                    fontColor: "rgba(255,0,0,1)",
+                    labelOffsetX: 0,
+                    labelOffsetY: 0,
+                    fontSize: 9,
+                    fontFamily: "黑体",
+                    lineDash: [2, 5, 2, 5],
+                    centerLabelPropertyName: "NAME"
+                },
+                maximumLevel: 20,
+                minimumLevel: 1,
+                simplify: true
+            });
+            shpProvider.readyPromise.then(function () {
+                shpLayer = viewer.imageryLayers.addImageryProvider(shpProvider);
+                viewer.imageryLayers.raiseToTop(chinaLayer);
+            });
+
+        });
+
+    </script>
+</body>
+</html>
