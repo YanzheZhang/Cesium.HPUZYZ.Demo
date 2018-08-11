@@ -237,7 +237,9 @@ TileLonlatsImageryProvider.prototype.requestImage = function (x, y, level, reque
     context.strokeStyle = cssColor;
     context.lineWidth = 2;
     context.strokeRect(1, 1, 255, 255);
-
+    /*
+    可以使用GeographicTilingScheme的tileXYToNativeRectangle接口获取对应关系，不需要自己算！
+    */
     var interval = 180.0 / Math.pow(2, level);
     var lon = (x + 0.5) * interval-180;
     var lat = 90 - (y + 0.5) * interval;
