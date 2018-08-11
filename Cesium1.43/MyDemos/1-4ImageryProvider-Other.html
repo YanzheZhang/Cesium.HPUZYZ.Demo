@@ -93,15 +93,16 @@
         //imageryLayers.brightness = 1.5;//改变亮度
 
 
-        //var imageryLayers = viewer.imageryLayers;
-        //var GridImageryLayer = imageryLayers.addImageryProvider(GridImagery);//添加注记图层
-        //imageryLayers.raiseToTop(GridImageryLayer);//将注记图层置顶
+        var imageryLayers = viewer.imageryLayers;
+        var GridImageryLayer = imageryLayers.addImageryProvider(GridImagery);//添加注记图层
+        imageryLayers.raiseToTop(GridImageryLayer);//将注记图层置顶
 
         
-        var imageryLayers = viewer.imageryLayers;
-        var TileCoordinatesImageryLayer = imageryLayers.addImageryProvider(TileCoordinatesImagery);//添加注记图层
-        imageryLayers.raiseToTop(TileCoordinatesImageryLayer);//将注记图层置顶
-    </script>
+        //var imageryLayers = viewer.imageryLayers;
+        //var TileCoordinatesImageryLayer = imageryLayers.addImageryProvider(TileCoordinatesImagery);//添加注记图层
+        //imageryLayers.raiseToTop(TileCoordinatesImageryLayer);//将注记图层置顶
+   
+     </script>
 
 </body>
 </html>

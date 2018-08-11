@@ -1,12 +1,11 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta />
+    <meta charset="utf-8" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-    <title>Tools-08CesiumVectorTile</title>
-    <meta charset="utf-8" />
+    <title>Tools-08CesiumVectorTile</title> 
     <style>
         @import url(../Cesium/Widgets/widgets.css);
         html, body, #cesiumContainer {
@@ -130,59 +129,59 @@
 
 
 
-        //var shpPromises = [
-        //  Cesium.loadBlob("./sampledata/vector/hubei/市界/市界.shp"),
-        //  Cesium.loadBlob("./sampledata/vector/hubei/市界/市界.dbf"),
-        //  Cesium.loadBlob("./sampledata/vector/hubei/市界/市界.prj"),
-        //];
-        //var chinaLayer = null;
-        //Cesium.when.all(shpPromises, function (files) {
-        //    files[0].name = "市界.shp";
-        //    files[1].name = "市界.dbf";
-        //    files[2].name = "市界.prj";
+        var shpPromises = [
+          Cesium.loadBlob("./sampledata/vector/hubei/市界/市界.shp"),
+          Cesium.loadBlob("./sampledata/vector/hubei/市界/市界.dbf"),
+          Cesium.loadBlob("./sampledata/vector/hubei/市界/市界.prj"),
+        ];
+        var chinaLayer = null;
+        Cesium.when.all(shpPromises, function (files) {
+            files[0].name = "市界.shp";
+            files[1].name = "市界.dbf";
+            files[2].name = "市界.prj";
 
 
-        //    var shpProvider = new VectorTileImageryProvider({
-        //        source: files,
-        //        //defaultStyle: {
-        //        //    outlineColor: Cesium.Color.WHITE,
-        //        //    fill: false
-        //        //},
-        //        defaultStyle: {
-        //            outlineColor: "rgb(255,0,0)",
-        //            fillColor: "rgba(255,0,0,0.6)",
-        //            lineWidth: 2,
-        //            fill: false,
-        //            tileCacheSize: 200,
-        //            showMaker: false,
-        //            showCenterLabel: true,
-        //            fontColor: "rgba(255,0,0,1)",
-        //            labelOffsetX: -10,
-        //            labelOffsetY: -5,
-        //            fontSize: 13,
-        //            fontFamily: "黑体",
-        //            centerLabelPropertyName: "XZQMC",
-        //            lineCap: "round",
-        //            shadowColor: "black",
-        //            shadowOffsetX: 1,
-        //            shadowOffsetY: -1,
-        //            shadowBlur: 1,
-        //            lineJoin: "round"
-        //        },
-        //        maximumLevel: 15,
-        //        minimumLevel: 1,
-        //        simplify: true,
-        //        simplifyTolerance:0.01
-        //    });
-        //    shpProvider.readyPromise.then(function () {
-        //        chinaLayer = viewer.imageryLayers.addImageryProvider(shpProvider);
-        //        viewer.imageryLayers.raiseToTop(chinaLayer);
+            var shpProvider = new VectorTileImageryProvider({
+                source: files,
+                //defaultStyle: {
+                //    outlineColor: Cesium.Color.WHITE,
+                //    fill: false
+                //},
+                defaultStyle: {
+                    outlineColor: "rgb(255,0,0)",
+                    fillColor: "rgba(255,0,0,0.6)",
+                    lineWidth: 2,
+                    fill: false,
+                    tileCacheSize: 200,
+                    showMaker: false,
+                    showCenterLabel: true,
+                    fontColor: "rgba(255,0,0,1)",
+                    labelOffsetX: -10,
+                    labelOffsetY: -5,
+                    fontSize: 13,
+                    fontFamily: "黑体",
+                    centerLabelPropertyName: "XZQMC",
+                    lineCap: "round",
+                    shadowColor: "black",
+                    shadowOffsetX: 1,
+                    shadowOffsetY: -1,
+                    shadowBlur: 1,
+                    lineJoin: "round"
+                },
+                maximumLevel: 15,
+                minimumLevel: 1,
+                simplify: true,
+                simplifyTolerance:0.01
+            });
+            shpProvider.readyPromise.then(function () {
+                chinaLayer = viewer.imageryLayers.addImageryProvider(shpProvider);
+                viewer.imageryLayers.raiseToTop(chinaLayer);
 
-        //        viewer.flyTo(chinaLayer);
-        //        Cesium.Camera.DEFAULT_VIEW_RECTANGLE = shpProvider.rectangle;
-        //    });
+                viewer.flyTo(chinaLayer);
+                Cesium.Camera.DEFAULT_VIEW_RECTANGLE = shpProvider.rectangle;
+            });
 
-        //});
+        });
 
 
 
