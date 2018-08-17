@@ -5,7 +5,7 @@ This project is some demos of CESIUM. Much of them are form other people's blogs
 </br>
 ## 基础篇
 </br>
-* [Cesium学习笔记1--环境搭建](http://blog.sina.com.cn/s/blog_15e866bbe0102xleh.html)
+*[Cesium学习笔记1--环境搭建](http://blog.sina.com.cn/s/blog_15e866bbe0102xleh.html)
 
 ## 工具篇
 </br>
