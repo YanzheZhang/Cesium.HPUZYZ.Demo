@@ -75,6 +75,8 @@
             maximumLevel: 18
         });
         var mapLonlat = new TileLonlatsImageryProvider({});
+        var isLoadTerrain = true;
+        var ellipsoidTerrainProvider = new Cesium.EllipsoidTerrainProvider();
         var terrainProvider = new Cesium.CesiumTerrainProvider({
             url: './sampledata/terrain/ctb-merger/'
         });
@@ -99,7 +101,6 @@
             infoBox: false,   
             fullscreenButton: true
         });
-
         viewer.terrainProvider = terrainProvider;
         var lat = 42.006;
         var lon = 128.055;
