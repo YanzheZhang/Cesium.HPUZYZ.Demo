@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <title>Tools-13PickPosition</title>
+    <script src="../Cesium/Cesium.js"></script>
+    <script src="./1-2ImageryProvider-WebExtend.js"></script>
+    <style>
+        @import url(../Cesium/Widgets/widgets.css);
+
+        html, body, #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        #menu {
+            position: absolute;
+            top: 80px;
+            left: 10px;
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+    <div id="cesiumContainer">
+        <div id="creditContainer" style="display: none;"></div>
+    </div>
+    <div id="menu">
+        <p>
+            <button onclick="setvisible('3dtiles')">tiles</button>
+        </p>
+        <p>
+            <button onclick="setvisible('dem')">dem</button>
+        </p>
+    </div>
+    <script>
+ 
+        //var terrainProvider = new Cesium.CesiumTerrainProvider({
+        //    url: './sampledata/terrain/ctb-merger/'
+        //});
+
+        var GoogleMap = ImageryProviderWebExtendTool.createGoogleMapsByUrl(Cesium, { url: "http://mt1.google.cn/vt/lyrs=s&hl=zh-CN&x={x}&y={y}&z={z}" });
+
+        var viewer = new Cesium.Viewer('cesiumContainer', {
+            imageryProvider: GoogleMap,
+            contextOptions: {
+                webgl: {
+                    alpha: true
+                }
+            },
+            creditContainer: "creditContainer",
+            selectionIndicator: false,
+            animation: false,   
+            baseLayerPicker: false,  
+            geocoder: false,  
+            timeline: false,  
+            sceneModePicker: true,  
+            navigationHelpButton: false,  
+            infoBox: false,   
+            fullscreenButton: true
+        });
+        //viewer.terrainProvider = terrainProvider;
+        viewer.scene.globe.depthTestAgainstTerrain = true;
+        var lat = 42.006;
+        var lon = 128.055;
+        //取消双击事件
+        viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
+        //设置homebutton的位置
+        Cesium.Camera.DEFAULT_VIEW_RECTANGLE =
+                Cesium.Rectangle.fromDegrees(lon - 1, lat - 1, lon + 1, lat + 1);//Rectangle(west, south, east, north)
+
+
+        //倾斜摄影
+        var tileset = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
+            url: './sampledata/3dtiles-QX/tileset.json'
+        }));
+        tileset.readyPromise.then(function () {
+            var boundingSphere = tileset.boundingSphere;
+            viewer.camera.viewBoundingSphere(boundingSphere, new Cesium.HeadingPitchRange(0.0, -0.5, boundingSphere.radius));
+            viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY);
+        }).otherwise(function (error) {
+            throw (error);
+        });
+
+
+        //得到当前三维场景的椭球体
+        var ellipsoid = viewer.scene.globe.ellipsoid;
+        var CesiumEventHandler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
+        CesiumEventHandler.setInputAction(function (movement) {
+            /*
+            收取坐标下面三种：
+            //1椭球面坐标
+            var cartesian = viewer.scene.camera.pickEllipsoid(movement.position, ellipsoid);
+            //2所有对象坐标 加地形的地表、模型、倾斜等  根据depth buffer反算
+            var cartesian = viewer.scene.pickPosition(movement.position);
+            //3地表坐标 不能收取模型、倾斜等对象高程
+            var ray = viewer.camera.getPickRay(windowCoordinates);
+            var cartesian = viewer.scene.globe.pick(ray, scene);
+
+            更多拾取对象可以参考demo：picking
+            */
+
+            //var ray = viewer.camera.getPickRay(movement.position);
+            //var cartesian = viewer.scene.globe.pick(ray, viewer.scene);
+
+            var cartesian = viewer.scene.pickPosition(movement.position);
+
+            //var cartesian = viewer.scene.camera.pickEllipsoid(movement.position, ellipsoid);
+
+            if (cartesian) {
+                //将笛卡尔坐标转换为地理坐标
+                var cartographic = Cesium.Cartographic.fromCartesian(cartesian);//这里高程值 如果未拾取到物体未负值或无值
+                //添加entity
+                viewer.entities.add({
+                    position: cartesian,//Cesium.Cartesian3.fromDegrees(-75.59777, 40.03883,3000),
+                    point: {
+                        pixelSize: 10,
+                        color: Cesium.Color.YELLOW
+                    }
+                });
+            }
+        }, Cesium.ScreenSpaceEventType.LEFT_UP);
+
+        function setvisible(value) {
+            switch (value) {
+                case '3dtiles':
+                    tileset.show = !tileset.show;
+                    break;
+                case 'dem':
+                    if (isLoadTerrain) {
+                        viewer.terrainProvider = ellipsoidTerrainProvider;
+                        isLoadTerrain = false;
+                    } else {
+                        viewer.terrainProvider = terrainProvider;
+                        isLoadTerrain = true;
+                    }
+                    break;
+            }
+        }
+    </script>
+</body>
+</html>
