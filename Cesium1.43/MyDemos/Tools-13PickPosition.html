@@ -41,9 +41,9 @@
     </div>
     <script>
  
-        //var terrainProvider = new Cesium.CesiumTerrainProvider({
-        //    url: './sampledata/terrain/ctb-merger/'
-        //});
+        var terrainProvider = new Cesium.CesiumTerrainProvider({
+            url: './sampledata/terrain/ctb-merger/'
+        });
 
         var GoogleMap = ImageryProviderWebExtendTool.createGoogleMapsByUrl(Cesium, { url: "http://mt1.google.cn/vt/lyrs=s&hl=zh-CN&x={x}&y={y}&z={z}" });
 
@@ -65,7 +65,7 @@
             infoBox: false,   
             fullscreenButton: true
         });
-        //viewer.terrainProvider = terrainProvider;
+        viewer.terrainProvider = terrainProvider;
         viewer.scene.globe.depthTestAgainstTerrain = true;
         var lat = 42.006;
         var lon = 128.055;
