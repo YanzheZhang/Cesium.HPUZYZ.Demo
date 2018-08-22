@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="Tools-02Tooltip-div.css" />
+    <title>Tools-15DynamicDraw-ClampGround</title>
+    <script src="../../Cesium1.48/Cesium/Cesium.js"></script>
+    <script src="./Tools-02Tooltip-div.js"></script>
+    <script src="./Tools-15DynamicDraw-ClampGround.js"></script>
+    <style>
+        @import url(../../Cesium1.48/Cesium/Widgets/widgets.css);
+
+        html, body, #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        #menu {
+            position: absolute;
+            top: 50px;
+            left: 50px;
+        }
+
+        #menu p {
+            background-color: #808080;
+            color: #ff0000;
+            height: 30px;
+            line-height: 30px;
+            font-size: 20px;
+            padding: 4px 10px 4px 10px;
+        }
+    </style>
+
+</head>
+<body>
+    <div id="cesiumContainer" class="fullSize"></div>
+    <div id="creditContainer" style="display: none;"></div>
+    <div id="menu">
+        <p onclick="drawPoint()">画点</p>
+        <p onclick="drawLine()">画线</p>
+        <p onclick="drawPolyline()">画多段线</p>
+        <p onclick="drawVline()">画方位线</p>
+    </div>
+
+    <script>
+        var terrainProvider = new Cesium.CesiumTerrainProvider({
+            url: './sampledata/terrain/ctb-merger/'
+        });
+        var viewer = new Cesium.Viewer('cesiumContainer', {
+            creditContainer: "creditContainer",
+            TerrainProvider: null,
+            selectionIndicator: false,
+            animation: false,
+            baseLayerPicker: true,
+            geocoder: false,
+            timeline: false,
+            sceneModePicker: true,
+            navigationHelpButton: false,
+            infoBox: false,
+            fullscreenButton: true
+        });
+        viewer.terrainProvider = terrainProvider;//地形数据源 terrainProvider
+        viewer.scene.globe.depthTestAgainstTerrain = true;
+        //取消双击事件
+        viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
+        //设置homebutton的位置
+        Cesium.Camera.DEFAULT_VIEW_RECTANGLE =
+                Cesium.Rectangle.fromDegrees(127.0, 41.0, 129.0, 43.0);//Rectangle(west, south, east, north)
+        //设置初始位置
+        viewer.camera.setView({
+            destination: Cesium.Cartesian3.fromDegrees(128.055, 42.006, 30000)
+        });
+
+        function drawPoint() {
+            DrawDynamicClampGround.startDrawPoint(viewer, function (cartographic) {
+                //处理结果
+                 
+            });
+        }
+        function drawLine() {
+            DrawDynamicClampGround.startDrawingLine(viewer, function (cartesians) {
+                //处理结果
+                //....
+            });
+        }
+        function drawPolyline() {
+            DrawDynamicClampGround.startDrawingPolyline(viewer, function (cartesians) {
+                //处理结果
+                //....
+            });
+        }
+        function drawVline() {
+            DrawDynamicClampGround.startDrawingVLine(viewer, function (cartesians) {
+                //处理结果
+                //....
+            });
+        }
+    </script>
+</body>
+</html>
