@@ -8,8 +8,8 @@ var PrimitivePoints=(
         var viewer;
         function _(options) {
             viewer = options.viewer;
-            vertexShader = VSPolylie();
-            fragmentShader = FSPolyline();
+            vertexShader = getVS();
+            fragmentShader = getFS();
             if (options.Cartesians && options.Cartesians.length >= 2) {
                 var postionsTemp = [];
                 var colorsTemp = [];
@@ -99,7 +99,7 @@ var PrimitivePoints=(
             });
         }
 
-        function VSPolylie() {
+        function getVS() {
             return "attribute vec3 position3DHigh;\
             attribute vec3 position3DLow;\
             attribute vec4 color;\
@@ -115,7 +115,7 @@ var PrimitivePoints=(
             }\
             ";
         }
-        function FSPolyline() {
+        function getFS() {
             return "varying vec4 v_color;\
             void main()\
             {\

@@ -8,8 +8,8 @@ var PrimitivePolyline=(
         var viewer;
         function _(options) {
             viewer = options.viewer;
-            vertexShader = VSPolylie();
-            fragmentShader = FSPolyline();
+            vertexShader = getVS();
+            fragmentShader = getFS();
             if (options.Cartesians && options.Cartesians.length >= 2) {
                 var postionsTemp = [];
                 var colorsTemp = [];
@@ -101,7 +101,7 @@ var PrimitivePolyline=(
             });
         }
 
-        function VSPolylie() {
+        function getVS() {
             return "attribute vec3 position3DHigh;\
             attribute vec3 position3DLow;\
             attribute vec4 color;\
@@ -113,11 +113,10 @@ var PrimitivePolyline=(
                 v_color =color;\
                 p = czm_modelViewProjectionRelativeToEye * p;\
                 gl_Position = p;\
-                gl_PointSize=10.0;\
             }\
             ";
         }
-        function FSPolyline() {
+        function getFS() {
             return "varying vec4 v_color;\
             void main()\
             {\
