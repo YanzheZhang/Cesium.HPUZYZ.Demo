@@ -47,7 +47,6 @@ var PrimitivePoints=(
                     p1.x, p1.y, p1.z,
                     p2.x, p2.y, p2.z
                 ]);
-                //默认蓝色
                 this.colorArr = new Float32Array([
                          0.0, 0.0, 1.0, 1.0,
                          0.0, 0.0, 1.0, 1.0

@@ -46,7 +46,6 @@ var PrimitiveTexture= (
                     p2.x, p2.y, p2.z,
                     p3.x, p3.y, p3.z
                 ]);
-                //默认蓝色
                 this.sts = new Uint8Array([0, 1,
                                            1, 1,
                                            1, 0]);
