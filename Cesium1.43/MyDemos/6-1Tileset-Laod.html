@@ -44,7 +44,7 @@
 
         //2加载模型
         var tileset = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
-            url: './data/NewYork/tileset.json' //   ./data/3dtiles-lab/tileset.json
+            url: 'http://localhost:8076/3dtiles/NewYork/tileset.json' // 
         }));
 
         tileset.readyPromise.then(function () {
