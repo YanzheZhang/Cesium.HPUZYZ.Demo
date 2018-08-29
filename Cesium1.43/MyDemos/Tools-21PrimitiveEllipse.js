@@ -41,7 +41,6 @@ var PrimitiveEllipse = (
 
                 ellipse.outerPositions = EllipseGeometryLibraryEx.raisePositionsToHeight(ellipse.outerPositions, raiseopt, false);
                
-                //上半部
                 for (var i = 0; i < ellipse.outerPositions.length; i = i + 3) {
                     postionsTemp.push(ellipse.outerPositions[i]);
                     postionsTemp.push(ellipse.outerPositions[i + 1]);
@@ -57,8 +56,7 @@ var PrimitiveEllipse = (
                     indicesTesm.push(i - 1);
                     indicesTesm.push(i);
                 }
-                //接边缝隙
-                //右缝隙
+
                 indicesTesm.push(0);
                 indicesTesm.push(ellipse.outerPositions.length / 3 -1);
                  
@@ -197,7 +195,6 @@ var PrimitiveEllipse = (
                     indicesTesm.push(i);
                 }
                  
-                //右缝隙
                 indicesTesm.push(0);
                 indicesTesm.push(ellipse.outerPositions.length / 3-1);
                  

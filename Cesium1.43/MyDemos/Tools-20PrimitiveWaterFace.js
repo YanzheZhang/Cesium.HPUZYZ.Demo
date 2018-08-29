@@ -62,12 +62,36 @@
                 fragmentShaderSource: fs
             });
         }
-
          
         function FSWaterFace() {
-            return 'varying vec3 v_positionMC;\nvarying vec3 v_positionEC;\nvarying vec2 v_st;\nvoid main()\n{\nczm_materialInput materialInput;\nvec3 normalEC = normalize(czm_normal3D * czm_geodeticSurfaceNormal(v_positionMC, vec3(0.0), vec3(1.0)));\n#ifdef FACE_FORWARD\nnormalEC = faceforward(normalEC, vec3(0.0, 0.0, 1.0), -normalEC);\n#endif\nmaterialInput.s = v_st.s;\nmaterialInput.st = v_st;\nmaterialInput.str = vec3(v_st, 0.0);\nmaterialInput.normalEC = normalEC;\nmaterialInput.tangentToEyeMatrix = czm_eastNorthUpToEyeCoordinates(v_positionMC, materialInput.normalEC);\nvec3 positionToEyeEC = -v_positionEC;\nmaterialInput.positionToEyeEC = positionToEyeEC;\nczm_material material = czm_getMaterial(materialInput);\n#ifdef FLAT\ngl_FragColor = vec4(material.diffuse + material.emission, material.alpha);\n#else\ngl_FragColor = czm_phong(normalize(positionToEyeEC), material);\ngl_FragColor.a=0.5;\n#endif\n}\n';
+            return
+       'varying vec3 v_positionMC;\
+        varying vec3 v_positionEC;\
+        varying vec2 v_st;\
+        void main()\
+        {\
+            czm_materialInput materialInput;\
+            vec3 normalEC = normalize(czm_normal3D * czm_geodeticSurfaceNormal(v_positionMC, vec3(0.0), vec3(1.0)));\
+#ifdef FACE_FORWARD\
+                           normalEC = faceforward(normalEC, vec3(0.0, 0.0, 1.0), -normalEC);\
+#endif\
+       materialInput.s = v_st.s;\
+       materialInput.st = v_st;\
+       materialInput.str = vec3(v_st, 0.0);\
+       materialInput.normalEC = normalEC;\
+       materialInput.tangentToEyeMatrix = czm_eastNorthUpToEyeCoordinates(v_positionMC, materialInput.normalEC);\
+       vec3 positionToEyeEC = -v_positionEC;\
+       materialInput.positionToEyeEC = positionToEyeEC;\
+       czm_material material = czm_getMaterial(materialInput);\
+#ifdef FLAT\
+       gl_FragColor = vec4(material.diffuse + material.emission, material.alpha);\
+#else\
+       gl_FragColor = czm_phong(normalize(positionToEyeEC), material);\
+       gl_FragColor.a=0.5;\
+#endif\
+}\
+              ';
         }
-
 
         _.prototype.remove = function () {
             if (this.primitive != null) {
