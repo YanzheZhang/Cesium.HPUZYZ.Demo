@@ -44,11 +44,19 @@
         </p>
     </div>
     <script>
-
+        var mtdt = new Cesium.WebMapTileServiceImageryProvider({
+            url: 'http://t0.tianditu.com/img_w/wmts?',
+            layer: 'img',
+            style: 'default',
+            format: 'tiles',
+            tileMatrixSetID: 'w',
+            credit: new Cesium.Credit('天地图全球影像服务'),
+            maximumLevel: 18
+        });
         var GoogleMap = ImageryProviderWebExtendTool.createGoogleMapsByUrl(Cesium, { url: "http://mt1.google.cn/vt/lyrs=s&hl=zh-CN&x={x}&y={y}&z={z}" });
 
         var viewer = new Cesium.Viewer('cesiumContainer', {
-            imageryProvider: GoogleMap,
+            imageryProvider: mtdt,
             contextOptions: {
                 webgl: {
                     alpha: true
