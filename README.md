@@ -36,7 +36,7 @@ This project is some demos of CESIUM. Much of them are form other people's blogs
 *[Cesium学习笔记-工具篇10-TileLonlatsImageryProvider经纬度网格瓦片地图服务](http://blog.sina.com.cn/s/blog_15e866bbe0102xxme.html) </br>
 *[Cesium学习笔记-工具篇11-Mouse-ButtonLanguage鼠标设置、按钮语言设置](http://blog.sina.com.cn/s/blog_15e866bbe0102xyn0.html) </br>
 *[Cesium学习笔记-工具篇12-GlobeSet球场景相关设置](http://blog.sina.com.cn/s/blog_15e866bbe0102xyny.html) </br>
-*[Cesium学习笔记-工具篇13-CesiumThreejsCesium引入threejs](http://blog.sina.com.cn/s/blog_15e866bbe0102xz2g.html) </br>
+*[Cesium学习笔记-工具篇13-CesiumThreejs引入threejs](http://blog.sina.com.cn/s/blog_15e866bbe0102xz2g.html) </br>
 *[Cesium学习笔记-工具篇14-PickPosition获取鼠标点击位置方法总结](http://blog.sina.com.cn/s/blog_15e866bbe0102xz32.html) </br>
 *[Cesium学习笔记-工具篇15-Elevation等高线绘制](http://blog.sina.com.cn/s/blog_15e866bbe0102xz6u.html) </br>
 *[Cesium学习笔记-工具篇16-DynamicDraw-ClampGround交互绘制-贴地](http://blog.sina.com.cn/s/blog_15e866bbe0102xzbj.html) </br>
@@ -47,6 +47,7 @@ This project is some demos of CESIUM. Much of them are form other people's blogs
 *[Cesium学习笔记-工具篇21-PrimitiveWaterface渲染水面](http://blog.sina.com.cn/s/blog_15e866bbe0102y0ql.html) </br>
 *[Cesium学习笔记-工具篇22-PrimitiveEllipse自定义渲染椭圆](http://blog.sina.com.cn/s/blog_15e866bbe0102y0qn.html) </br>
 *[Cesium学习笔记-工具篇23-PrimitiveSector自定义渲染扇形](http://blog.sina.com.cn/s/blog_15e866bbe0102y12s.html) </br>
-*[Cesium学习笔记-工具篇24-CesiumCanvas2imageCesium场景截屏](http://blog.sina.com.cn/s/blog_15e866bbe0102y136.html)
+*[Cesium学习笔记-工具篇24-CesiumCanvas2image场景截屏](http://blog.sina.com.cn/s/blog_15e866bbe0102y136.html) </br>
+*[Cesium学习笔记-工具篇25-geoserver-wms-tif加载geoserver服务-tif](http://blog.sina.com.cn/s/blog_15e866bbe0102y2iz.html)
 ### 原理篇
 </br>

@@ -77,13 +77,23 @@
 
         var provider = new Cesium.WebMapServiceImageryProvider({
             url: 'http://localhost:8080/geoserver/cesium/wms',
-            layers: 'cesium:1-2-dom',
+            layers: 'cesium:2-dom',
             parameters: {
                 service: 'WMS',
                 format: 'image/png',
                 transparent: true,
             }
         });
+
+        //var provider = new Cesium.WebMapServiceImageryProvider({
+        //    url: 'http://localhost:8080/geoserver/cesium/wms',
+        //    layers: 'cesium:1-2-domnodata',
+        //    parameters: {
+        //        service: 'WMS',
+        //        format: 'image/png',
+        //        transparent: true,
+        //    }
+        //});
         viewer.imageryLayers.addImageryProvider(provider);
         
         function setvisible(value) {
