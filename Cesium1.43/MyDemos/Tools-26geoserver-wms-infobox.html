@@ -1,0 +1,192 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link href="./Tools-26Tooltip-div.css" rel="stylesheet" />
+    <title>Tools-26geoserver-wms-infobox</title>
+    <script src="../Cesium/Cesium.js"></script>
+    <script src="Tools-02Tooltip-div.js"></script>
+    <script src="1-2ImageryProvider-WebExtend.js"></script>
+    <style>
+        @import url(../Cesium/Widgets/widgets.css);
+        html, body, #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        #menu {
+            position: absolute;
+            top: 80px;
+            left: 10px;
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+    <div id="cesiumContainer" class="fullSize"></div>
+    <div id="creditContainer" style="display: none;"></div>
+    <div id="menu">
+        <p>
+            <button onclick="setvisible('position')">定位</button>
+        </p>
+    </div>
+    <script>
+
+        var GoogleMap = ImageryProviderWebExtendTool.createGoogleMapsByUrl(Cesium, { url: "http://mt1.google.cn/vt/lyrs=s&hl=zh-CN&x={x}&y={y}&z={z}" });
+
+        var viewer = new Cesium.Viewer('cesiumContainer', {
+            imageryProvider: GoogleMap,
+            contextOptions: {
+                webgl: {
+                    alpha: true,
+                    depth: false,
+                    stencil: true,
+                    antialias: true,
+                    premultipliedAlpha: true,
+                    preserveDrawingBuffer: true,  
+                    failIfMajorPerformanceCaveat: true
+                },
+                allowTextureFilterAnisotropic: true
+            },
+            creditContainer: "creditContainer",
+            selectionIndicator: false,
+            animation: false,
+            baseLayerPicker: false,
+            geocoder: false,
+            timeline: false,
+            sceneModePicker: true,
+            navigationHelpButton: false,
+            infoBox: false,
+            fullscreenButton: true
+        });
+        
+        var lat = 30.108038312826377; 
+        var lon = 116.042786481759; 
+        //取消双击事件
+        viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
+        //设置homebutton的位置
+        Cesium.Camera.DEFAULT_VIEW_RECTANGLE =
+                Cesium.Rectangle.fromDegrees(lon - 1, lat - 1, lon + 1, lat + 1);
+        //设置初始位置
+        viewer.camera.setView({
+            destination: Cesium.Cartesian3.fromDegrees(lon, lat, 300000)
+        });
+
+        TooltipDiv.initTool(viewer.cesiumWidget.container);
+        var providerLine = new Cesium.WebMapServiceImageryProvider({
+            url: 'http://localhost:8080/geoserver/cesium/wms',
+            layers: 'cesium:line2',
+            parameters: {
+                service: 'WMS',
+                format: 'image/png',
+                transparent: true,
+            }
+        });
+        viewer.imageryLayers.addImageryProvider(providerLine);
+        var providerPoint = new Cesium.WebMapServiceImageryProvider({
+            url: 'http://localhost:8080/geoserver/cesium/wms',
+            layers: 'cesium:citypoint',
+            parameters: {
+                service: 'WMS',
+                format: 'image/png',
+                transparent: true,
+            }
+        });
+        viewer.imageryLayers.addImageryProvider(providerPoint);
+
+        function setvisible(value) {
+            switch (value) {
+                case 'position':
+                    viewer.camera.setView({
+                        destination: Cesium.Cartesian3.fromDegrees(lon, lat, 300000)
+                    });
+                    break;
+            }
+        }
+
+        var CesiumEventHandler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
+        CesiumEventHandler.setInputAction(function (movement) {
+            //var cartesian = viewer.scene.pickPosition(movement.position);  
+            var ray = viewer.camera.getPickRay(movement.position);
+            var cartesian = viewer.scene.globe.pick(ray, viewer.scene);
+            if (cartesian) {
+                var cartographic = Cesium.Cartographic.fromCartesian(cartesian);
+                if (cartographic) {
+                    var xy = new Cesium.Cartesian2();
+                    var alti = viewer.camera.positionCartographic.height;
+                    var level = getLevel(alti);
+                    if (providerPoint.ready) {
+                        xy = providerPoint.tilingScheme.positionToTileXY(cartographic, level, xy);
+                        var promise = providerPoint.pickFeatures(xy.x, xy.y, level, cartographic.longitude, cartographic.latitude);
+                        Cesium.when(promise, function (data) {
+                            if (data && data.length > 0) {
+                                //alert(data[0].name);
+                                var info = "<p class='tooltipdivline'>" + data[0].name + '</p>' +
+                                    "<p class='tooltipdivline'>" + data[0].properties.ADMINCODE + '</p>' +
+                                    "<p class='tooltipdivline'>" + data[0].properties.POPULATION + 'w人</p>';
+                                TooltipDiv.showAt(movement.position, info);
+                            } else {
+                                TooltipDiv.setVisible(false);
+                            }
+                        });
+                    } else {
+                        TooltipDiv.setVisible(false);
+                    }
+                } else {
+                    TooltipDiv.setVisible(false);
+                }
+            } else {
+                TooltipDiv.setVisible(false);
+            }
+
+        }, Cesium.ScreenSpaceEventType.LEFT_UP);
+
+        function getLevel(height) {
+            if (height > 48000000) {
+                return 0;
+            } else if (height > 24000000) {
+                return 1;
+            } else if (height > 12000000) {
+                return 2;
+            } else if (height > 6000000) {
+                return 3;
+            } else if (height > 3000000) {
+                return 4;
+            } else if (height > 1500000) {
+                return 5;
+            } else if (height > 750000) {
+                return 6;
+            } else if (height > 375000) {
+                return 7;
+            } else if (height > 187500) {
+                return 8;
+            } else if (height > 93750) {
+                return 9;
+            } else if (height > 46875) {
+                return 10;
+            } else if (height > 23437.5) {
+                return 11;
+            } else if (height > 11718.75) {
+                return 12;
+            } else if (height > 5859.38) {
+                return 13;
+            } else if (height > 2929.69) {
+                return 14;
+            } else if (height > 1464.84) {
+                return 15;
+            } else if (height > 732.42) {
+                return 16;
+            } else if (height > 366.21) {
+                return 17;
+            } else {
+                return 18;
+            }
+        }
+    </script>
+</body>
+</html>
