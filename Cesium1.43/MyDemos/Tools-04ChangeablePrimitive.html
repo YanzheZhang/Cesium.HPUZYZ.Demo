@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <title>Tools-03ChangeablePrimitive</title>
-    <link href="Tools-04ChangeablePrimitive.css" rel="stylesheet" type="text/css" />
+    <title>Tools-04ChangeablePrimitive</title>
+    <link href="./Tools-02Tooltip-div.css" rel="stylesheet" />
     <script src="../Cesium/Cesium.js"></script>
+    <script src="Tools-02Tooltip-div.js"></script>
     <script src="./Tools-04ChangeablePrimitive.js"></script>
     <style>
         @import url(../Cesium/Widgets/widgets.css);
@@ -49,13 +50,13 @@
         creditContainer: "creditContainer",
         TerrainProvider: null,
         selectionIndicator: false,
-        animation: false,  //是否显示动画控件
-        baseLayerPicker: true, //是否显示图层选择控件
-        geocoder: false, //是否显示地名查找控件
-        timeline: false, //是否显示时间线控件
-        sceneModePicker: true, //是否显示投影方式控件
-        navigationHelpButton: false, //是否显示帮助信息控件
-        infoBox: false,  //是否显示点击要素之后显示的信息
+        animation: false, 
+        baseLayerPicker: true, 
+        geocoder: false,
+        timeline: false, 
+        sceneModePicker: true, 
+        navigationHelpButton: false,
+        infoBox: false, 
         fullscreenButton: true
     });
     //取消双击事件
@@ -69,6 +70,7 @@
     viewer.camera.setView({
         destination: Cesium.Cartesian3.fromDegrees(110.20, 34.55, 3000000)
     });
+    TooltipDiv.initTool(viewer.cesiumWidget.container);
 
     function drawLine() {
         viewer.scene.primitives.removeAll();

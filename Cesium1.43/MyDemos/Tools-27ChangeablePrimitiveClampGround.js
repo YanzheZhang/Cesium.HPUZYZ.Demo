@@ -123,7 +123,7 @@
 
                 this._primitive = this._primitive && this._primitive.destroy();
 
-                this._primitive = new Cesium.Primitive({
+                this._primitive = new Cesium.GroundPolylinePrimitive({
                     geometryInstances: new Cesium.GeometryInstance({
                         geometry: geometry,
                         id: this.id,
@@ -279,10 +279,16 @@
             function (movement) {
                 callPrimitiveCallback('leftClick', movement.position);
             }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+        //handler.setInputAction(
+        //    function (movement) {
+        //        callPrimitiveCallback('leftDoubleClick', movement.position);
+        //    }, Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
+
         handler.setInputAction(
             function (movement) {
-                callPrimitiveCallback('leftDoubleClick', movement.position);
-            }, Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
+                callPrimitiveCallback('rightClick', movement.position);
+            }, Cesium.ScreenSpaceEventType.RIGHT_CLICK);
+
         var mouseOutObject;
         handler.setInputAction(
             function (movement) {
@@ -440,7 +446,24 @@
                                 onEdited();
                             }
                         },
-                        onDoubleClick: function (index) {
+                        //onDoubleClick: function (index) {
+                        //    if (_self.positions.length < 4) {
+                        //        return;
+                        //    }
+                        //    // remove the point and the corresponding markers
+                        //    _self.positions.splice(index, 1);
+                        //    _self._createPrimitive = true;
+                        //    markers.removeBillboard(index);
+                        //    editMarkers.removeBillboard(index);
+                        //    updateHalfMarkers(index, _self.positions);
+                        //    onEdited();
+                        //},
+                        //tooltip: function () {
+                        //    if (_self.positions.length > 3) {
+                        //        return "双击移除结点";
+                        //    }
+                        //}
+                        onRightClick: function (index) {
                             if (_self.positions.length < 4) {
                                 return;
                             }
@@ -454,7 +477,7 @@
                         },
                         tooltip: function () {
                             if (_self.positions.length > 3) {
-                                return "双击移除结点";
+                                return "右击移除结点";
                             }
                         }
                     };
@@ -489,9 +512,9 @@
                             },
                             onDragEnd: function (index, position) {
                                 // create new sets of makers for editing
-                                markers.insertBillboard(this.index, position, handleMarkerChanges);
-                                editMarkers.getBillboard(this.index - 1).position = calculateHalfMarkerPosition(this.index - 1);
-                                editMarkers.insertBillboard(this.index, calculateHalfMarkerPosition(this.index), handleEditMarkerChanges);
+                                markers.insertBillboard(this.index, position, handleMarkerChanges); //add by wfw
+                                editMarkers.getBillboard(this.index - 1).position = calculateHalfMarkerPosition(this.index - 1);//add by wfw
+                                editMarkers.insertBillboard(this.index, calculateHalfMarkerPosition(this.index), handleEditMarkerChanges);//add by wfw
                                 _self._createPrimitive = true;
                                 onEdited();
                             }
@@ -563,7 +586,7 @@
             };
 
             enhanceWithListeners(polyline);
-            polyline.setEditMode(false);
+            polyline.setEditMode(true);
 
         };
         //取消编辑状态 -- 在外层控制 
@@ -690,12 +713,12 @@
             if (!Cesium.defined(this.positions) || this.positions.length < 2) {
                 return;
             }
-            return new Cesium.PolylineGeometry({
+            return new Cesium.GroundPolylineGeometry({
                 positions: this.positions,
-                height: this.height,
+                // height: this.height,
                 width: this.width < 1 ? 1 : this.width,
-                vertexFormat: Cesium.EllipsoidSurfaceAppearance.VERTEX_FORMAT,
-                ellipsoid: this.ellipsoid
+                //vertexFormat: Cesium.EllipsoidSurfaceAppearance.VERTEX_FORMAT,
+                //ellipsoid: this.ellipsoid
             });
         };
         return _;
@@ -749,7 +772,7 @@
         this._options = copyOptions(options, defaultBillboard);
 
         // create one common billboard collection for all billboards
-        var b = new Cesium.BillboardCollection();
+        var b = new Cesium.BillboardCollection({ scene: this._scene });
         this._scene.primitives.add(b);
         this._billboards = b;
         // keep an ordered list of billboards
@@ -761,6 +784,7 @@
             var billboard = this._billboards.add({
                 show: true,
                 position: position,
+                heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
                 pixelOffset: new Cesium.Cartesian2(this._options.shiftX, this._options.shiftY),
                 eyeOffset: new Cesium.Cartesian3(0.0, 0.0, 0.0),
                 horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
@@ -819,9 +843,14 @@
                         callbacks.dragHandlers.onDragStart && callbacks.dragHandlers.onDragStart(getIndex(), _self._scene.camera.pickEllipsoid(position, ellipsoid));
                     });
                 }
-                if (callbacks.onDoubleClick) {
-                    setListener(billboard, 'leftDoubleClick', function (position) {
-                        callbacks.onDoubleClick(getIndex());
+                //if (callbacks.onDoubleClick) {
+                //    setListener(billboard, 'leftDoubleClick', function (position) {
+                //        callbacks.onDoubleClick(getIndex());
+                //    });
+                //}
+                if (callbacks.onRightClick) {
+                    setListener(billboard, 'rightClick', function (position) {
+                        callbacks.onRightClick(getIndex());
                     });
                 }
                 if (callbacks.onClick) {
@@ -891,5 +920,3 @@
 
     return _;
 })();
-
- 
