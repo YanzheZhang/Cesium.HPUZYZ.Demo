@@ -353,16 +353,31 @@
                 var handler = new Cesium.ScreenSpaceEventHandler(changeablePrimitiveTool._scene.canvas);
 
                 handler.setInputAction(function (movement) {
-                    var cartesian = changeablePrimitiveTool._scene.camera.pickEllipsoid(movement.endPosition, ellipsoid);
-                    if (cartesian) {
-                        onDrag(cartesian);
-                    } else {
-                        onDragEnd(cartesian);
+                    //var cartesian = changeablePrimitiveTool._scene.camera.pickEllipsoid(movement.endPosition, ellipsoid);
+                    //var cartesian = changeablePrimitiveTool.scene.pickPosition(movement.endPosition);
+
+                    if (!!movement.endPosition) {
+                        var ray = changeablePrimitiveTool._scene.camera.getPickRay(movement.endPosition);
+                        var cartesian = changeablePrimitiveTool._scene.globe.pick(ray, changeablePrimitiveTool._scene);
+                        //var cartesian = changeablePrimitiveTool._scene.camera.pickEllipsoid(movement.endPosition, ellipsoid);
+                        if (cartesian) {
+                            onDrag(cartesian);
+                        } else {
+                            onDragEnd(cartesian);
+                        }
                     }
+
                 }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
 
                 handler.setInputAction(function (movement) {
-                    onDragEnd(changeablePrimitiveTool._scene.camera.pickEllipsoid(movement.position, ellipsoid));
+                    //onDragEnd(changeablePrimitiveTool._scene.camera.pickEllipsoid(movement.position, ellipsoid));
+                    //onDragEnd(changeablePrimitiveTool.scene.pickPosition(movement.endPosition));
+                    if (!!movement.endPosition) {
+                        var ray = changeablePrimitiveTool._scene.camera.getPickRay(movement.endPosition);
+                        var cartesian = changeablePrimitiveTool._scene.globe.pick(ray, changeablePrimitiveTool._scene);
+                        onDragEnd(cartesian);
+                        //onDragEnd(changeablePrimitiveTool._scene.camera.pickEllipsoid(movement.position, ellipsoid));
+                    }
                 }, Cesium.ScreenSpaceEventType.LEFT_UP);
 
                 enableRotation(false);
@@ -597,30 +612,30 @@
             }
         }
 
-        ChangeablePrimitiveTool.PolygonPrimitive.prototype.setEditable = function () {
+        //ChangeablePrimitiveTool.PolygonPrimitive.prototype.setEditable = function () {
 
-            var polygon = this;
-            polygon.asynchronous = false;
+        //    var polygon = this;
+        //    polygon.asynchronous = false;
 
-            var scene = changeablePrimitiveTool._scene;
+        //    var scene = changeablePrimitiveTool._scene;
 
-            changeablePrimitiveTool.registerEditableShape(polygon);
+        //    changeablePrimitiveTool.registerEditableShape(polygon);
 
-            polygon.setEditMode = setEditMode;
+        //    polygon.setEditMode = setEditMode;
 
-            polygon.setHighlighted = setHighlighted;
+        //    polygon.setHighlighted = setHighlighted;
 
-            enhanceWithListeners(polygon);
+        //    enhanceWithListeners(polygon);
 
-            polygon.setEditMode(false);
-        };
-        //取消编辑状态 -- 在外层控制 
-        ChangeablePrimitiveTool.PolygonPrimitive.prototype.setEditableFalse = function () {
-            var polygon = this;
-            if (polygon.setEditMode) {
-                polygon.setEditMode(false);
-            }
-        }
+        //    polygon.setEditMode(false);
+        //};
+        ////取消编辑状态 -- 在外层控制 
+        //ChangeablePrimitiveTool.PolygonPrimitive.prototype.setEditableFalse = function () {
+        //    var polygon = this;
+        //    if (polygon.setEditMode) {
+        //        polygon.setEditMode(false);
+        //    }
+        //}
     };
 
     _.prototype.setListener = function (primitive, type, callback) {
@@ -723,45 +738,45 @@
         };
         return _;
     })();
-    //多边形
-    _.PolygonPrimitive = (function () {
-        function _(options) {
-            if (isCreat) { } else {
-                new ChangeablePrimitiveTool(viewer);
-            }
-            options = copyOptions(options, defaultPolygonOptions);
-            this.initialiseOptions(options);
-            this.isPolygon = true;
-        }
+    ////多边形
+    //_.PolygonPrimitive = (function () {
+    //    function _(options) {
+    //        if (isCreat) { } else {
+    //            new ChangeablePrimitiveTool(viewer);
+    //        }
+    //        options = copyOptions(options, defaultPolygonOptions);
+    //        this.initialiseOptions(options);
+    //        this.isPolygon = true;
+    //    }
 
-        _.prototype = new ChangeablePrimitive();//继承
-        _.prototype.setPositions = function (positions) {
-            this.setAttribute('positions', positions);
-        };
-        _.prototype.getPositions = function () {
-            return this.getAttribute('positions');
-        };
-        _.prototype.getGeometry = function () {
-            if (!Cesium.defined(this.positions) || this.positions.length < 3) {
-                return;
-            }
-            return Cesium.PolygonGeometry.fromPositions({
-                positions: this.positions,
-                height: this.height,
-                vertexFormat: Cesium.EllipsoidSurfaceAppearance.VERTEX_FORMAT,
-                stRotation: this.textureRotationAngle,
-                ellipsoid: this.ellipsoid,
-                granularity: this.granularity
-            });
-        };
+    //    _.prototype = new ChangeablePrimitive();//继承
+    //    _.prototype.setPositions = function (positions) {
+    //        this.setAttribute('positions', positions);
+    //    };
+    //    _.prototype.getPositions = function () {
+    //        return this.getAttribute('positions');
+    //    };
+    //    _.prototype.getGeometry = function () {
+    //        if (!Cesium.defined(this.positions) || this.positions.length < 3) {
+    //            return;
+    //        }
+    //        return Cesium.PolygonGeometry.fromPositions({
+    //            positions: this.positions,
+    //            height: this.height,
+    //            vertexFormat: Cesium.EllipsoidSurfaceAppearance.VERTEX_FORMAT,
+    //            stRotation: this.textureRotationAngle,
+    //            ellipsoid: this.ellipsoid,
+    //            granularity: this.granularity
+    //        });
+    //    };
 
-        _.prototype.getOutlineGeometry = function () {
-            return Cesium.PolygonOutlineGeometry.fromPositions({
-                positions: this.getPositions()
-            });
-        };
-        return _;
-    })();
+    //    _.prototype.getOutlineGeometry = function () {
+    //        return Cesium.PolygonOutlineGeometry.fromPositions({
+    //            positions: this.getPositions()
+    //        });
+    //    };
+    //    return _;
+    //})();
 
     //编辑状态节点 图标
     _.BillboardGroup = function (changeablePrimitiveTool, options) {
@@ -826,21 +841,37 @@
                         var handler = new Cesium.ScreenSpaceEventHandler(_self._scene.canvas);
 
                         handler.setInputAction(function (movement) {
-                            var cartesian = _self._scene.camera.pickEllipsoid(movement.endPosition, ellipsoid);
-                            if (cartesian) {
-                                onDrag(cartesian);
-                            } else {
-                                onDragEnd(cartesian);
+                            //var cartesian = _self._scene.camera.pickEllipsoid(movement.endPosition, ellipsoid);
+                            //var cartesian = _self.scene.pickPosition(movement.endPosition);
+                            if (!!movement.endPosition) {
+                                var ray = _self._scene.camera.getPickRay(movement.endPosition);
+                                var cartesian = _self._scene.globe.pick(ray, _self._scene);
+                                // var cartesian = _self._scene.camera.pickEllipsoid(movement.endPosition, ellipsoid);
+                                if (cartesian) {
+                                    onDrag(cartesian);
+                                } else {
+                                    onDragEnd(cartesian);
+                                }
                             }
                         }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
 
                         handler.setInputAction(function (movement) {
-                            onDragEnd(_self._scene.camera.pickEllipsoid(movement.position, ellipsoid));
+                            //onDragEnd(_self._scene.camera.pickEllipsoid(movement.position, ellipsoid
+                            //onDragEnd(_self.scene.pickPosition(movement.position));
+                            if (!!movement.position) {
+                                var ray = _self._scene.camera.getPickRay(movement.position);
+                                var cartesian = _self._scene.globe.pick(ray, _self._scene);
+                                onDragEnd(cartesian);
+                            }
                         }, Cesium.ScreenSpaceEventType.LEFT_UP);
 
                         enableRotation(false);
 
-                        callbacks.dragHandlers.onDragStart && callbacks.dragHandlers.onDragStart(getIndex(), _self._scene.camera.pickEllipsoid(position, ellipsoid));
+                        //callbacks.dragHandlers.onDragStart && callbacks.dragHandlers.onDragStart(getIndex(), _self._scene.camera.pickEllipsoid(position, ellipsoid));
+                        //callbacks.dragHandlers.onDragStart && callbacks.dragHandlers.onDragStart(getIndex(), _self.scene.pickPosition(movement.position));
+                        var ray = _self._scene.camera.getPickRay(position);
+                        var cartesian = _self._scene.globe.pick(ray, _self._scene);
+                        callbacks.dragHandlers.onDragStart && callbacks.dragHandlers.onDragStart(getIndex(), cartesian);
                     });
                 }
                 //if (callbacks.onDoubleClick) {
