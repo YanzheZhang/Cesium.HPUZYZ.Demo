@@ -612,30 +612,6 @@
             }
         }
 
-        //ChangeablePrimitiveTool.PolygonPrimitive.prototype.setEditable = function () {
-
-        //    var polygon = this;
-        //    polygon.asynchronous = false;
-
-        //    var scene = changeablePrimitiveTool._scene;
-
-        //    changeablePrimitiveTool.registerEditableShape(polygon);
-
-        //    polygon.setEditMode = setEditMode;
-
-        //    polygon.setHighlighted = setHighlighted;
-
-        //    enhanceWithListeners(polygon);
-
-        //    polygon.setEditMode(false);
-        //};
-        ////取消编辑状态 -- 在外层控制 
-        //ChangeablePrimitiveTool.PolygonPrimitive.prototype.setEditableFalse = function () {
-        //    var polygon = this;
-        //    if (polygon.setEditMode) {
-        //        polygon.setEditMode(false);
-        //    }
-        //}
     };
 
     _.prototype.setListener = function (primitive, type, callback) {
@@ -738,45 +714,7 @@
         };
         return _;
     })();
-    ////多边形
-    //_.PolygonPrimitive = (function () {
-    //    function _(options) {
-    //        if (isCreat) { } else {
-    //            new ChangeablePrimitiveTool(viewer);
-    //        }
-    //        options = copyOptions(options, defaultPolygonOptions);
-    //        this.initialiseOptions(options);
-    //        this.isPolygon = true;
-    //    }
-
-    //    _.prototype = new ChangeablePrimitive();//继承
-    //    _.prototype.setPositions = function (positions) {
-    //        this.setAttribute('positions', positions);
-    //    };
-    //    _.prototype.getPositions = function () {
-    //        return this.getAttribute('positions');
-    //    };
-    //    _.prototype.getGeometry = function () {
-    //        if (!Cesium.defined(this.positions) || this.positions.length < 3) {
-    //            return;
-    //        }
-    //        return Cesium.PolygonGeometry.fromPositions({
-    //            positions: this.positions,
-    //            height: this.height,
-    //            vertexFormat: Cesium.EllipsoidSurfaceAppearance.VERTEX_FORMAT,
-    //            stRotation: this.textureRotationAngle,
-    //            ellipsoid: this.ellipsoid,
-    //            granularity: this.granularity
-    //        });
-    //    };
-
-    //    _.prototype.getOutlineGeometry = function () {
-    //        return Cesium.PolygonOutlineGeometry.fromPositions({
-    //            positions: this.getPositions()
-    //        });
-    //    };
-    //    return _;
-    //})();
+   
 
     //编辑状态节点 图标
     _.BillboardGroup = function (changeablePrimitiveTool, options) {
