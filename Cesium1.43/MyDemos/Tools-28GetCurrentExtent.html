@@ -1,0 +1,200 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <title>Tools-28GetCurrentExtent</title>
+    <script src="../Cesium/Cesium.js"></script>
+    <script src="1-2ImageryProvider-WebExtend.js"></script>  
+    <style>
+        @import url(../Cesium/Widgets/widgets.css);
+        html, body, #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div id="cesiumContainer" class="fullSize"></div>
+    <div id="creditContainer" style="display: none;"></div>
+   
+    <script>
+
+        var GoogleMap = ImageryProviderWebExtendTool.createGoogleMapsByUrl(Cesium, { url: "http://mt1.google.cn/vt/lyrs=s&hl=zh-CN&x={x}&y={y}&z={z}" });
+
+        var viewer = new Cesium.Viewer('cesiumContainer', {
+            imageryProvider: GoogleMap,
+            contextOptions: {
+                webgl: {
+                    alpha: true,
+                    depth: false,
+                    stencil: true,
+                    antialias: true,
+                    premultipliedAlpha: true,
+                    preserveDrawingBuffer: true, //通过canvas.toDataURL()实现截图需要将该项设置为true
+                    failIfMajorPerformanceCaveat: true
+                },
+                allowTextureFilterAnisotropic: true
+            },
+            creditContainer: "creditContainer",
+            selectionIndicator: false,
+            animation: false,   
+            baseLayerPicker: false,  
+            geocoder: false,  
+            timeline: false,  
+            sceneModePicker: true,  
+            navigationHelpButton: false,  
+            infoBox: false,   
+            fullscreenButton: true
+        });
+        
+        var lat = 42.006;
+        var lon = 128.055;
+        //取消双击事件
+        viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
+        //设置homebutton的位置
+        Cesium.Camera.DEFAULT_VIEW_RECTANGLE =
+                Cesium.Rectangle.fromDegrees(lon - 1, lat - 1, lon + 1, lat + 1);//Rectangle(west, south, east, north)
+        //设置初始位置
+        viewer.camera.setView({
+            destination: Cesium.Cartesian3.fromDegrees(lon, lat, 300000)
+        });
+
+        //注册键盘事件
+        document.onkeydown = function (event) {
+            if (event.keyCode === 32) {
+                var tempP = CesiumViewTool.GetViewCenter(viewer);
+                var tempExtent = CesiumViewTool.GetViewExtent(viewer);
+                alert('xmin:' + tempExtent.xmin + '\n' + 'xmax:' + tempExtent.xmax + '\n' + 'ymin:' + tempExtent.ymin + '\n' + 'ymax:' + tempExtent.ymax);
+                if (tempP) {
+                    var oldPosition = Cesium.Cartesian3.fromDegrees(tempP.lon, tempP.lat, tempP.height);
+
+                    viewer.camera.setView({
+                        destination: oldPosition,
+                        orientation: {
+                            heading: Cesium.Math.toRadians(0.0), //  
+                            pitch: Cesium.Math.toRadians(-90),    // 
+                            roll: 0.0
+                        }
+                    });
+                } else {
+                    viewer.camera.setView({
+                        destination: Cesium.Cartesian3.fromDegrees(lon, 42, 300000)
+                    });
+                }
+
+            }
+        };
+
+        var CesiumViewTool = (function () {
+            function _() {
+            }
+
+            _.GetViewExtent = function (viewer) {
+                var extent = {};
+                var scene = viewer.scene;
+                var ellipsoid = scene.globe.ellipsoid;
+                var canvas = scene.canvas;
+
+                var car3_lt = viewer.camera.pickEllipsoid(new Cesium.Cartesian2(0, 0), ellipsoid);// canvas左上角
+                var car3_rb = viewer.camera.pickEllipsoid(new Cesium.Cartesian2(canvas.width, canvas.height), ellipsoid); // canvas右下角
+
+                // 当canvas左上角和右下角全部在椭球体上
+                if (car3_lt && car3_rb) {
+                    var carto_lt = ellipsoid.cartesianToCartographic(car3_lt);
+                    var carto_rb = ellipsoid.cartesianToCartographic(car3_rb);
+                    extent.xmin = Cesium.Math.toDegrees(carto_lt.longitude);
+                    extent.ymax = Cesium.Math.toDegrees(carto_lt.latitude);
+                    extent.xmax = Cesium.Math.toDegrees(carto_rb.longitude);
+                    extent.ymin = Cesium.Math.toDegrees(carto_rb.latitude);
+                } else if (!car3_lt && car3_rb) { // 当canvas左上角不在但右下角在椭球体上
+                    var car3_lt2 = null;
+                    var yIndex = 0;
+                    var xIndex = 0;
+                    do {
+                        // 这里每次10像素递加，一是10像素相差不大，二是为了提高程序运行效率
+                        yIndex <= canvas.height ? yIndex += 10 : canvas.height;
+                        xIndex <= canvas.width ? xIndex += 10 : canvas.width;
+                        car3_lt2 = viewer.camera.pickEllipsoid(new Cesium.Cartesian2(xIndex, yIndex), ellipsoid);
+                    } while (!car3_lt2);
+                    var carto_lt2 = ellipsoid.cartesianToCartographic(car3_lt2);
+                    var carto_rb2 = ellipsoid.cartesianToCartographic(car3_rb);
+                    extent.xmin = Cesium.Math.toDegrees(carto_lt2.longitude);
+                    extent.ymax = Cesium.Math.toDegrees(carto_lt2.latitude);
+                    extent.xmax = Cesium.Math.toDegrees(carto_rb2.longitude);
+                    extent.ymin = Cesium.Math.toDegrees(carto_rb2.latitude);
+                }
+                else if (car3_lt && !car3_rb) { // 当canvas左上角在但右下角不在椭球体上
+                    var car3_rb2 = null;
+                    var yIndex = canvas.height;
+                    var xIndex = canvas.width;
+                    do {
+                        // 这里每次10像素递加，一是10像素相差不大，二是为了提高程序运行效率
+                        yIndex >= 10 ? yIndex -= 10 : 10;
+                        xIndex >= 10 ? xIndex -= 10 : 10;
+                        car3_rb2 = viewer.camera.pickEllipsoid(new Cesium.Cartesian2(yIndex, yIndex), ellipsoid);
+                    } while (!car3_rb2);
+                    var carto_lt2 = ellipsoid.cartesianToCartographic(car3_lt);
+                    var carto_rb2 = ellipsoid.cartesianToCartographic(car3_rb2);
+                    extent.xmin = Cesium.Math.toDegrees(carto_lt2.longitude);
+                    extent.ymax = Cesium.Math.toDegrees(carto_lt2.latitude);
+                    extent.xmax = Cesium.Math.toDegrees(carto_rb2.longitude);
+                    extent.ymin = Cesium.Math.toDegrees(carto_rb2.latitude);
+                } else if (!car3_lt && !car3_rb) {
+                    var car3_lt2 = null;
+                    var yIndex = 0;
+                    var xIndex = 0;
+                    do {
+                        // 这里每次10像素递加，一是10像素相差不大，二是为了提高程序运行效率
+                        yIndex <= canvas.height ? yIndex += 10 : canvas.height;
+                        xIndex <= canvas.width ? xIndex += 10 : canvas.width;
+                        car3_lt2 = viewer.camera.pickEllipsoid(new Cesium.Cartesian2(xIndex, yIndex), ellipsoid);
+                    } while (!car3_lt2);
+
+                    var car3_rb2 = null;
+                    var yIndex = canvas.height;
+                    var xIndex = canvas.width;
+                    do {
+                        // 这里每次10像素递加，一是10像素相差不大，二是为了提高程序运行效率
+                        yIndex >= 10 ? yIndex -= 10 : 10;
+                        xIndex >= 10 ? xIndex -= 10 : 10;
+                        car3_rb2 = viewer.camera.pickEllipsoid(new Cesium.Cartesian2(yIndex, yIndex), ellipsoid);
+                    } while (!car3_rb2);
+
+                    var carto_lt2 = ellipsoid.cartesianToCartographic(car3_lt2);
+                    var carto_rb2 = ellipsoid.cartesianToCartographic(car3_rb2);
+                    extent.xmin = Cesium.Math.toDegrees(carto_lt2.longitude);
+                    extent.ymax = Cesium.Math.toDegrees(carto_lt2.latitude);
+                    extent.xmax = Cesium.Math.toDegrees(carto_rb2.longitude);
+                    extent.ymin = Cesium.Math.toDegrees(carto_rb2.latitude);
+                }
+
+                // 获取高度
+                extent.height = Math.ceil(viewer.camera.positionCartographic.height);
+                return extent;
+            }
+
+            _.GetViewCenter = function (viewer) {
+                var result = viewer.camera.pickEllipsoid(new Cesium.Cartesian2(viewer.canvas.clientWidth / 2, viewer.canvas.clientHeight / 2));
+                if (result) { } else { return null; }
+                var curPosition = Cesium.Ellipsoid.WGS84.cartesianToCartographic(result);
+                var lon = curPosition.longitude * 180 / Math.PI;
+                var lat = curPosition.latitude * 180 / Math.PI;
+                var height = viewer.camera.positionCartographic.height;
+                return {
+                    lon: lon,
+                    lat: lat,
+                    height: height
+                };
+            }
+            return _;
+        })();
+  
+    </script>
+</body>
+</html>
