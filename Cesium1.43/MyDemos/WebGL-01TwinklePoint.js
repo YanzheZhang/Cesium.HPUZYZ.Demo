@@ -6,10 +6,8 @@
      '  gl_PointSize = 5.0+u_TimeIndex*0.5;\n' +//当前点大小
      '}\n';
 
-var FSHADER_SOURCE =
-  // '#ifdef GL_ES\n' +   
+var FSHADER_SOURCE = 
   'precision mediump float;\n' +
-  // '#endif\n' +
   'void main() {\n' +
   '  float d = distance(gl_PointCoord, vec2(0.5, 0.5));\n' +  
   '  if(d < 0.3) {\n' +   
