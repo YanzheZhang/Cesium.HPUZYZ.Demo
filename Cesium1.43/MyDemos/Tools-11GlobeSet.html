@@ -65,14 +65,18 @@
     </div>
     <script>
 
-        var tdtImagerLayerProvider = new Cesium.WebMapTileServiceImageryProvider({
-            url: "http://t0.tianditu.com/img_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=img&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles",
-            layer: "tiandituImg",
-            style: "default",
-            format: "image/jpeg",
-            tileMatrixSetID: "tiandituImg",
-            show: true,
-            maximumLevel: 18
+        //var tdtImagerLayerProvider = new Cesium.WebMapTileServiceImageryProvider({
+        //    url: "http://t0.tianditu.com/img_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=img&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles",
+        //    layer: "tiandituImg",
+        //    style: "default",
+        //    format: "image/jpeg",
+        //    tileMatrixSetID: "tiandituImg",
+        //    show: true,
+        //    maximumLevel: 18
+        //});
+        var globemap = Cesium.createTileMapServiceImageryProvider({
+            url: 'sampledata/imagery/ceshi/tiles',
+            fileExtension: 'png'
         });
         var mapLonlat = new TileLonlatsImageryProvider({});
         var isLoadTerrain = true;
@@ -84,7 +88,7 @@
         var viewer = new Cesium.Viewer('cesiumContainer', {
             //skyBox: false,
             //skyAtmosphere: false,
-            imageryProvider: tdtImagerLayerProvider,
+            imageryProvider: globemap,
             contextOptions: {
                 webgl: {
                     alpha: true
@@ -102,6 +106,9 @@
             fullscreenButton: true
         });
         viewer.terrainProvider = terrainProvider;
+        //viewer.scene.backgroundColor=Cesium.Color.TRANSPARENT;
+        viewer.scene.globe.baseColor = Cesium.Color.BLUE;//Cesium.Color.TRANSPARENT;
+
         var lat = 42.006;
         var lon = 128.055;
         //取消双击事件

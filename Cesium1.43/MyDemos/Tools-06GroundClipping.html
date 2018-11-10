@@ -78,6 +78,16 @@
                 outline: true,
                 outlineColor: Cesium.Color.WHITE
             }
+            //name: 'Green extruded polygon',
+            //polygon: {
+            //    hierarchy: Cesium.Cartesian3.fromDegreesArray([128.055, 42.006,
+            //                                                   128.066, 42.006,
+            //                                                   128.066, 42.017]),
+            //    extrudedHeight: 5000.0,
+            //    material: Cesium.Color.GREEN,
+            //    closeTop: false,
+            //    closeBottom: false
+            //}
         });
 
         var globe = viewer.scene.globe;
@@ -88,7 +98,7 @@
                 new Cesium.Plane(new Cesium.Cartesian3(1.0, 0.0, 0.0), -700.0),
                 new Cesium.Plane(new Cesium.Cartesian3(-1.0, 0.0, 0.0), -700.0),
                 new Cesium.Plane(new Cesium.Cartesian3(0.0, 1.0, 0.0), -700.0),
-                new Cesium.Plane(new Cesium.Cartesian3(0.0, -1.0, 0.0), -700.0)
+                //new Cesium.Plane(new Cesium.Cartesian3(0.0, -1.0, 0.0), -700.0)
             ],
             edgeWidth: 1.0,
             edgeColor: Cesium.Color.WHITE
