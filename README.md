@@ -2,6 +2,8 @@
 This project is some demos of CESIUM. Much of them are form other people's blogs and cesium's official website (https://cesiumjs.org/tutorials/cesium-up-and-running/). Thanks to my good friend MikesWei (https://github.com/MikesWei) for giving me great help.
 # 内容
 本工程使用VS2013+chrome来编辑和调试，示例代码下载后，可以直接在vs中调试运行，部分示例的测试数据需要另外下载，在对应博客中我已经一一指出了。目前我把cesium学习基础内容整理19个笔记，涵盖环境搭建、影像服务、地形服务、模型加载、鼠标事件、绘制对象、3DTiles加载等几方面。关于其它诸如czml、DataSource、粒子系统等先放一放，随后再学习。现在继续从两个方面写：工具篇、原理篇。工具篇包括在cesium引擎上实现一些常用的工具，原理篇和大家一起尝试查看cesium的源码，试图探究一下cesium底层实现和设计思想。
+# 学习计划变更说明：
+在看了cesium源码好多天后，发现自己连三维的门都没碰到，以前觉得会调用三维引擎的接口就算三维开发了，现在想想真是感觉自己井底之蛙。看cesium源码这么些天实在看不下去，索性从webgl底层学习。我想花一部分时间先把webgl这块补起来，不求马上就掌握（掌握也不可能，三维博大精深，仅凭看几页教程就说掌握真是天方夜谭），只求再看cesium源码时能看得懂就算达到目的了。先在原理篇前面插个专题：WebGL篇。
 </br>
 ### 基础篇
 *[Cesium学习笔记1--环境搭建](http://blog.sina.com.cn/s/blog_15e866bbe0102xleh.html) </br>
@@ -53,6 +55,10 @@ This project is some demos of CESIUM. Much of them are form other people's blogs
 *[Cesium学习笔记-工具篇27-Cesium查询wms服务自定义信息框](http://blog.sina.com.cn/s/blog_15e866bbe0102y32b.html) </br>
 *[Cesium学习笔记-工具篇28-ChangeablePrimitiveClampGround可编辑图形--贴地](http://blog.sina.com.cn/s/blog_15e866bbe0102y47m.html) </br>
 *[Cesium学习笔记-工具篇29-GetCurrentExtent获取当前场景范围](http://blog.sina.com.cn/s/blog_15e866bbe0102y5no.html)
+### WebGL篇
+*[Cesium学习笔记-WebGL篇01-绘制圆点、闪烁点](http://blog.sina.com.cn/s/blog_15e866bbe0102yeq7.html)
 ### 原理篇
 *[Cesium学习笔记-原理篇01-Cesium源码编译](http://blog.sina.com.cn/s/blog_15e866bbe0102y8c2.html)
 </br>
+### 号外
+我的学习公众号也开通，感兴趣的小伙伴们可以加关注：giserYZ2SS
