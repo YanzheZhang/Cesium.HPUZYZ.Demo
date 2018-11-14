@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <title>Tools-30postProcess-Rain</title>
+    <script src="../../Cesium1.48/Cesium/Cesium.js"></script>
+    <script src="1-2ImageryProvider-WebExtend.js"></script>  
+    <style>
+        @import url(../../Cesium1.48/Cesium/Widgets/widgets.css);
+        html, body, #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div id="cesiumContainer" class="fullSize"></div>
+    <div id="creditContainer" style="display: none;"></div>
+   
+    <script>
+
+        var GoogleMap = ImageryProviderWebExtendTool.createGoogleMapsByUrl(Cesium, { url: "http://mt1.google.cn/vt/lyrs=s&hl=zh-CN&x={x}&y={y}&z={z}" });
+
+        var viewer = new Cesium.Viewer('cesiumContainer', {
+            imageryProvider: GoogleMap,
+            contextOptions: {
+                webgl: {
+                    alpha: true,
+                    depth: false,
+                    stencil: true,
+                    antialias: true,
+                    premultipliedAlpha: true,
+                    preserveDrawingBuffer: true,  
+                    failIfMajorPerformanceCaveat: true
+                },
+                allowTextureFilterAnisotropic: true
+            },
+            creditContainer: "creditContainer",
+            selectionIndicator: false,
+            animation: false,   
+            baseLayerPicker: false,  
+            geocoder: false,  
+            timeline: false,  
+            sceneModePicker: true,  
+            navigationHelpButton: false,  
+            infoBox: false,   
+            fullscreenButton: true
+        });
+        
+        var lat = 42.006;
+        var lon = 128.055;
+        //取消双击事件
+        viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
+        //设置homebutton的位置
+        Cesium.Camera.DEFAULT_VIEW_RECTANGLE =
+                Cesium.Rectangle.fromDegrees(lon - 1, lat - 1, lon + 1, lat + 1);//Rectangle(west, south, east, north)
+        //设置初始位置
+        viewer.camera.setView({
+            destination: Cesium.Cartesian3.fromDegrees(lon, lat, 300000)
+        });
+
+        //定义下雨场景 着色器
+        function FS_Rain() {
+            return "uniform sampler2D colorTexture;\n\
+    varying vec2 v_textureCoordinates;\n\
+\n\
+    float hash(float x){\n\
+        return fract(sin(x*133.3)*13.13);\n\
+}\n\
+\n\
+void main(void){\n\
+\n\
+    float time = czm_frameNumber / 60.0;\n\
+vec2 resolution = czm_viewport.zw;\n\
+\n\
+vec2 uv=(gl_FragCoord.xy*2.-resolution.xy)/min(resolution.x,resolution.y);\n\
+vec3 c=vec3(.6,.7,.8);\n\
+\n\
+float a=-.4;\n\
+float si=sin(a),co=cos(a);\n\
+uv*=mat2(co,-si,si,co);\n\
+uv*=length(uv+vec2(0,4.9))*.3+1.;\n\
+\n\
+float v=1.-sin(hash(floor(uv.x*100.))*2.);\n\
+float b=clamp(abs(sin(20.*time*v+uv.y*(5./(2.+v))))-.95,0.,1.)*20.;\n\
+c*=v*b; \n\
+\n\
+gl_FragColor = mix(texture2D(colorTexture, v_textureCoordinates), vec4(c,1), 0.5);  \n\
+}\n\
+";
+        }
+
+        var collection = viewer.scene.postProcessStages;
+        var fs_rain = FS_Rain();
+        var snow = new Cesium.PostProcessStage({
+            name: 'czm_rain',
+            fragmentShader: fs_rain
+        });
+        collection.add(snow);
+
+        viewer.scene.skyAtmosphere.hueShift = -0.8;
+        viewer.scene.skyAtmosphere.saturationShift = -0.7;
+        viewer.scene.skyAtmosphere.brightnessShift = -0.33;
+        viewer.scene.fog.density = 0.001;
+        viewer.scene.fog.minimumBrightness = 0.8;
+    </script>
+</body>
+</html>
