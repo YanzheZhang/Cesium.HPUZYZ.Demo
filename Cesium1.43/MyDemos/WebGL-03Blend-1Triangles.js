@@ -37,10 +37,14 @@ function main() {
     }
 
     gl.clearColor(0, 0, 0, 1);
+    //开启深度检测
+    gl.enable(gl.DEPTH_TEST);
+    //-------------------------------------------
+    gl.depthMask(false);//锁定用于进行隐藏面消除的深度缓冲区的写入操作，使之只读
     //开启混合功能
     gl.enable(gl.BLEND);
     //指定混合函数
-    gl.blendFunc(gl.SRC_ALPHA, gl.ONE);// ONE_MINUS_SRC_ALPHA
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);// ONE_MINUS_SRC_ALPHA
 
     //
     var u_ViewMatrix = gl.getUniformLocation(gl.program, 'u_ViewMatrix');
@@ -56,23 +60,41 @@ function main() {
     projMatrix.setOrtho(-1, 1, -1, 1, 0, 2);
     gl.uniformMatrix4fv(u_ProjMatrix, false, projMatrix.elements);
     draw(gl, n, u_ViewMatrix, viewMatrix);
+    //-------------------------------------------
+    gl.depthMask(true);//释放深度缓冲区，使之可读可写
 }
 
 function initVertexBuffers(gl) {
+    //var verticesColors = new Float32Array([
+    // //顶点坐标和颜色(RGBA)
+    // 0.0, 0.5, -0.4, 1.0, 0.0, 0.0, 0.4, // The back red one
+    //-0.5, -0.5, -0.4, 1.0, 0.0, 0.0, 0.4,
+    // 0.5, -0.5, -0.4, 1.0, 0.0, 0.0, 0.4,
+
+    // 0.5, 0.4, -0.2, 0.0, 1.0, 0.0, 0.4, // The middle green one
+    //-0.5, 0.4, -0.2, 0.0, 1.0, 0.0, 0.4,
+    // 0.0, -0.6, -0.2, 0.0, 1.0, 0.0, 0.4,
+   
+    // 0.0, 0.5, 0.0, 0.0, 0.0, 1.0, 0.4,  // The front blue one 
+    //-0.5, -0.5, 0.0, 0.0, 0.0, 1.0, 0.4,
+    // 0.5, -0.5, 0.0, 0.0, 0.0, 1.0, 0.4,
+    //]);
+
     var verticesColors = new Float32Array([
-      //顶点坐标和颜色(RGBA)
-      0.0, 0.5, -0.4, 0.4, 1.0, 0.4, 0.4, // The back green one
-     -0.5, -0.5, -0.4, 0.4, 1.0, 0.4, 0.4,
-      0.5, -0.5, -0.4, 1.0, 0.4, 0.4, 0.4,
+    //顶点坐标和颜色(RGBA)
+    0.5, 0.4, -0.2, 0.0, 1.0, 0.0, 0.4, // The middle green one
+   -0.5, 0.4, -0.2, 0.0, 1.0, 0.0, 0.4,
+    0.0, -0.6, -0.2, 0.0, 1.0, 0.0, 0.4,
 
-      0.5, 0.4, -0.2, 1.0, 0.4, 0.4, 0.4, // The middle yerrow one
-     -0.5, 0.4, -0.2, 1.0, 1.0, 0.4, 0.4,
-      0.0, -0.6, -0.2, 1.0, 1.0, 0.4, 0.4,
+    0.0, 0.5, 0.0, 0.0, 0.0, 1.0, 0.4,  // The front blue one 
+   -0.5, -0.5, 0.0, 0.0, 0.0, 1.0, 0.4,
+    0.5, -0.5, 0.0, 0.0, 0.0, 1.0, 0.4,
 
-      0.0, 0.5, 0.0, 0.4, 0.4, 1.0, 0.4,  // The front blue one 
-     -0.5, -0.5, 0.0, 0.4, 0.4, 1.0, 0.4,
-      0.5, -0.5, 0.0, 1.0, 0.4, 0.4, 0.4,
+     0.0, 0.5, -0.4, 1.0, 0.0, 0.0, 0.4, // The back red one
+   -0.5, -0.5, -0.4, 1.0, 0.0, 0.0, 0.4,
+    0.5, -0.5, -0.4, 1.0, 0.0, 0.0, 0.4,
     ]);
+
     var n = 9;
 
     var vertexColorbuffer = gl.createBuffer();
@@ -117,10 +139,12 @@ function keydown(ev, gl, n, u_ViewMatrix, viewMatrix) {
 //视点
 var g_EyeX = 0.20, g_EyeY = 0.25, g_EyeZ = 0.25;
 function draw(gl, n, u_ViewMatrix, viewMatrix) {
+    gl.depthMask(false);
     viewMatrix.setLookAt(g_EyeX, g_EyeY, g_EyeZ, 0, 0, 0, 0, 1, 0);
     // 改变视图矩阵
     gl.uniformMatrix4fv(u_ViewMatrix, false, viewMatrix.elements);
 
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     gl.drawArrays(gl.TRIANGLES, 0, n);
+    gl.depthMask(true);
 }
