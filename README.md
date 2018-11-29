@@ -57,12 +57,15 @@ This project is some demos of CESIUM. Much of them are form other people's blogs
 *[Cesium学习笔记-工具篇27-Cesium查询wms服务自定义信息框](http://blog.sina.com.cn/s/blog_15e866bbe0102y32b.html) </br>
 *[Cesium学习笔记-工具篇28-ChangeablePrimitiveClampGround可编辑图形--贴地](http://blog.sina.com.cn/s/blog_15e866bbe0102y47m.html) </br>
 *[Cesium学习笔记-工具篇29-GetCurrentExtent获取当前场景范围](http://blog.sina.com.cn/s/blog_15e866bbe0102y5no.html) </br>
-*[Cesium学习笔记-工具篇30-CesiumSceneWeather添加雨雪天气场景](http://blog.sina.com.cn/s/blog_15e866bbe0102yfpc.html)
+*[Cesium学习笔记-工具篇30-CesiumSceneWeather添加雨雪天气场景](http://blog.sina.com.cn/s/blog_15e866bbe0102yfpc.html) </br>
+*[Cesium学习笔记-工具篇31-cesium加载geoserver发布图层组](http://blog.sina.com.cn/s/blog_15e866bbe0102ygtt.html)
 ### WebGL篇
 *[Cesium学习笔记-WebGL篇01-绘制圆点、闪烁点](http://blog.sina.com.cn/s/blog_15e866bbe0102yeq7.html) </br>
 *[Cesium学习笔记-WebGL篇02-选中对象](http://blog.sina.com.cn/s/blog_15e866bbe0102yfyv.html) </br>
 *[Cesium学习笔记-WebGL篇03-blending混合](http://blog.sina.com.cn/s/blog_15e866bbe0102yhw5.html) </br>
-*[Cesium学习笔记-WebGL篇04-切换着色器](http://blog.sina.com.cn/s/blog_15e866bbe0102yhwf.html)
+*[Cesium学习笔记-WebGL篇04-切换着色器](http://blog.sina.com.cn/s/blog_15e866bbe0102yhwf.html) </br>
+*[Cesium学习笔记-WebGL篇05-渲染到纹理](http://blog.sina.com.cn/s/blog_15e866bbe0102yi3v.html) </br>
+*[Cesium学习笔记-WebGL篇06-绘制阴影](http://blog.sina.com.cn/s/blog_15e866bbe0102yi8o.html)
 ### 原理篇
 *[Cesium学习笔记-原理篇01-Cesium源码编译](http://blog.sina.com.cn/s/blog_15e866bbe0102y8c2.html)
 </br>

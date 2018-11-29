@@ -38,7 +38,7 @@ var FSHADER_SOURCE =
   '  vec3 shadowCoord = (v_PositionFromLight.xyz/v_PositionFromLight.w)/2.0 + 0.5;\n' +
   '  vec4 rgbaDepth = texture2D(u_ShadowMap, shadowCoord.xy);\n' +
   '  float depth = rgbaDepth.r;\n' + //从R分量重获取Z值
-  '  float visibility = (shadowCoord.z > depth + 0.005 ) ? 0.7 : 1.0;\n' + //加0.005的便宜量为了消除马赫带
+  '  float visibility = (shadowCoord.z > depth +0.005 ) ? 0.7 : 1.0;\n' + //加0.005的便宜量为了消除马赫带
   '  gl_FragColor = vec4(v_Color.rgb * visibility, v_Color.a);\n' +
   '}\n';
 var OFFSCREEN_WIDTH = 256, OFFSCREEN_HEIGHT = 256;
