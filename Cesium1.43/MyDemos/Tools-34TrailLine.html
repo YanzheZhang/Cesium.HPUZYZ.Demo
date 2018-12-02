@@ -68,7 +68,7 @@
 
 
         /*
-           流纹纹理线
+          流动纹理线
            color 颜色
            duration 持续时间 毫秒
         */
@@ -112,7 +112,7 @@
         }
         Cesium.PolylineTrailLinkMaterialProperty = PolylineTrailLinkMaterialProperty;
         Cesium.Material.PolylineTrailLinkType = 'PolylineTrailLink';
-        Cesium.Material.PolylineTrailLinkImage = "./sampledata/images/colors1.png";
+        Cesium.Material.PolylineTrailLinkImage = "./sampledata/images/colors.png";
         Cesium.Material.PolylineTrailLinkSource = "czm_material czm_getMaterial(czm_materialInput materialInput)\n\
                                                       {\n\
                                                            czm_material material = czm_getDefaultMaterial(materialInput);\n\
@@ -154,7 +154,7 @@
                                                                                       lon + 10, lat, 2500,
                                                                                       lon + 10, lat + 10, 2500, ]),
                                 width: 15,
-                                material: new Cesium.PolylineTrailLinkMaterialProperty(Cesium.Color.ORANGE, 8000)
+                                material: new Cesium.PolylineTrailLinkMaterialProperty(Cesium.Color.ORANGE, 3000)
                             }
                         });
                         isAdd = true;
