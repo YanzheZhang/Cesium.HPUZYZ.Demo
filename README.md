@@ -59,7 +59,9 @@ This project is some demos of CESIUM. Much of them are form other people's blogs
 *[Cesium学习笔记-工具篇29-GetCurrentExtent获取当前场景范围](http://blog.sina.com.cn/s/blog_15e866bbe0102y5no.html) </br>
 *[Cesium学习笔记-工具篇30-CesiumSceneWeather添加雨雪天气场景](http://blog.sina.com.cn/s/blog_15e866bbe0102yfpc.html) </br>
 *[Cesium学习笔记-工具篇31-cesium加载geoserver发布图层组](http://blog.sina.com.cn/s/blog_15e866bbe0102ygtt.html) </br>
-*[Cesium学习笔记-工具篇32cesium圆形扫面线](http://blog.sina.com.cn/s/blog_15e866bbe0102yiw2.html)
+*[Cesium学习笔记-工具篇32-cesium圆形扫面线](http://blog.sina.com.cn/s/blog_15e866bbe0102yiw2.html) </br>
+*[Cesium学习笔记-工具篇33-cesium雷达扫描](http://blog.sina.com.cn/s/blog_15e866bbe0102yj4e.html) </br>
+*[Cesium学习笔记-工具篇34-cesium流动纹理](http://blog.sina.com.cn/s/blog_15e866bbe0102yjaj.html)
 ### WebGL篇
 *[Cesium学习笔记-WebGL篇01-绘制圆点、闪烁点](http://blog.sina.com.cn/s/blog_15e866bbe0102yeq7.html) </br>
 *[Cesium学习笔记-WebGL篇02-选中对象](http://blog.sina.com.cn/s/blog_15e866bbe0102yfyv.html) </br>
