@@ -203,7 +203,7 @@
                 case 'add':
                     if (!isAdd) {
                         if (material != null) { } else {
-                            material = new Cesium.PolylineTrailLinkMaterialProperty(Cesium.Color.ORANGE, 5000);
+                            material = new Cesium.PolylineTrailLinkMaterialProperty(Cesium.Color.ORANGE, 3000);
                         }
                         for (var j = 0; j < cities.length; j++) {
                             var points = parabolaEquation({ pt1: center, pt2: cities[j], height: 50000, num: 100 });
