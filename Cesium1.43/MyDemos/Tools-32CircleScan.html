@@ -38,9 +38,13 @@
     <script>
 
         var GoogleMap = ImageryProviderWebExtendTool.createGoogleMapsByUrl(Cesium, { url: "http://mt1.google.cn/vt/lyrs=s&hl=zh-CN&x={x}&y={y}&z={z}" });
-
+        //自己处理瓦片数据
+        var globemap = Cesium.createTileMapServiceImageryProvider({
+            url: 'sampledata/imagery/ceshi/tiles',
+            fileExtension: 'png'
+        });
         var viewer = new Cesium.Viewer('cesiumContainer', {
-            imageryProvider: GoogleMap,
+            imageryProvider: globemap,
             creditContainer: "creditContainer",
             selectionIndicator: true,
             animation: false,

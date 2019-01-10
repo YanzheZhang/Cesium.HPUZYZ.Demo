@@ -91,10 +91,10 @@
         c+=snow(uv,15.)*.0;\n\
         c+=snow(uv,10.);\n\
         c+=snow(uv,8.);\n\
-    c+=snow(uv,6.);\n\
+        c+=snow(uv,6.);\n\
         c+=snow(uv,5.);\n\
         finalColor=(vec3(c)); \n\
-        gl_FragColor = mix(texture2D(colorTexture, v_textureCoordinates), vec4(finalColor,1), 0.5); \n\
+        gl_FragColor = mix(texture2D(colorTexture, v_textureCoordinates), vec4(finalColor,1), 0.3); \n\
 \n\
     }\n\
 ";
@@ -108,11 +108,11 @@
         });
         collection.add(snow);
 
-        viewer.scene.skyAtmosphere.hueShift = -0.8;
-        viewer.scene.skyAtmosphere.saturationShift = -0.7;
-        viewer.scene.skyAtmosphere.brightnessShift = -0.33;
-        viewer.scene.fog.density = 0.001;
-        viewer.scene.fog.minimumBrightness = 0.8;
+        //viewer.scene.skyAtmosphere.hueShift = -0.8;
+        //viewer.scene.skyAtmosphere.saturationShift = -0.7;
+        viewer.scene.skyAtmosphere.brightnessShift = -0.33;//大气圈亮度 
+        //viewer.scene.fog.density = 0.001;
+        viewer.scene.fog.minimumBrightness = 0.8;//0.8
     </script>
 </body>
 </html>

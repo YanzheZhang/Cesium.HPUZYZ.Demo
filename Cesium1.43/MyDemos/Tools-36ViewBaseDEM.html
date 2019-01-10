@@ -1,0 +1,191 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>Tools-36ViewBaseDEM--基于dem可视域分析</title>
+    <link href="../Cesium/Widgets/widgets.css" rel="stylesheet" />
+    <script src="../Cesium/Cesium.js"></script>
+    <script src="./Tools-36MathTools.js"></script>
+    <script src="./Tools-36PrimitivePoints.js"></script>
+    <script src="./Tools-36EllipseGeometryLibraryEx.js"></script>
+    <script src="./Tools-36TerrainToolCopy.js"></script>
+    
+    <style>
+        html, body, #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        #menu {
+            position: absolute;
+            top: 80px;
+            left: 10px;
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+    <div id="menu">
+        <p>
+            <button onclick="DrawLineKSY()">可视域</button>
+        </p>
+        <p>
+            <button onclick="ClearAll()">清除</button>
+        </p>
+    </div>
+    <div id="cesiumContainer" class="fullSize"></div>
+    <div id="creditContainer" style="display: none;"></div>
+    <span style="white-space:pre"></span>
+
+    <script>
+    var mtdt = new Cesium.WebMapTileServiceImageryProvider({
+        url: 'http://t0.tianditu.com/img_w/wmts?',
+        layer: 'img',
+        style: 'default',
+        format: 'tiles',
+        tileMatrixSetID: 'w',
+        credit: new Cesium.Credit('天地图全球影像服务'),
+        maximumLevel: 18
+    });
+    var terrainProvider = new Cesium.CesiumTerrainProvider({
+        url : './sampledata/terrain/ctb-merger/'
+    });
+   
+    var viewer = new Cesium.Viewer('cesiumContainer',{
+        skyBox:false,
+        skyAtmosphere:false,
+        imageryProvider: mtdt, 
+        contextOptions:{
+            webgl:{
+                alpha:true
+            }
+        },
+        creditContainer: "creditContainer",
+        selectionIndicator: false,
+        animation: false, 
+        baseLayerPicker: false,
+        geocoder: false,
+        timeline: false,
+        sceneModePicker: true, 
+        navigationHelpButton: false, 
+        infoBox: false,  
+        fullscreenButton:true
+    });
+
+    viewer.terrainProvider = terrainProvider;
+    viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);//取消双击事件
+    Cesium.Camera.DEFAULT_VIEW_RECTANGLE=
+            Cesium.Rectangle.fromDegrees( 127.0, 41.0, 129.0, 43.0);
+    //设置初始位置
+    viewer.camera.setView( {
+        destination: Cesium.Cartesian3.fromDegrees(128.055, 42.006, 30000)
+    } );
+
+    viewer.scene.fxaa = false;
+    viewer.scene.fog.enabled = false;
+    viewer.scene.globe.depthTestAgainstTerrain = true;
+
+    //可视域
+    var primitiveKSY = [];
+    function DrawLineKSY() {
+        if (primitiveKSY.length > 0) { return;}
+        var viewHeight = 1.5;
+        var cartographicCenter = Cesium.Cartographic.fromDegrees(128.05843675, 42.02659795);
+        var cartesianCenterH0 = Cesium.Cartesian3.fromRadians(cartographicCenter.longitude, cartographicCenter.latitude);
+        var cartesianPointH0 = Cesium.Cartesian3.fromDegrees( 128.078142005, 42.0363598006);
+
+        var ab = Cesium.Cartesian3.distance(cartesianCenterH0, cartesianPointH0);
+        var eopt = {};
+        eopt.semiMinorAxis = ab;
+        eopt.semiMajorAxis = ab;
+        eopt.rotation = 0;
+        eopt.center = cartesianCenterH0;
+        eopt.granularity = Math.PI / 45.0;//间隔
+        var ellipse = EllipseGeometryLibraryEx.computeEllipseEdgePositions(eopt);
+        for (var i = 0; i < ellipse.outerPositions.length; i += 3) {
+            //逐条计算可视域
+            var cartesian = new Cesium.Cartesian3(ellipse.outerPositions[i], ellipse.outerPositions[i + 1], ellipse.outerPositions[i + 2]);
+            var cartographic = Cesium.Cartographic.fromCartesian(cartesian);
+            var deltaRadian = 0.00005 * Math.PI / 180.0; //Cesium.Math.RADIANS_PER_DEGREE
+            var cartographicArr = SysMathTool.InterpolateLineCartographic(cartographicCenter, cartographic, deltaRadian);
+            TerrainToolCopy.CartographicPointsTerrainData(cartographicArr,
+                 function (terrainData) {
+                     if (terrainData.length > 0) {
+                         var preVisible = true;
+                         var cartesiansLine = [];
+                         var colors = [];
+                         for (var j = 1; j < terrainData.length; j++) {
+                             //逐点计算可见性
+                             var visible = true;//该点可见性
+                             if (j > 1) {
+                                 var cartographicCenterHV = new Cesium.Cartographic(terrainData[0].longitude, terrainData[0].latitude, terrainData[0].height + viewHeight);
+                                 //
+                                 if (preVisible) {
+                                     //     
+                                     var curPoint = SysMathTool.InterpolateIndexLineHeightCartographic(cartographicCenterHV, terrainData[j], j, j - 1);
+                                     if (curPoint.height >= terrainData[j - 1].height) {
+                                         preVisible = true;
+                                         visible = true;
+                                     } else {
+                                         preVisible = false;
+                                         visible = false;
+                                     }
+                                 } else {
+                                     //插值到当前
+                                     var curPointArr = SysMathTool.Interpolate2IndexLineHeightCartographic(cartographicCenterHV, terrainData[j], j, j - 1);
+                                     for (var k = 0; k < curPointArr.length; k++) {
+                                         if (curPointArr[k].height >= terrainData[k].height) {
+                                             preVisible = true;
+                                             visible = true;
+                                         } else {
+                                             preVisible = false;
+                                             visible = false;
+                                             break;
+                                         }
+                                     }
+                                 }
+                             }
+                             var cartesianTemp = Cesium.Cartesian3.fromRadians(terrainData[j].longitude, terrainData[j].latitude, terrainData[j].height + 0.10);
+                             cartesiansLine.push(cartesianTemp);
+                             //绘制点
+                             if (visible) {
+                                 colors.push(0);
+                                 colors.push(0);
+                                 colors.push(1);
+                                 colors.push(1);
+                             } else {
+                                 colors.push(1);
+                                 colors.push(0);
+                                 colors.push(0);
+                                 colors.push(1);
+                             }
+                         }
+
+                         //绘制结果
+                         var pointsKSY = new PrimitivePoints({ 'viewer': viewer, 'Cartesians': cartesiansLine, 'Colors': colors });
+                         primitiveKSY.push(pointsKSY);
+                     } else {
+                         alert("高程异常！");
+                     }
+                 });
+        }
+         
+    }
+
+    function ClearAll() {
+        if (primitiveKSY.length > 0) {
+            for (var i = 0; i < primitiveKSY.length; i++) {
+                primitiveKSY[i].remove();
+                primitiveKSY[i] = null;
+            }
+            primitiveKSY = [];
+        }
+        
+    }
+    </script>
+</body>
+</html>
