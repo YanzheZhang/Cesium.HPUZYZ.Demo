@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>Tools-37CesiumWind-Cesium风场</title>
+    <link href="../Cesium/Widgets/widgets.css" rel="stylesheet" />
+    <script src="../Cesium/Cesium.js"></script>
+    <script src="1-2ImageryProvider-WebExtend.js"></script>
+    <script src="./Libs/jquery.min.js"></script>
+    <script src="./Libs/wind/Particle.js"></script>
+    <script src="./Libs/wind/WindField.js"></script>
+    <script src="./Libs/wind/Windy.js"></script>
+    <style>
+        html, body, #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        #menu {
+            position: absolute;
+            top: 80px;
+            left: 10px;
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+    <div id="menu">
+        <p>
+            <button onclick="Draw()">绘制</button>
+        </p>
+        <p>
+            <!--<button onclick="ClearAll()">清除</button>-->
+        </p>
+    </div>
+    <div id="cesiumContainer" class="fullSize"></div>
+    <div id="creditContainer" style="display: none;"></div>
+    <span style="white-space:pre"></span>
+
+    <script>
+    var mtdt = new Cesium.WebMapTileServiceImageryProvider({
+        url: 'http://t0.tianditu.com/img_w/wmts?',
+        layer: 'img',
+        style: 'default',
+        format: 'tiles',
+        tileMatrixSetID: 'w',
+        credit: new Cesium.Credit('天地图全球影像服务'),
+        maximumLevel: 18
+    });
+    var GoogleMap = ImageryProviderWebExtendTool.createGoogleMapsByUrl(Cesium, { url: "http://mt1.google.cn/vt/lyrs=s&hl=zh-CN&x={x}&y={y}&z={z}" });
+
+    var viewer = new Cesium.Viewer('cesiumContainer', {
+        imageryProvider: GoogleMap,
+        selectionIndicator: false,
+        animation: false,
+        baseLayerPicker: false,
+        geocoder: false,
+        timeline: false,
+        sceneModePicker: true,
+        navigationHelpButton: false,
+        infoBox: false,
+        fullscreenButton: true
+    });
+
+    var windy;
+    function Draw() {
+        $.ajax({
+            type: "get",
+            url: "./sampledata/wind/2017121300.json",// 
+            dataType: "json",
+            success: function (response) {
+                var header = response[0].header;
+                windy = new Windy(response, viewer);
+                redraw();
+            },
+            error: function (errorMsg) {
+                alert("请求数据失败1!");
+            }
+        });
+    }
+
+    var timer = null;
+
+    function redraw() {
+        timer = setInterval(function () {
+            windy.animate();
+        }, 300);
+    }
+    </script>
+</body>
+</html>
