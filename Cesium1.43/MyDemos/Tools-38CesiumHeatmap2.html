@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <title>Tools-38CesiumHeatmap1热力图</title>
+    <title>Tools-38CesiumHeatmap2热力图</title>
     <link href="../Cesium/Widgets/widgets.css" rel="stylesheet" />
     <script src="../Cesium/Cesium.js"></script>
     <script src="1-2ImageryProvider-WebExtend.js"></script>
     <script src="./Libs/heatmap/heatmap.min.js"></script>
-    <script src="./Libs/heatmap/CesiumHeatmap.js"></script>
+    <script src="./Libs/heatmap/webgl-heatmap.js"></script>
+    <script src="./Libs/heatmap/CesiumHeatmapGL.js"></script>
     <style>
         html, body, #cesiumContainer {
             width: 100%;
@@ -67,7 +68,7 @@
     var heatmap=null;
     function Draw() {
         if (heatmap == null) {
-            heatmap = new CesiumHeatmap(viewer, './Libs/heatmap/busstop2016.geojson')
+            heatmap = new CesiumHeatmapGL(viewer, './Libs/heatmap/busstop2016.geojson')
         }
     }
 
