@@ -54,7 +54,7 @@
                         uniforms: {
                             normalMap: url,
                             frequency: 1000.0,
-                            animationSpeed: 0.01,
+                            animationSpeed: 0.05,
                             amplitude: 10.0
                         }
                     }

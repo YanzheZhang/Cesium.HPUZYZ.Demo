@@ -56,7 +56,7 @@
         var GoogleMap = ImageryProviderWebExtendTool.createGoogleMapsByUrl(Cesium, { url: "http://mt1.google.cn/vt/lyrs=s&hl=zh-CN&x={x}&y={y}&z={z}" });
 
         var viewer = new Cesium.Viewer('cesiumContainer', {
-            imageryProvider: mtdt,
+            imageryProvider: GoogleMap,
             contextOptions: {
                 webgl: {
                     alpha: true
@@ -97,7 +97,8 @@
                 case 'add':
                     var waterFace = [lon, lat, 1000,
                     lon + 0.5, lat+0.5, 1000,
-                    lon + 0.5, lat, 1000];
+                    lon + 0.5, lat, 1000,
+                     lon, lat-0.5, 1000];
  
                     primitive = new PrimitiveWaterFace({ 'viewer': viewer, 'normalMapUrl': './sampledata/waterNormals.png', 'DegreesArrayHeights': waterFace });
                     break;

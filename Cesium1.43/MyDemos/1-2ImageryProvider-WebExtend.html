@@ -25,21 +25,41 @@
     <script>
  
        //一： WebMapTileServiceImageryProvider--天地图
-       var mtdt = new Cesium.WebMapTileServiceImageryProvider({
-            url: 'http://t0.tianditu.com/img_w/wmts?',
-            layer: 'img',
-            style: 'default',
-            format: 'tiles',
-            tileMatrixSetID: 'w',
-            credit: new Cesium.Credit('天地图全球影像服务'),
-            maximumLevel: 18
-        });
+       //var mtdt = new Cesium.WebMapTileServiceImageryProvider({
+       //     url: 'http://t0.tianditu.com/img_w/wmts?',
+       //     layer: 'img',
+       //     style: 'default',
+       //     format: 'tiles',
+       //     tileMatrixSetID: 'w',
+       //     credit: new Cesium.Credit('天地图全球影像服务'),
+       //     maximumLevel: 18
+       // });
 
+       var mtdt = new Cesium.WebMapTileServiceImageryProvider({
+             url: "http://{s}.tianditu.com/img_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=img&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=837264f46e683ec982d452e78d71052e",
+             layer: "tdtBasicLayer",
+             style: "default",
+             maximumLevel:20,
+             format: "image/jpeg",
+             tileMatrixSetID: "GoogleMapsCompatible",
+             show: true,
+             subdomains:["t0","t1","t2","t3","t4","t5","t6","t7"]
+       })
+       var noteLayer = new Cesium.WebMapTileServiceImageryProvider({
+           url: "http://t0.tianditu.gov.cn/cia_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=cia&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=837264f46e683ec982d452e78d71052e",
+           layer: "tdtBasicLayer",
+           style: "default",
+           maximumLevel: 20,
+           format: "image/png",
+           tileMatrixSetID: "GoogleMapsCompatible",
+           show: true
+       });
+      
         //二： UrlTemplateImageryProvider-- esri
         var GoogleMap = ImageryProviderWebExtendTool.createGoogleMapsByUrl(Cesium, { url: "http://mt1.google.cn/vt/lyrs=s&hl=zh-CN&x={x}&y={y}&z={z}" });
 
         var viewer = new Cesium.Viewer('cesiumContainer', {
-            imageryProvider: GoogleMap,
+            imageryProvider: mtdt,
             contextOptions: {
                 webgl: {
                     alpha: true
@@ -56,6 +76,8 @@
             infoBox: false,  //是否显示点击要素之后显示的信息
             fullscreenButton: true
         });
+
+        viewer.imageryLayers.addImageryProvider(noteLayer);
 
         //取消双击事件
         viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
