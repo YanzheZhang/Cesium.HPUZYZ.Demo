@@ -74,6 +74,11 @@ This project is some demos of CESIUM. Much of them are form other people's blogs
 *[Cesium学习笔记-WebGL篇06-绘制阴影](http://blog.sina.com.cn/s/blog_15e866bbe0102yi8o.html)
 ### 原理篇
 *[Cesium学习笔记-原理篇01-Cesium源码编译](http://blog.sina.com.cn/s/blog_15e866bbe0102y8c2.html)
+### 示例
+*1模型加载 </br>
+![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/Assets/3-1LoadModel-GLTF.png) </br>
+*1挖地形 </br>
+![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/Assets/CircleClipping.gif) </br>
 </br>
 ### 号外
 我的学习公众号也开通，感兴趣的小伙伴们可以加关注：giserYZ2SS
