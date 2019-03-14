@@ -74,12 +74,39 @@ This project is some demos of CESIUM. Much of them are form other people's blogs
 *[Cesium学习笔记-WebGL篇06-绘制阴影](http://blog.sina.com.cn/s/blog_15e866bbe0102yi8o.html)
 ### 原理篇
 *[Cesium学习笔记-原理篇01-Cesium源码编译](http://blog.sina.com.cn/s/blog_15e866bbe0102y8c2.html)
-### 示例
-*1模型加载 </br>
-![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/Assets/3-1LoadModel-GLTF.png) </br>
-*1挖地形 </br>
-![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/Assets/CircleClipping.gif) </br>
-</br>
 ### 号外
-我的学习公众号也开通，感兴趣的小伙伴们可以加关注：giserYZ2SS
-![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/%E5%85%AC%E4%BC%97%E5%8F%B7.png)
+我的学习公众号也开通，感兴趣的小伙伴们可以加关注：giserYZ2SS </br>
+![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/%E5%85%AC%E4%BC%97%E5%8F%B7.png) </br>
+### 示例展示
+*1-模型加载 </br>
+![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/Assets/3-1LoadModel-GLTF.png) </br>
+*2-3dtiles加载 </br>
+![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/Assets/6-1Tileset-Laod.html.png) </br>
+*3-场景汉化 </br>
+![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/Assets/Tools-10Mouse-ButtonLanguage.png) </br>
+*4-水面 </br>
+![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/Assets/Tools-20PrimitiveWaterface.png) </br>
+*5-扇形 </br>
+![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/Assets/Tools-22PrimitiveSector.png) </br>
+*6-天气场景-雪 </br>
+![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/Assets/Tools-29postProcess-Snow.png) </br>
+*7-天气场景-雨 </br>
+![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/Assets/Tools-30postProcess-Rain.png) </br>
+*8-挖地形 </br>
+![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/Assets/CircleClipping.gif) </br>
+*9-态势标绘 </br>
+![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/Assets/Plot.gif) </br>
+*10-可视域-基于DEM </br>
+![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/Assets/Tools-36ViewBaseDEM.gif) </br>
+*11-圆形扫描 </br>
+![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/Assets/Tools32-CricleScan.gif) </br>
+*12-雷达扫描 </br>
+![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/Assets/Tools33-RadarScan.gif) </br>
+*13-流动纹理 </br>
+![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/Assets/Tools34-TrailLine.gif) </br>
+*14-飞行航迹 </br>
+![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/Assets/Tools35-FlyPath.gif) </br>
+*15-流场-3d </br>
+![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/Assets/Tools-37CesiumWind-3d.gif) </br>
+*16-流场-2d </br>
+![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/Assets/Tools-37Wind-2d.gif) </br>
