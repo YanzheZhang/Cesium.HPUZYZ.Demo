@@ -17,10 +17,20 @@
             padding: 0;
             overflow: hidden;
         }
+        #menu {
+            position: absolute;
+            top: 80px;
+            left: 10px;
+            z-index: 999;
+        }
     </style>
 </head>
 <body>
-
+    <div id="menu">
+        <p>
+            <button onclick="setvisible('update')">刷新</button>
+        </p>
+    </div>
     <div id="cesiumContainer">
         <div id="creditContainer" style="display: none;"></div>
     </div>
@@ -31,15 +41,25 @@
         });
 
         //一： WebMapTileServiceImageryProvider--天地图
+        //var mtdt = new Cesium.WebMapTileServiceImageryProvider({
+        //    url: 'http://t0.tianditu.com/img_w/wmts?',
+        //    layer: 'img',
+        //    style: 'default',
+        //    format: 'tiles',
+        //    tileMatrixSetID: 'w',
+        //    credit: new Cesium.Credit('天地图全球影像服务'),
+        //    maximumLevel: 18
+        //});
         var mtdt = new Cesium.WebMapTileServiceImageryProvider({
-            url: 'http://t0.tianditu.com/img_w/wmts?',
-            layer: 'img',
-            style: 'default',
-            format: 'tiles',
-            tileMatrixSetID: 'w',
-            credit: new Cesium.Credit('天地图全球影像服务'),
-            maximumLevel: 18
-        });
+            url: "http://{s}.tianditu.com/img_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=img&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=837264f46e683ec982d452e78d71052e",
+            layer: "tdtBasicLayer",
+            style: "default",
+            maximumLevel: 20,
+            format: "image/jpeg",
+            tileMatrixSetID: "GoogleMapsCompatible",
+            show: true,
+            subdomains: ["t0", "t1", "t2", "t3", "t4", "t5", "t6", "t7"]
+        })
  
         var viewer = new Cesium.Viewer('cesiumContainer', {
             imageryProvider: mtdt,
@@ -92,18 +112,53 @@
 
         var globe = viewer.scene.globe;
         globe.depthTestAgainstTerrain = true;
+
         globe.clippingPlanes = new Cesium.ClippingPlaneCollection({
             modelMatrix: entity.computeModelMatrix(Cesium.JulianDate.now()),
             planes: [
                 new Cesium.Plane(new Cesium.Cartesian3(1.0, 0.0, 0.0), -700.0),
                 new Cesium.Plane(new Cesium.Cartesian3(-1.0, 0.0, 0.0), -700.0),
                 new Cesium.Plane(new Cesium.Cartesian3(0.0, 1.0, 0.0), -700.0),
-                //new Cesium.Plane(new Cesium.Cartesian3(0.0, -1.0, 0.0), -700.0)
+                new Cesium.Plane(new Cesium.Cartesian3(0.0, -1.0, 0.0), -700.0)
             ],
             edgeWidth: 1.0,
             edgeColor: Cesium.Color.WHITE
         });
 
+        function setvisible(value) {
+            switch (value) {
+                case 'update':
+                    globe.clippingPlanes = new Cesium.ClippingPlaneCollection({
+                        modelMatrix: entity.computeModelMatrix(Cesium.JulianDate.now()),
+                        planes: [
+                            new Cesium.Plane(new Cesium.Cartesian3(1.0, 0.0, 0.0), -1700.0),
+                            new Cesium.Plane(new Cesium.Cartesian3(-1.0, 0.0, 0.0), -1700.0),
+                            new Cesium.Plane(new Cesium.Cartesian3(0.0, 1.0, 0.0), -1700.0),
+                            new Cesium.Plane(new Cesium.Cartesian3(0.0, -1.0, 0.0), -1700.0)
+                        ],
+                        edgeWidth: 1.0,
+                        edgeColor: Cesium.Color.WHITE
+                    });
+                    break;
+
+            }
+        }
+
+        var index = 1;
+        setInterval(function () {
+            globe.clippingPlanes = new Cesium.ClippingPlaneCollection({
+                modelMatrix: entity.computeModelMatrix(Cesium.JulianDate.now()),
+                planes: [
+                    new Cesium.Plane(new Cesium.Cartesian3(1.0, 0.0, 0.0), -700.0-index*100),
+                    new Cesium.Plane(new Cesium.Cartesian3(-1.0, 0.0, 0.0), -700.0 - index * 100),
+                    new Cesium.Plane(new Cesium.Cartesian3(0.0, 1.0, 0.0), -700.0 - index * 100),
+                    new Cesium.Plane(new Cesium.Cartesian3(0.0, -1.0, 0.0), -700.0 - index * 100)
+                ],
+                edgeWidth: 1.0,
+                edgeColor: Cesium.Color.WHITE
+            });
+            index++;
+        }, 3000);
     </script>
 </body>
 </html>
