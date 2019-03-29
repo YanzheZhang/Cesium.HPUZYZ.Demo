@@ -1,112 +1,112 @@
 # Cesium.HPUZYZ.Demo
-This project is some demos of CESIUM. Much of them are form other people's blogs and cesium's official website (https://cesiumjs.org/tutorials/cesium-up-and-running/). Thanks to my good friend MikesWei (https://github.com/MikesWei) for giving me great help.
-# ÄÚÈİ
-±¾¹¤³ÌÊ¹ÓÃVS2013+chromeÀ´±à¼­ºÍµ÷ÊÔ£¬Ê¾Àı´úÂëÏÂÔØºó£¬¿ÉÒÔÖ±½ÓÔÚvsÖĞµ÷ÊÔÔËĞĞ£¬²¿·ÖÊ¾ÀıµÄ²âÊÔÊı¾İĞèÒªÁíÍâÏÂÔØ£¬ÔÚ¶ÔÓ¦²©¿ÍÖĞÎÒÒÑ¾­Ò»Ò»Ö¸³öÁË¡£Ä¿Ç°ÎÒ°ÑcesiumÑ§Ï°»ù´¡ÄÚÈİÕûÀí19¸ö±Ê¼Ç£¬º­¸Ç»·¾³´î½¨¡¢Ó°Ïñ·şÎñ¡¢µØĞÎ·şÎñ¡¢Ä£ĞÍ¼ÓÔØ¡¢Êó±êÊÂ¼ş¡¢»æÖÆ¶ÔÏó¡¢3DTiles¼ÓÔØµÈ¼¸·½Ãæ¡£¹ØÓÚÆäËüÖîÈçczml¡¢DataSource¡¢Á£×ÓÏµÍ³µÈÏÈ·ÅÒ»·Å£¬ËæºóÔÙÑ§Ï°¡£ÏÖÔÚ¼ÌĞø´ÓÁ½¸ö·½ÃæĞ´£º¹¤¾ßÆª¡¢Ô­ÀíÆª¡£¹¤¾ßÆª°üÀ¨ÔÚcesiumÒıÇæÉÏÊµÏÖÒ»Ğ©³£ÓÃµÄ¹¤¾ß£¬Ô­ÀíÆªºÍ´ó¼ÒÒ»Æğ³¢ÊÔ²é¿´cesiumµÄÔ´Âë£¬ÊÔÍ¼Ì½¾¿Ò»ÏÂcesiumµ×²ãÊµÏÖºÍÉè¼ÆË¼Ïë¡£
-# Ñ§Ï°¼Æ»®±ä¸üËµÃ÷£º
-ÔÚ¿´ÁËcesiumÔ´ÂëºÃ¶àÌìºó£¬·¢ÏÖ×Ô¼ºÁ¬ÈıÎ¬µÄÃÅ¶¼Ã»Åöµ½£¬ÒÔÇ°¾õµÃ»áµ÷ÓÃÈıÎ¬ÒıÇæµÄ½Ó¿Ú¾ÍËãÈıÎ¬¿ª·¢ÁË£¬ÏÖÔÚÏëÏëÕæÊÇ¸Ğ¾õ×Ô¼º¾®µ×Ö®ÍÜ¡£¿´cesiumÔ´ÂëÕâÃ´Ğ©ÌìÊµÔÚ¿´²»ÏÂÈ¥£¬Ë÷ĞÔ´Ówebglµ×²ãÑ§Ï°¡£ÎÒÏë»¨Ò»²¿·ÖÊ±¼äÏÈ°ÑwebglÕâ¿é²¹ÆğÀ´£¬²»ÇóÂíÉÏ¾ÍÕÆÎÕ£¨ÕÆÎÕÒ²²»¿ÉÄÜ£¬ÈıÎ¬²©´ó¾«Éî£¬½öÆ¾¿´¼¸Ò³½Ì³Ì¾ÍËµÕÆÎÕÕæÊÇÌì·½Ò¹Ì·£©£¬Ö»ÇóÔÙ¿´cesiumÔ´ÂëÊ±ÄÜ¿´µÃ¶®¾ÍËã´ïµ½Ä¿µÄÁË¡£ÏÈÔÚÔ­ÀíÆªÇ°Ãæ²å¸ö×¨Ìâ£ºWebGLÆª¡£
+This project is some demos of CESIUM. Much of them are from other people's blogs and cesium's official website (https://cesiumjs.org/tutorials/cesium-up-and-running/). Thanks to my good friend MikesWei (https://github.com/MikesWei) for giving me great help.
+# å†…å®¹
+æœ¬å·¥ç¨‹ä½¿ç”¨VS2013+chromeæ¥ç¼–è¾‘å’Œè°ƒè¯•ï¼Œç¤ºä¾‹ä»£ç ä¸‹è½½åï¼Œå¯ä»¥ç›´æ¥åœ¨vsä¸­è°ƒè¯•è¿è¡Œï¼Œéƒ¨åˆ†ç¤ºä¾‹çš„æµ‹è¯•æ•°æ®éœ€è¦å¦å¤–ä¸‹è½½ï¼Œåœ¨å¯¹åº”åšå®¢ä¸­æˆ‘å·²ç»ä¸€ä¸€æŒ‡å‡ºäº†ã€‚ç›®å‰æˆ‘æŠŠcesiumå­¦ä¹ åŸºç¡€å†…å®¹æ•´ç†19ä¸ªç¬”è®°ï¼Œæ¶µç›–ç¯å¢ƒæ­å»ºã€å½±åƒæœåŠ¡ã€åœ°å½¢æœåŠ¡ã€æ¨¡å‹åŠ è½½ã€é¼ æ ‡äº‹ä»¶ã€ç»˜åˆ¶å¯¹è±¡ã€3DTilesåŠ è½½ç­‰å‡ æ–¹é¢ã€‚å…³äºå…¶å®ƒè¯¸å¦‚czmlã€DataSourceã€ç²’å­ç³»ç»Ÿç­‰å…ˆæ”¾ä¸€æ”¾ï¼Œéšåå†å­¦ä¹ ã€‚ç°åœ¨ç»§ç»­ä»ä¸¤ä¸ªæ–¹é¢å†™ï¼šå·¥å…·ç¯‡ã€åŸç†ç¯‡ã€‚å·¥å…·ç¯‡åŒ…æ‹¬åœ¨cesiumå¼•æ“ä¸Šå®ç°ä¸€äº›å¸¸ç”¨çš„å·¥å…·ï¼ŒåŸç†ç¯‡å’Œå¤§å®¶ä¸€èµ·å°è¯•æŸ¥çœ‹cesiumçš„æºç ï¼Œè¯•å›¾æ¢ç©¶ä¸€ä¸‹cesiumåº•å±‚å®ç°å’Œè®¾è®¡æ€æƒ³ã€‚
+# å­¦ä¹ è®¡åˆ’å˜æ›´è¯´æ˜ï¼š
+åœ¨çœ‹äº†cesiumæºç å¥½å¤šå¤©åï¼Œå‘ç°è‡ªå·±è¿ä¸‰ç»´çš„é—¨éƒ½æ²¡ç¢°åˆ°ï¼Œä»¥å‰è§‰å¾—ä¼šè°ƒç”¨ä¸‰ç»´å¼•æ“çš„æ¥å£å°±ç®—ä¸‰ç»´å¼€å‘äº†ï¼Œç°åœ¨æƒ³æƒ³çœŸæ˜¯æ„Ÿè§‰è‡ªå·±äº•åº•ä¹‹è›™ã€‚çœ‹cesiumæºç è¿™ä¹ˆäº›å¤©å®åœ¨çœ‹ä¸ä¸‹å»ï¼Œç´¢æ€§ä»webglåº•å±‚å­¦ä¹ ã€‚æˆ‘æƒ³èŠ±ä¸€éƒ¨åˆ†æ—¶é—´å…ˆæŠŠwebglè¿™å—è¡¥èµ·æ¥ï¼Œä¸æ±‚é©¬ä¸Šå°±æŒæ¡ï¼ˆæŒæ¡ä¹Ÿä¸å¯èƒ½ï¼Œä¸‰ç»´åšå¤§ç²¾æ·±ï¼Œä»…å‡­çœ‹å‡ é¡µæ•™ç¨‹å°±è¯´æŒæ¡çœŸæ˜¯å¤©æ–¹å¤œè°­ï¼‰ï¼Œåªæ±‚å†çœ‹cesiumæºç æ—¶èƒ½çœ‹å¾—æ‡‚å°±ç®—è¾¾åˆ°ç›®çš„äº†ã€‚å…ˆåœ¨åŸç†ç¯‡å‰é¢æ’ä¸ªä¸“é¢˜ï¼šWebGLç¯‡ã€‚
 </br>
 </br>
-*[CesiumÑ§Ï°±Ê¼Ç»ã×Ü](http://blog.sina.com.cn/s/blog_15e866bbe0102xu2f.html) </br>
-### »ù´¡Æª
-*[CesiumÑ§Ï°±Ê¼Ç1--»·¾³´î½¨](http://blog.sina.com.cn/s/blog_15e866bbe0102xleh.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç2--¹Ù·½DEMOºÍAPI²é¿´](http://blog.sina.com.cn/s/blog_15e866bbe0102xm9s.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç3--CesiumÓ°Ïñ·şÎñ--ÔÚÏß·şÎñ](http://blog.sina.com.cn/s/blog_15e866bbe0102xmo5.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç4--CesiumÓ°Ïñ·şÎñ--ÔÚÏß·şÎñÀ©Õ¹](http://blog.sina.com.cn/s/blog_15e866bbe0102xmo6.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç5--CesiumÓ°Ïñ·şÎñ--µØÍ¼·¢²¼](http://blog.sina.com.cn/s/blog_15e866bbe0102xn72.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç6--CesiumÓ°Ïñ·şÎñ--Í¼²ã¹¦ÄÜ](http://blog.sina.com.cn/s/blog_15e866bbe0102xnmj.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç7--CesiumÓ°Ïñ·şÎñ--BaseLayerPickerÊ¹ÓÃ](http://blog.sina.com.cn/s/blog_15e866bbe0102xnml.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç8--CesiumµØĞÎ·şÎñ--ÔÚÏßµØĞÎ](http://blog.sina.com.cn/s/blog_15e866bbe0102xoak.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç9--CesiumµØĞÎ·şÎñ--±¾µØµØĞÎÊı¾İ´¦Àí¼°¼ÓÔØ](http://blog.sina.com.cn/s/blog_15e866bbe0102xofa.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç10--CesiumµØĞÎ·şÎñ--µØĞÎÊı¾İ²ÉÑù](http://blog.sina.com.cn/s/blog_15e866bbe0102xoo7.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç11--Ä£ĞÍ¼ÓÔØ](http://blog.sina.com.cn/s/blog_15e866bbe0102xpsm.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç12--Êó±êÊÂ¼ş](http://blog.sina.com.cn/s/blog_15e866bbe0102xq8d.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç13--»æÖÆ¶ÔÏó-Entity·½Ê½](http://blog.sina.com.cn/s/blog_15e866bbe0102xqsx.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç14--»æÖÆ¶ÔÏó-Entity¹ÜÀí](http://blog.sina.com.cn/s/blog_15e866bbe0102xrt2.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç15--»æÖÆ¶ÔÏó-Primitive·½Ê½](http://blog.sina.com.cn/s/blog_15e866bbe0102xse8.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç16--»æÖÆ¶ÔÏó-Primitive¹ÜÀí](http://blog.sina.com.cn/s/blog_15e866bbe0102xseb.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç17--»æÖÆ¶ÔÏó-PrimitiveÍâ¹Û](http://blog.sina.com.cn/s/blog_15e866bbe0102xsi8.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç18--»æÖÆ¶ÔÏó-Ğ§ÂÊ±È½Ï](http://blog.sina.com.cn/s/blog_15e866bbe0102xsj3.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç19--3DTiles¼ÓÔØ](http://blog.sina.com.cn/s/blog_15e866bbe0102xt9i.html) 
-### ¹¤¾ßÆª
-*[CesiumÑ§Ï°±Ê¼Ç-¹¤¾ßÆª01-Tooltip-entity·½Ê½](http://blog.sina.com.cn/s/blog_15e866bbe0102xv5f.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç-¹¤¾ßÆª02-Tooltip-div·½Ê½](http://blog.sina.com.cn/s/blog_15e866bbe0102xv8k.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç-¹¤¾ßÆª03-DrawHelper](http://blog.sina.com.cn/s/blog_15e866bbe0102xvwv.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç-¹¤¾ßÆª04-ChangeablePrimitive¿É±à¼­Í¼ĞÎ](http://blog.sina.com.cn/s/blog_15e866bbe0102xvwx.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç-¹¤¾ßÆª05-DynamicDrawTool½»»¥»æÖÆ](http://blog.sina.com.cn/s/blog_15e866bbe0102xvx1.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç-¹¤¾ßÆª06-GroundPushÍÚµØĞÎ](http://blog.sina.com.cn/s/blog_15e866bbe0102xwyb.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç-¹¤¾ßÆª07-GroundClippingÍÚµØĞÎ](http://blog.sina.com.cn/s/blog_15e866bbe0102xwyd.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç-¹¤¾ßÆª08-CesiumNavigationµ¼º½²å¼ş](http://blog.sina.com.cn/s/blog_15e866bbe0102xxcw.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç-¹¤¾ßÆª09-CesiumVectorTileÊ¸Á¿ÍßÆ¬](http://blog.sina.com.cn/s/blog_15e866bbe0102xxd1.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç-¹¤¾ßÆª10-TileLonlatsImageryProvider¾­Î³¶ÈÍø¸ñÍßÆ¬µØÍ¼·şÎñ](http://blog.sina.com.cn/s/blog_15e866bbe0102xxme.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç-¹¤¾ßÆª11-Mouse-ButtonLanguageÊó±êÉèÖÃ¡¢°´Å¥ÓïÑÔÉèÖÃ](http://blog.sina.com.cn/s/blog_15e866bbe0102xyn0.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç-¹¤¾ßÆª12-GlobeSetÇò³¡¾°Ïà¹ØÉèÖÃ](http://blog.sina.com.cn/s/blog_15e866bbe0102xyny.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç-¹¤¾ßÆª13-CesiumThreejsÒıÈëthreejs](http://blog.sina.com.cn/s/blog_15e866bbe0102xz2g.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç-¹¤¾ßÆª14-PickPosition»ñÈ¡Êó±êµã»÷Î»ÖÃ·½·¨×Ü½á](http://blog.sina.com.cn/s/blog_15e866bbe0102xz32.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç-¹¤¾ßÆª15-ElevationµÈ¸ßÏß»æÖÆ](http://blog.sina.com.cn/s/blog_15e866bbe0102xz6u.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç-¹¤¾ßÆª16-DynamicDraw-ClampGround½»»¥»æÖÆ-ÌùµØ](http://blog.sina.com.cn/s/blog_15e866bbe0102xzbj.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç-¹¤¾ßÆª17-PrimitivePoint×Ô¶¨ÒåäÖÈ¾-µã](http://blog.sina.com.cn/s/blog_15e866bbe0102y0ji.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç-¹¤¾ßÆª18-PrimitivePolyline×Ô¶¨ÒåäÖÈ¾-Ïß](http://blog.sina.com.cn/s/blog_15e866bbe0102y0jj.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç-¹¤¾ßÆª19-PrimitiveTriangles×Ô¶¨ÒåäÖÈ¾-Ãæ](http://blog.sina.com.cn/s/blog_15e866bbe0102y0jl.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç-¹¤¾ßÆª20-PrimitiveTexture×Ô¶¨ÒåäÖÈ¾-ÌùÍ¼](http://blog.sina.com.cn/s/blog_15e866bbe0102y0jm.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç-¹¤¾ßÆª21-PrimitiveWaterfaceäÖÈ¾Ë®Ãæ](http://blog.sina.com.cn/s/blog_15e866bbe0102y0ql.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç-¹¤¾ßÆª22-PrimitiveEllipse×Ô¶¨ÒåäÖÈ¾ÍÖÔ²](http://blog.sina.com.cn/s/blog_15e866bbe0102y0qn.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç-¹¤¾ßÆª23-PrimitiveSector×Ô¶¨ÒåäÖÈ¾ÉÈĞÎ](http://blog.sina.com.cn/s/blog_15e866bbe0102y12s.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç-¹¤¾ßÆª24-CesiumCanvas2image³¡¾°½ØÆÁ](http://blog.sina.com.cn/s/blog_15e866bbe0102y136.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç-¹¤¾ßÆª25-Cesium¼ÓÔØgeoserverÓ°Ïñ·şÎñ-tif](http://blog.sina.com.cn/s/blog_15e866bbe0102y2iz.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç-¹¤¾ßÆª26-Cesium¼ÓÔØgeoserverÊ¸Á¿·şÎñ-shp](http://blog.sina.com.cn/s/blog_15e866bbe0102y2ps.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç-¹¤¾ßÆª27-Cesium²éÑ¯wms·şÎñ×Ô¶¨ÒåĞÅÏ¢¿ò](http://blog.sina.com.cn/s/blog_15e866bbe0102y32b.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç-¹¤¾ßÆª28-ChangeablePrimitiveClampGround¿É±à¼­Í¼ĞÎ--ÌùµØ](http://blog.sina.com.cn/s/blog_15e866bbe0102y47m.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç-¹¤¾ßÆª29-GetCurrentExtent»ñÈ¡µ±Ç°³¡¾°·¶Î§](http://blog.sina.com.cn/s/blog_15e866bbe0102y5no.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç-¹¤¾ßÆª30-CesiumSceneWeatherÌí¼ÓÓêÑ©ÌìÆø³¡¾°](http://blog.sina.com.cn/s/blog_15e866bbe0102yfpc.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç-¹¤¾ßÆª31-cesium¼ÓÔØgeoserver·¢²¼Í¼²ã×é](http://blog.sina.com.cn/s/blog_15e866bbe0102ygtt.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç-¹¤¾ßÆª32-cesiumÔ²ĞÎÉ¨ÃæÏß](http://blog.sina.com.cn/s/blog_15e866bbe0102yiw2.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç-¹¤¾ßÆª33-cesiumÀ×´ïÉ¨Ãè](http://blog.sina.com.cn/s/blog_15e866bbe0102yj4e.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç-¹¤¾ßÆª34-cesiumÁ÷¶¯ÎÆÀí](http://blog.sina.com.cn/s/blog_15e866bbe0102yjaj.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç-¹¤¾ßÆª35-cesiumÁ÷¶¯ÎÆÀí-·ÉĞĞÂ·¾¶](http://blog.sina.com.cn/s/blog_15e866bbe0102yjdy.html) </br>
-*[CesiumÑ§Ï°ÏµÁĞ-ÍÚµØĞÎ¡¢Ì¬ÊÆ±ê»æ¡¢¿ÉÊÓÓò](http://blog.sina.com.cn/s/blog_15e866bbe0102ykk1.html) </br>
-*[CesiumÑ§Ï°ÏµÁĞ-·ç³¡»æÖÆ](http://blog.sina.com.cn/s/blog_15e866bbe0102ykkb.html)
-### WebGLÆª
-*[CesiumÑ§Ï°±Ê¼Ç-WebGLÆª01-»æÖÆÔ²µã¡¢ÉÁË¸µã](http://blog.sina.com.cn/s/blog_15e866bbe0102yeq7.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç-WebGLÆª02-Ñ¡ÖĞ¶ÔÏó](http://blog.sina.com.cn/s/blog_15e866bbe0102yfyv.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç-WebGLÆª03-blending»ìºÏ](http://blog.sina.com.cn/s/blog_15e866bbe0102yhw5.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç-WebGLÆª04-ÇĞ»»×ÅÉ«Æ÷](http://blog.sina.com.cn/s/blog_15e866bbe0102yhwf.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç-WebGLÆª05-äÖÈ¾µ½ÎÆÀí](http://blog.sina.com.cn/s/blog_15e866bbe0102yi3v.html) </br>
-*[CesiumÑ§Ï°±Ê¼Ç-WebGLÆª06-»æÖÆÒõÓ°](http://blog.sina.com.cn/s/blog_15e866bbe0102yi8o.html)
-### Ô­ÀíÆª
-*[CesiumÑ§Ï°±Ê¼Ç-Ô­ÀíÆª01-CesiumÔ´Âë±àÒë](http://blog.sina.com.cn/s/blog_15e866bbe0102y8c2.html)
-### ºÅÍâ
-ÎÒµÄÑ§Ï°¹«ÖÚºÅÒ²¿ªÍ¨£¬¸ĞĞËÈ¤µÄĞ¡»ï°éÃÇ¿ÉÒÔ¼Ó¹Ø×¢£ºgiserYZ2SS </br>
+*[Cesiumå­¦ä¹ ç¬”è®°æ±‡æ€»](http://blog.sina.com.cn/s/blog_15e866bbe0102xu2f.html) </br>
+### åŸºç¡€ç¯‡
+*[Cesiumå­¦ä¹ ç¬”è®°1--ç¯å¢ƒæ­å»º](http://blog.sina.com.cn/s/blog_15e866bbe0102xleh.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°2--å®˜æ–¹DEMOå’ŒAPIæŸ¥çœ‹](http://blog.sina.com.cn/s/blog_15e866bbe0102xm9s.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°3--Cesiumå½±åƒæœåŠ¡--åœ¨çº¿æœåŠ¡](http://blog.sina.com.cn/s/blog_15e866bbe0102xmo5.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°4--Cesiumå½±åƒæœåŠ¡--åœ¨çº¿æœåŠ¡æ‰©å±•](http://blog.sina.com.cn/s/blog_15e866bbe0102xmo6.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°5--Cesiumå½±åƒæœåŠ¡--åœ°å›¾å‘å¸ƒ](http://blog.sina.com.cn/s/blog_15e866bbe0102xn72.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°6--Cesiumå½±åƒæœåŠ¡--å›¾å±‚åŠŸèƒ½](http://blog.sina.com.cn/s/blog_15e866bbe0102xnmj.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°7--Cesiumå½±åƒæœåŠ¡--BaseLayerPickerä½¿ç”¨](http://blog.sina.com.cn/s/blog_15e866bbe0102xnml.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°8--Cesiumåœ°å½¢æœåŠ¡--åœ¨çº¿åœ°å½¢](http://blog.sina.com.cn/s/blog_15e866bbe0102xoak.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°9--Cesiumåœ°å½¢æœåŠ¡--æœ¬åœ°åœ°å½¢æ•°æ®å¤„ç†åŠåŠ è½½](http://blog.sina.com.cn/s/blog_15e866bbe0102xofa.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°10--Cesiumåœ°å½¢æœåŠ¡--åœ°å½¢æ•°æ®é‡‡æ ·](http://blog.sina.com.cn/s/blog_15e866bbe0102xoo7.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°11--æ¨¡å‹åŠ è½½](http://blog.sina.com.cn/s/blog_15e866bbe0102xpsm.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°12--é¼ æ ‡äº‹ä»¶](http://blog.sina.com.cn/s/blog_15e866bbe0102xq8d.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°13--ç»˜åˆ¶å¯¹è±¡-Entityæ–¹å¼](http://blog.sina.com.cn/s/blog_15e866bbe0102xqsx.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°14--ç»˜åˆ¶å¯¹è±¡-Entityç®¡ç†](http://blog.sina.com.cn/s/blog_15e866bbe0102xrt2.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°15--ç»˜åˆ¶å¯¹è±¡-Primitiveæ–¹å¼](http://blog.sina.com.cn/s/blog_15e866bbe0102xse8.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°16--ç»˜åˆ¶å¯¹è±¡-Primitiveç®¡ç†](http://blog.sina.com.cn/s/blog_15e866bbe0102xseb.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°17--ç»˜åˆ¶å¯¹è±¡-Primitiveå¤–è§‚](http://blog.sina.com.cn/s/blog_15e866bbe0102xsi8.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°18--ç»˜åˆ¶å¯¹è±¡-æ•ˆç‡æ¯”è¾ƒ](http://blog.sina.com.cn/s/blog_15e866bbe0102xsj3.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°19--3DTilesåŠ è½½](http://blog.sina.com.cn/s/blog_15e866bbe0102xt9i.html) 
+### å·¥å…·ç¯‡
+*[Cesiumå­¦ä¹ ç¬”è®°-å·¥å…·ç¯‡01-Tooltip-entityæ–¹å¼](http://blog.sina.com.cn/s/blog_15e866bbe0102xv5f.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°-å·¥å…·ç¯‡02-Tooltip-divæ–¹å¼](http://blog.sina.com.cn/s/blog_15e866bbe0102xv8k.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°-å·¥å…·ç¯‡03-DrawHelper](http://blog.sina.com.cn/s/blog_15e866bbe0102xvwv.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°-å·¥å…·ç¯‡04-ChangeablePrimitiveå¯ç¼–è¾‘å›¾å½¢](http://blog.sina.com.cn/s/blog_15e866bbe0102xvwx.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°-å·¥å…·ç¯‡05-DynamicDrawTooläº¤äº’ç»˜åˆ¶](http://blog.sina.com.cn/s/blog_15e866bbe0102xvx1.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°-å·¥å…·ç¯‡06-GroundPushæŒ–åœ°å½¢](http://blog.sina.com.cn/s/blog_15e866bbe0102xwyb.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°-å·¥å…·ç¯‡07-GroundClippingæŒ–åœ°å½¢](http://blog.sina.com.cn/s/blog_15e866bbe0102xwyd.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°-å·¥å…·ç¯‡08-CesiumNavigationå¯¼èˆªæ’ä»¶](http://blog.sina.com.cn/s/blog_15e866bbe0102xxcw.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°-å·¥å…·ç¯‡09-CesiumVectorTileçŸ¢é‡ç“¦ç‰‡](http://blog.sina.com.cn/s/blog_15e866bbe0102xxd1.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°-å·¥å…·ç¯‡10-TileLonlatsImageryProviderç»çº¬åº¦ç½‘æ ¼ç“¦ç‰‡åœ°å›¾æœåŠ¡](http://blog.sina.com.cn/s/blog_15e866bbe0102xxme.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°-å·¥å…·ç¯‡11-Mouse-ButtonLanguageé¼ æ ‡è®¾ç½®ã€æŒ‰é’®è¯­è¨€è®¾ç½®](http://blog.sina.com.cn/s/blog_15e866bbe0102xyn0.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°-å·¥å…·ç¯‡12-GlobeSetçƒåœºæ™¯ç›¸å…³è®¾ç½®](http://blog.sina.com.cn/s/blog_15e866bbe0102xyny.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°-å·¥å…·ç¯‡13-CesiumThreejså¼•å…¥threejs](http://blog.sina.com.cn/s/blog_15e866bbe0102xz2g.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°-å·¥å…·ç¯‡14-PickPositionè·å–é¼ æ ‡ç‚¹å‡»ä½ç½®æ–¹æ³•æ€»ç»“](http://blog.sina.com.cn/s/blog_15e866bbe0102xz32.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°-å·¥å…·ç¯‡15-Elevationç­‰é«˜çº¿ç»˜åˆ¶](http://blog.sina.com.cn/s/blog_15e866bbe0102xz6u.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°-å·¥å…·ç¯‡16-DynamicDraw-ClampGroundäº¤äº’ç»˜åˆ¶-è´´åœ°](http://blog.sina.com.cn/s/blog_15e866bbe0102xzbj.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°-å·¥å…·ç¯‡17-PrimitivePointè‡ªå®šä¹‰æ¸²æŸ“-ç‚¹](http://blog.sina.com.cn/s/blog_15e866bbe0102y0ji.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°-å·¥å…·ç¯‡18-PrimitivePolylineè‡ªå®šä¹‰æ¸²æŸ“-çº¿](http://blog.sina.com.cn/s/blog_15e866bbe0102y0jj.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°-å·¥å…·ç¯‡19-PrimitiveTrianglesè‡ªå®šä¹‰æ¸²æŸ“-é¢](http://blog.sina.com.cn/s/blog_15e866bbe0102y0jl.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°-å·¥å…·ç¯‡20-PrimitiveTextureè‡ªå®šä¹‰æ¸²æŸ“-è´´å›¾](http://blog.sina.com.cn/s/blog_15e866bbe0102y0jm.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°-å·¥å…·ç¯‡21-PrimitiveWaterfaceæ¸²æŸ“æ°´é¢](http://blog.sina.com.cn/s/blog_15e866bbe0102y0ql.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°-å·¥å…·ç¯‡22-PrimitiveEllipseè‡ªå®šä¹‰æ¸²æŸ“æ¤­åœ†](http://blog.sina.com.cn/s/blog_15e866bbe0102y0qn.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°-å·¥å…·ç¯‡23-PrimitiveSectorè‡ªå®šä¹‰æ¸²æŸ“æ‰‡å½¢](http://blog.sina.com.cn/s/blog_15e866bbe0102y12s.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°-å·¥å…·ç¯‡24-CesiumCanvas2imageåœºæ™¯æˆªå±](http://blog.sina.com.cn/s/blog_15e866bbe0102y136.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°-å·¥å…·ç¯‡25-CesiumåŠ è½½geoserverå½±åƒæœåŠ¡-tif](http://blog.sina.com.cn/s/blog_15e866bbe0102y2iz.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°-å·¥å…·ç¯‡26-CesiumåŠ è½½geoserverçŸ¢é‡æœåŠ¡-shp](http://blog.sina.com.cn/s/blog_15e866bbe0102y2ps.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°-å·¥å…·ç¯‡27-CesiumæŸ¥è¯¢wmsæœåŠ¡è‡ªå®šä¹‰ä¿¡æ¯æ¡†](http://blog.sina.com.cn/s/blog_15e866bbe0102y32b.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°-å·¥å…·ç¯‡28-ChangeablePrimitiveClampGroundå¯ç¼–è¾‘å›¾å½¢--è´´åœ°](http://blog.sina.com.cn/s/blog_15e866bbe0102y47m.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°-å·¥å…·ç¯‡29-GetCurrentExtentè·å–å½“å‰åœºæ™¯èŒƒå›´](http://blog.sina.com.cn/s/blog_15e866bbe0102y5no.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°-å·¥å…·ç¯‡30-CesiumSceneWeatheræ·»åŠ é›¨é›ªå¤©æ°”åœºæ™¯](http://blog.sina.com.cn/s/blog_15e866bbe0102yfpc.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°-å·¥å…·ç¯‡31-cesiumåŠ è½½geoserverå‘å¸ƒå›¾å±‚ç»„](http://blog.sina.com.cn/s/blog_15e866bbe0102ygtt.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°-å·¥å…·ç¯‡32-cesiumåœ†å½¢æ‰«é¢çº¿](http://blog.sina.com.cn/s/blog_15e866bbe0102yiw2.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°-å·¥å…·ç¯‡33-cesiumé›·è¾¾æ‰«æ](http://blog.sina.com.cn/s/blog_15e866bbe0102yj4e.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°-å·¥å…·ç¯‡34-cesiumæµåŠ¨çº¹ç†](http://blog.sina.com.cn/s/blog_15e866bbe0102yjaj.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°-å·¥å…·ç¯‡35-cesiumæµåŠ¨çº¹ç†-é£è¡Œè·¯å¾„](http://blog.sina.com.cn/s/blog_15e866bbe0102yjdy.html) </br>
+*[Cesiumå­¦ä¹ ç³»åˆ—-æŒ–åœ°å½¢ã€æ€åŠ¿æ ‡ç»˜ã€å¯è§†åŸŸ](http://blog.sina.com.cn/s/blog_15e866bbe0102ykk1.html) </br>
+*[Cesiumå­¦ä¹ ç³»åˆ—-é£åœºç»˜åˆ¶](http://blog.sina.com.cn/s/blog_15e866bbe0102ykkb.html)
+### WebGLç¯‡
+*[Cesiumå­¦ä¹ ç¬”è®°-WebGLç¯‡01-ç»˜åˆ¶åœ†ç‚¹ã€é—ªçƒç‚¹](http://blog.sina.com.cn/s/blog_15e866bbe0102yeq7.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°-WebGLç¯‡02-é€‰ä¸­å¯¹è±¡](http://blog.sina.com.cn/s/blog_15e866bbe0102yfyv.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°-WebGLç¯‡03-blendingæ··åˆ](http://blog.sina.com.cn/s/blog_15e866bbe0102yhw5.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°-WebGLç¯‡04-åˆ‡æ¢ç€è‰²å™¨](http://blog.sina.com.cn/s/blog_15e866bbe0102yhwf.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°-WebGLç¯‡05-æ¸²æŸ“åˆ°çº¹ç†](http://blog.sina.com.cn/s/blog_15e866bbe0102yi3v.html) </br>
+*[Cesiumå­¦ä¹ ç¬”è®°-WebGLç¯‡06-ç»˜åˆ¶é˜´å½±](http://blog.sina.com.cn/s/blog_15e866bbe0102yi8o.html)
+### åŸç†ç¯‡
+*[Cesiumå­¦ä¹ ç¬”è®°-åŸç†ç¯‡01-Cesiumæºç ç¼–è¯‘](http://blog.sina.com.cn/s/blog_15e866bbe0102y8c2.html)
+### å·å¤–
+æˆ‘çš„å­¦ä¹ å…¬ä¼—å·ä¹Ÿå¼€é€šï¼Œæ„Ÿå…´è¶£çš„å°ä¼™ä¼´ä»¬å¯ä»¥åŠ å…³æ³¨ï¼šgiserYZ2SS </br>
 ![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/%E5%85%AC%E4%BC%97%E5%8F%B7.png) </br>
-### Ê¾ÀıÕ¹Ê¾
-*1-Ä£ĞÍ¼ÓÔØ </br>
+### ç¤ºä¾‹å±•ç¤º
+*1-æ¨¡å‹åŠ è½½ </br>
 ![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/Assets/3-1LoadModel-GLTF.png) </br>
-*2-3dtiles¼ÓÔØ </br>
+*2-3dtilesåŠ è½½ </br>
 ![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/Assets/6-1Tileset-Laod.html.png) </br>
-*3-³¡¾°ºº»¯ </br>
+*3-åœºæ™¯æ±‰åŒ– </br>
 ![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/Assets/Tools-10Mouse-ButtonLanguage.png) </br>
-*4-Ë®Ãæ </br>
+*4-æ°´é¢ </br>
 ![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/Assets/Tools-20PrimitiveWaterface.png) </br>
-*5-ÉÈĞÎ </br>
+*5-æ‰‡å½¢ </br>
 ![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/Assets/Tools-22PrimitiveSector.png) </br>
-*6-ÌìÆø³¡¾°-Ñ© </br>
+*6-å¤©æ°”åœºæ™¯-é›ª </br>
 ![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/Assets/Tools-29postProcess-Snow.png) </br>
-*7-ÌìÆø³¡¾°-Óê </br>
+*7-å¤©æ°”åœºæ™¯-é›¨ </br>
 ![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/Assets/Tools-30postProcess-Rain.png) </br>
-*8-ÍÚµØĞÎ </br>
+*8-æŒ–åœ°å½¢ </br>
 ![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/Assets/CircleClipping.gif) </br>
-*9-Ì¬ÊÆ±ê»æ </br>
+*9-æ€åŠ¿æ ‡ç»˜ </br>
 ![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/Assets/Plot.gif) </br>
-*10-¿ÉÊÓÓò-»ùÓÚDEM </br>
+*10-å¯è§†åŸŸ-åŸºäºDEM </br>
 ![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/Assets/Tools-36ViewBaseDEM.gif) </br>
-*11-Ô²ĞÎÉ¨Ãè </br>
+*11-åœ†å½¢æ‰«æ </br>
 ![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/Assets/Tools32-CricleScan.gif) </br>
-*12-À×´ïÉ¨Ãè </br>
+*12-é›·è¾¾æ‰«æ </br>
 ![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/Assets/Tools33-RadarScan.gif) </br>
-*13-Á÷¶¯ÎÆÀí </br>
+*13-æµåŠ¨çº¹ç† </br>
 ![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/Assets/Tools34-TrailLine.gif) </br>
-*14-·ÉĞĞº½¼£ </br>
+*14-é£è¡Œèˆªè¿¹ </br>
 ![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/Assets/Tools35-FlyPath.gif) </br>
-*15-Á÷³¡-3d </br>
+*15-æµåœº-3d </br>
 ![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/Assets/Tools-37CesiumWind-3d.gif) </br>
-*16-Á÷³¡-2d </br>
+*16-æµåœº-2d </br>
 ![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/Assets/Tools-37Wind-2d.gif) </br>
