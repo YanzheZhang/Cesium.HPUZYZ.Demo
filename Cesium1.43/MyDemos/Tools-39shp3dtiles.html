@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>Tools-39shp3dtiles矢量转3dtile属性查询</title>
+    <link href="../Cesium/Widgets/widgets.css" rel="stylesheet" />
+    <script src="../Cesium/Cesium.js"></script>
+    <script src="1-2ImageryProvider-WebExtend.js"></script>
+    <style>
+        html, body, #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div id="cesiumContainer" class="fullSize"></div>
+    <div id="creditContainer" style="display: none;"></div>
+    <script>
+    var GoogleMap = ImageryProviderWebExtendTool.createGoogleMapsByUrl(Cesium, { url: "http://mt1.google.cn/vt/lyrs=s&hl=zh-CN&x={x}&y={y}&z={z}" });
+
+    var viewer = new Cesium.Viewer('cesiumContainer', {
+        imageryProvider: GoogleMap,
+        creditContainer: "creditContainer",
+        selectionIndicator: true,
+        animation: true,
+        baseLayerPicker: false,
+        geocoder: false,
+        timeline: true,
+        sceneModePicker: true,
+        navigationHelpButton: false,
+        infoBox: true,
+        fullscreenButton: true,
+    });
+
+     
+    var tileset = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
+        url: './sampledata/shp3dtiles1/tileset.json' // 
+    }));
+
+    var tileset2 = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
+        url: './sampledata/shp3dtiles2/tileset.json' //  
+    }));
+
+    tileset2.style = new Cesium.Cesium3DTileStyle({
+        color: {
+            conditions: [
+                ['${height} >= 50.0', 'color("purple")'],//, 0.5 
+                ['${height} >= 20.0', 'color("red")'],
+                ['true', 'color("blue")']
+            ]
+        },
+        show: '${height} > 0',
+        meta: {
+            description: '"Building id ${id} has height ${height}."'
+        }
+    });
+
+    tileset.readyPromise.then(function () {
+        var boundingSphere = tileset.boundingSphere;
+        viewer.camera.viewBoundingSphere(boundingSphere, new Cesium.HeadingPitchRange(0.0, -0.5, boundingSphere.radius));
+        viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY);
+    }).otherwise(function (error) {
+        throw (error);
+    });
+
+    viewer.screenSpaceEventHandler.setInputAction(function onLeftClick(movement) {
+        var pickedFeature = viewer.scene.pick(movement.position);
+        if (Cesium.defined(pickedFeature && pickedFeature._batchId != undefined)) {
+            alert(pickedFeature.content.batchTable.batchTableJson.xzqdm[pickedFeature._batchId]);
+        }
+    }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+
+    </script>
+</body>
+</html>
