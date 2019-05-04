@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>Tools-41view-splitview卷帘视图</title>
+    <link href="../Cesium/Widgets/widgets.css" rel="stylesheet" />
+    <script src="../Cesium/Cesium.js"></script>
+    <script src="1-2ImageryProvider-WebExtend.js"></script>
+    <style>
+        html, body, #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        #slider {
+            position: absolute;
+            left: 50%;
+            top: 0px;
+            background-color: #D3D3D3;
+            width: 4px;
+            height: 100%;
+            z-index: 9999;
+        }
+        #slider:hover {
+            cursor: ew-resize;
+        }
+    </style>
+</head>
+<body>
+    <div id="cesiumContainer" class="fullSize">
+        <div id="slider"></div>
+        <div id="creditContainer" style="display: none;"></div>
+    </div>
+    <script>
+    var GoogleMap = ImageryProviderWebExtendTool.createGoogleMapsByUrl(Cesium, { url: "http://mt1.google.cn/vt/lyrs=s&hl=zh-CN&x={x}&y={y}&z={z}" });
+
+    var viewer = new Cesium.Viewer('cesiumContainer', {
+        imageryProvider: new Cesium.ArcGisMapServerImageryProvider({
+            url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer'
+        }),
+        baseLayerPicker: false,
+        infoBox: false
+    });
+    var layers = viewer.imageryLayers;
+    var earthAtNight = layers.addImageryProvider(GoogleMap);
+    earthAtNight.splitDirection = Cesium.ImagerySplitDirection.LEFT;  
+
+
+    // Sync the position of the slider with the split position
+    var slider = document.getElementById('slider');
+    viewer.scene.imagerySplitPosition = (slider.offsetLeft) / slider.parentElement.offsetWidth;
+
+    var slider = document.getElementById('slider');
+    viewer.scene.imagerySplitPosition = (slider.offsetLeft) / slider.parentElement.offsetWidth;
+    var dragStartX = 0;
+    document.getElementById('slider').addEventListener('mousedown', mouseDown, false);
+    window.addEventListener('mouseup', mouseUp, false);
+    function mouseUp() {
+        window.removeEventListener('mousemove', sliderMove, true);
+    }
+    function mouseDown(e) {
+        var slider = document.getElementById('slider');
+        dragStartX = e.clientX - slider.offsetLeft;
+        window.addEventListener('mousemove', sliderMove, true);
+    }
+    function sliderMove(e) {
+        var slider = document.getElementById('slider');
+        var splitPosition = (e.clientX - dragStartX) / slider.parentElement.offsetWidth;
+        slider.style.left = 100.0 * splitPosition + '%';
+        viewer.scene.imagerySplitPosition = splitPosition;
+    }
+    </script>
+</body>
+</html>
