@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>Tools-41view2-eyeview鹰眼</title>
+    <link href="../Cesium/Widgets/widgets.css" rel="stylesheet" />
+    <script src="../Cesium/Cesium.js"></script>
+    <script src="1-2ImageryProvider-WebExtend.js"></script>
+    <style>
+        html, body, #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        #eye {
+            position: absolute;
+            width: 20%;
+            height: 20%;
+            bottom: 0;
+            right: 0;
+            z-index: 999;
+            background: red;
+            border: solid blue 1px;
+        }
+    </style>
+</head>
+<body>
+    <div id="cesiumContainerL" class="fullSize">
+        <div id="creditContainer1" style="display: none;"></div>
+    </div>
+    <div id="eye">
+        <div id="creditContainer2" style="display: none;"></div>
+    </div>
+    <script>
+    var GoogleMap = ImageryProviderWebExtendTool.createGoogleMapsByUrl(Cesium, { url: "http://mt1.google.cn/vt/lyrs=s&hl=zh-CN&x={x}&y={y}&z={z}" });
+
+    var viewerL = new Cesium.Viewer('cesiumContainerL', {
+        imageryProvider: GoogleMap,
+        creditContainer: "creditContainer1",
+        scene3DOnly: true,
+        baseLayerPicker: false,
+        infoBox: false,
+        selectionIndicator: false,
+        timeline: false,
+        animation: false,
+    });
+    var viewerEye = new Cesium.Viewer('eye', {
+        imageryProvider: GoogleMap,
+        creditContainer: "creditContainer2",
+        scene3DOnly: true,
+        baseLayerPicker: false,
+        infoBox: false,
+        selectionIndicator: false,
+        timeline: false,
+        animation: false,
+    });
+
+    var control = viewerEye.scene.screenSpaceCameraController;
+    control.enableRotate = false;
+    control.enableTranslate = false;
+    control.enableZoom = false;
+    control.enableTilt = false;
+    control.enableLook = false;
+
+    var syncViewer = function () {
+        viewerEye.camera.flyTo({
+            destination: viewerL.camera.position,
+            orientation: {
+                heading: viewerL.camera.heading,
+                pitch: viewerL.camera.pitch,
+                roll: viewerL.camera.roll
+            },
+            duration: 0.0
+        });
+    }
+    viewerL.camera.changed.addEventListener(syncViewer);
+    viewerL.scene.preRender.addEventListener(syncViewer);
+    </script>
+</body>
+</html>
