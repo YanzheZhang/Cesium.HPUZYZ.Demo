@@ -59,7 +59,7 @@
         var GoogleMap = ImageryProviderWebExtendTool.createGoogleMapsByUrl(Cesium, { url: "http://mt1.google.cn/vt/lyrs=s&hl=zh-CN&x={x}&y={y}&z={z}" });
 
         var viewer = new Cesium.Viewer('cesiumContainer', {
-            imageryProvider: mtdt,
+            imageryProvider: GoogleMap,
             contextOptions: {
                 webgl: {
                     alpha: true
@@ -77,7 +77,7 @@
             fullscreenButton: true
         });
 
-        viewer.imageryLayers.addImageryProvider(noteLayer);
+        //viewer.imageryLayers.addImageryProvider(noteLayer);
 
         //取消双击事件
         viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);

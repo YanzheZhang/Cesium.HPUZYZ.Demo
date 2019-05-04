@@ -49,11 +49,16 @@
 
         var viewer = new Cesium.Viewer('cesiumContainer', {
             imageryProvider: GoogleMap,
-            contextOptions: {
-                webgl: {
-                    alpha: true
-                }
-            },
+            //contextOptions: {
+            //    webgl: {
+            //        alpha: true,
+            //        depthTest: {
+            //            enabled: true,
+            //            func: Cesium.DepthFunction.EQUAL
+            //        },
+            //    }
+ 
+            //},
             creditContainer: "creditContainer",
             selectionIndicator: false,
             animation: false,   
@@ -126,6 +131,48 @@
                             colors.push(1);
                             colors.push(0);
                             colors.push(0);
+                            colors.push(1);
+
+                        }
+                    }
+
+                    for (var i = 0; i < 100; i++) {
+                        var cartesianTemp0 = Cesium.Cartesian3.fromDegrees(lon + i * 0.01, lat-0.03, i * 100);
+                        var cartesianTemp1 = Cesium.Cartesian3.fromDegrees(lon + i * 0.01 + 0.005, lat - 0.03, i * 100);
+                        var cartesianTemp2 = Cesium.Cartesian3.fromDegrees(lon + i * 0.01 + 0.005, lat + 0.05 - 0.03, i * 100);
+                        cartesiansPoints.push(cartesianTemp0);
+                        cartesiansPoints.push(cartesianTemp1);
+                        cartesiansPoints.push(cartesianTemp2);
+                        //绘制点
+                        if (i % 3 == 0) {
+                            colors.push(1);
+                            colors.push(0);
+                            colors.push(0);
+                            colors.push(1);
+
+                            colors.push(1);
+                            colors.push(0);
+                            colors.push(0);
+                            colors.push(1);
+
+                            colors.push(1);
+                            colors.push(0);
+                            colors.push(0);
+                            colors.push(1);
+                        } else {
+                            colors.push(0);
+                            colors.push(0);
+                            colors.push(1);
+                            colors.push(1);
+
+                            colors.push(0);
+                            colors.push(0);
+                            colors.push(1);
+                            colors.push(1);
+
+                            colors.push(0);
+                            colors.push(0);
+                            colors.push(1);
                             colors.push(1);
 
                         }

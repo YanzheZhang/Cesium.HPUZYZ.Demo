@@ -25,7 +25,8 @@
 
         //一： SingleTileImageryProvider  单张图片服务
         var mapsingle = new Cesium.SingleTileImageryProvider({
-            url: 'sampledata/images/globe.jpg'
+            url:'sampledata/images/globe.jpg',
+            //rectangle: new Cesium.Rectangle(-3.14, 0.0, 0.0, 1.5)
         });
 
         //二： 多图层叠加
@@ -57,7 +58,7 @@
         var TileCoordinatesImagery = new Cesium.TileCoordinatesImageryProvider();
 
         var viewer = new Cesium.Viewer('cesiumContainer', {
-            imageryProvider: tdtImagerLayerProvider,
+            imageryProvider: mapsingle,
             contextOptions: {
                 webgl: {
                     alpha: true
@@ -93,9 +94,9 @@
         //imageryLayers.brightness = 1.5;//改变亮度
 
 
-        var imageryLayers = viewer.imageryLayers;
-        var GridImageryLayer = imageryLayers.addImageryProvider(GridImagery);//添加注记图层
-        imageryLayers.raiseToTop(GridImageryLayer);//将注记图层置顶
+        //var imageryLayers = viewer.imageryLayers;
+        //var GridImageryLayer = imageryLayers.addImageryProvider(GridImagery);//添加注记图层
+        //imageryLayers.raiseToTop(GridImageryLayer);//将注记图层置顶
 
         
         //var imageryLayers = viewer.imageryLayers;

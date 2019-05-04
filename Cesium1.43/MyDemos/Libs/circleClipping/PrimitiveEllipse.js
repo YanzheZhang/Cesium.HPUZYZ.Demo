@@ -23,7 +23,7 @@ var PrimitiveEllipse = (
                 var colorsTemp = [];
                 var indicesTesm = [];
                 var height = options.height ? options.height:0 ;
-                var slices = 10;//options.slices && options.slices >= 36 ? options.slices : 360;//
+                var slices = options.slices && options.slices >= 36 ? options.slices : 360;// 
                 var semiMinorAxis = options.semiMinorAxis;
                 var semiMajorAxis = options.semiMajorAxis;
                 var rotation = Cesium.Math.toRadians(options.rotation);
@@ -33,33 +33,52 @@ var PrimitiveEllipse = (
                 eopt.rotation = rotation;
                 eopt.center = Cesium.Cartesian3.fromRadians(options.center.longitude, options.center.latitude, height);
                 eopt.granularity = Math.PI * 2.0 / parseFloat(slices);
-                var ellipse = EllipseGeometryLibraryEx.computeEllipseEdgePositions(eopt);
+                var ellipse = EllipseGeometryLibraryEx.computeEllipsePositions(eopt, false);
                 var raiseopt={};
                 raiseopt.ellipsoid=ellipsoid;
                 raiseopt.height=height;
                 raiseopt.extrudedHeight=0;
 
-                ellipse.outerPositions = EllipseGeometryLibraryEx.raisePositionsToHeight(ellipse.outerPositions, raiseopt, false);
-               
-                for (var i = 0; i < ellipse.outerPositions.length; i = i + 3) {
-                    postionsTemp.push(ellipse.outerPositions[i]);
-                    postionsTemp.push(ellipse.outerPositions[i + 1]);
-                    postionsTemp.push(ellipse.outerPositions[i + 2]);
+                ellipse.positions = EllipseGeometryLibraryEx.raisePositionsToHeight(ellipse.positions, raiseopt, false);
+                ellipse.positionsdown = EllipseGeometryLibraryEx.raisePositionsToHeight(ellipse.positionsdown, raiseopt, false);
+                //上半部
+                for (var i = 0; i < ellipse.positions.length; i = i + 3) {
+                    postionsTemp.push(ellipse.positions[i]);
+                    postionsTemp.push(ellipse.positions[i + 1]);
+                    postionsTemp.push(ellipse.positions[i + 2]);
 
                     colorsTemp.push(0.0);
                     colorsTemp.push(0.0);
                     colorsTemp.push(1.0);
                     colorsTemp.push(1.0);
                 }
-                 
-                for (var i = 1; i < ellipse.outerPositions.length/ 3; i++) {
+                for (var i = 1; i < ellipse.positions.length / 3; i++) {
                     indicesTesm.push(i - 1);
                     indicesTesm.push(i);
                 }
+                //下半部
+                for (var i = 0; i < ellipse.positionsdown.length; i = i + 3) {
+                    postionsTemp.push(ellipse.positionsdown[i]);
+                    postionsTemp.push(ellipse.positionsdown[i + 1]);
+                    postionsTemp.push(ellipse.positionsdown[i + 2]);
 
+                    colorsTemp.push(0.0);
+                    colorsTemp.push(0.0);
+                    colorsTemp.push(1.0);
+                    colorsTemp.push(1.0);
+                }
+                for (var i = ellipse.positions.length / 3 +1; i < ellipse.positionsdown.length*2 / 3; i++) {
+                    indicesTesm.push(i - 1);
+                    indicesTesm.push(i);
+                }
+                //接边缝隙
+                //右缝隙
                 indicesTesm.push(0);
-                indicesTesm.push(ellipse.outerPositions.length / 3 -1);
-                 
+                indicesTesm.push(ellipse.positions.length / 3);
+                //左缝隙
+                indicesTesm.push(ellipse.positions.length / 3-1);
+                indicesTesm.push(ellipse.positionsdown.length * 2 / 3 -1);
+
                 positionArr = new Float64Array(postionsTemp);
                 colorArr = new Float32Array(colorsTemp);
                 indiceArr = new Uint16Array(indicesTesm);
@@ -157,6 +176,7 @@ var PrimitiveEllipse = (
         _.prototype.updatePosition = function (options) {
             if (this.primitive != null) {
                 viewer.scene.primitives.remove(this.primitive);
+                //primitive = null;
                 var postionsTemp = [];
                 var colorsTemp = [];
                 var indicesTesm = [];
@@ -171,33 +191,53 @@ var PrimitiveEllipse = (
                 eopt.rotation = rotation;
                 eopt.center = Cesium.Cartesian3.fromRadians(options.center.longitude, options.center.latitude, height);
                 eopt.granularity = Math.PI * 2.0 / parseFloat(slices);
-                var ellipse = EllipseGeometryLibraryEx.computeEllipseEdgePositions(eopt);
+                var ellipse = EllipseGeometryLibraryEx.computeEllipsePositions(eopt, false);
 
                 var raiseopt = {};
                 raiseopt.ellipsoid = ellipsoid;
                 raiseopt.height = height;
                 raiseopt.extrudedHeight = 0;
 
-                ellipse.outerPositions = EllipseGeometryLibraryEx.raisePositionsToHeight(ellipse.outerPositions, raiseopt, false);
-
-                for (var i = 0; i < ellipse.outerPositions.length; i = i + 3) {
-                    postionsTemp.push(ellipse.outerPositions[i]);
-                    postionsTemp.push(ellipse.outerPositions[i + 1]);
-                    postionsTemp.push(ellipse.outerPositions[i + 2]);
+                ellipse.positions = EllipseGeometryLibraryEx.raisePositionsToHeight(ellipse.positions, raiseopt, false);
+                ellipse.positionsdown = EllipseGeometryLibraryEx.raisePositionsToHeight(ellipse.positionsdown, raiseopt, false);
+                //上半部
+                for (var i = 0; i < ellipse.positions.length; i = i + 3) {
+                    postionsTemp.push(ellipse.positions[i]);
+                    postionsTemp.push(ellipse.positions[i + 1]);
+                    postionsTemp.push(ellipse.positions[i + 2]);
 
                     colorsTemp.push(0.0);
                     colorsTemp.push(0.0);
                     colorsTemp.push(1.0);
                     colorsTemp.push(1.0);
                 }
-                for (var i = 1; i < ellipse.outerPositions.length / 3; i++) {
+                for (var i = 1; i < ellipse.positions.length / 3; i++) {
                     indicesTesm.push(i - 1);
                     indicesTesm.push(i);
                 }
-                 
+                //下半部
+                for (var i = 0; i < ellipse.positionsdown.length; i = i + 3) {
+                    postionsTemp.push(ellipse.positionsdown[i]);
+                    postionsTemp.push(ellipse.positionsdown[i + 1]);
+                    postionsTemp.push(ellipse.positionsdown[i + 2]);
+
+                    colorsTemp.push(0.0);
+                    colorsTemp.push(0.0);
+                    colorsTemp.push(1.0);
+                    colorsTemp.push(1.0);
+                }
+                for (var i = ellipse.positions.length / 3 + 1; i < ellipse.positionsdown.length * 2 / 3; i++) {
+                    indicesTesm.push(i - 1);
+                    indicesTesm.push(i);
+                }
+                //接边缝隙
+                //右缝隙
                 indicesTesm.push(0);
-                indicesTesm.push(ellipse.outerPositions.length / 3-1);
-                 
+                indicesTesm.push(ellipse.positions.length / 3);
+                //左缝隙
+                indicesTesm.push(ellipse.positions.length / 3 - 1);
+                indicesTesm.push(ellipse.positionsdown.length * 2 / 3 - 1);
+
                 positionArr = new Float64Array(postionsTemp);
                 colorArr = new Float32Array(colorsTemp);
                 indiceArr = new Uint16Array(indicesTesm);

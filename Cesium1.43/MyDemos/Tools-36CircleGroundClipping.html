@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="./libs/circleClipping/TooltipDiv.css" />
+    <title>Tools-36CircleGroundClipping-挖地形</title>
+    <script src="../../Cesium1.48forCircleClipping/Cesium/Cesium.js"></script>
+    <script src="1-2ImageryProvider-WebExtend.js"></script>
+    <script src="./libs/TileLonlatsImageryProvider.js"></script>
+    <script src="./libs/circleClipping/PrimitivePolyline.js"></script>
+    <script src="./libs/circleClipping/DrawDynamicPrimitive.js"></script>
+    <script src="./libs/circleClipping/DrawDynamicClampGround.js"></script>
+    <script src="./libs/circleClipping/TooltipDiv.js"></script>
+    <script src="./libs/circleClipping/PrimitiveEllipse.js"></script>
+    <script src="./libs/circleClipping/EllipseGeometryLibraryEx.js"></script>
+    <style>
+        @import url(../../Cesium1.48forCircleClipping/Cesium/Widgets/widgets.css);
+        html, body, #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        #menu {
+            position: absolute;
+            top: 80px;
+            left: 10px;
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+    <div id="cesiumContainer">
+        <div id="creditContainer" style="display: none;"></div>
+    </div>
+    <div id="menu">
+        <p>
+            <button id="drawDiv">绘制</button>
+            <button id="entityDiv">entity显隐</button>
+            <button id="holeDiv">hole显隐</button>
+            <button id="moveDiv">修改位置</button>
+        </p>
+    </div>
+    <script>
+            var isLoadTerrain = false;
+            var ellipsoidTerrainProvider = new Cesium.EllipsoidTerrainProvider();
+            var terrainProvider = new Cesium.CesiumTerrainProvider({
+                url: 'http://localhost:8010/hubeidem/demHB30/'
+            });
+            var GoogleMap = ImageryProviderWebExtendTool.createGoogleMapsByUrl(Cesium, { url: "http://mt1.google.cn/vt/lyrs=s&hl=zh-CN&x={x}&y={y}&z={z}" });
+            var mapLonlat = new TileLonlatsImageryProvider({});
+            var viewer = new Cesium.Viewer('cesiumContainer', {
+                imageryProvider: GoogleMap,
+                terrainProvider: terrainProvider,
+                creditContainer: "creditContainer",
+                selectionIndicator: true,
+                animation: false, 
+                baseLayerPicker: false, 
+                geocoder: false,
+                timeline: false,
+                sceneModePicker: true,
+                navigationHelpButton: false, 
+                infoBox: true, 
+                fullscreenButton: true
+            });
+
+            viewer.scene.globe.depthTestAgainstTerrain = true;//地形遮挡
+
+            //设置初始位置
+            var lon = 116.04437, lat = 30.10932; height = 100;
+            var width = 0.02;
+            viewer.camera.setView({
+                destination: Cesium.Cartesian3.fromDegrees(lon, lat, 500)
+            });
+            Cesium.Camera.DEFAULT_VIEW_RECTANGLE = Cesium.Rectangle.fromDegrees(lon - width, lat - width, lon + width, lat + width);
+            
+            var imageryLayers = viewer.imageryLayers;
+            var mapLonlatLayer = imageryLayers.addImageryProvider(mapLonlat);
+
+            var position1 = Cesium.Cartesian3.fromDegrees(116.05537, 30.10932, 100.0);
+            var position2 = Cesium.Cartesian3.fromDegrees(116.05537, 30.10932, 100.0);
+            var globe = viewer.scene.globe;
+            globe.depthTestAgainstTerrain = true;
+
+            var clipCirlce = new Cesium.ClippingCircle(position1, 100.0);
+            globe.clippingCircle = clipCirlce;
+            var ellipsoid = viewer.entities.add({
+                position: position2,
+                ellipsoid: {
+                    radii: new Cesium.Cartesian3(100.0, 100.0, 100.0),
+                    outline: true,
+                    outlineColor: Cesium.Color.WHITE,
+                    outlineWidth: 2,
+                    material: Cesium.Color.fromRandom({ alpha: 0.5 })
+                }
+            });
+
+            var drawDiv = document.getElementById('drawDiv');
+            drawDiv.onclick = function () {
+                DrawDynamicPrimitive.startDrawingCircle(viewer, function (cartesians) {
+                    var length = Cesium.Cartesian3.distance(cartesians[0], cartesians[1]);
+                    var clipCirlceTemp = new Cesium.ClippingCircle(cartesians[0], length);
+                    globe.clippingCircle = clipCirlceTemp;
+                });
+            }
+
+            var entityDiv = document.getElementById('entityDiv');
+            entityDiv.onclick = function () {
+                ellipsoid.show = !ellipsoid.show;
+            }
+            var holeDiv = document.getElementById('holeDiv');
+            holeDiv.onclick = function () {
+                if (globe.clippingCircle != undefined) {
+                    globe.clippingCircle = undefined;
+                } else {
+                    globe.clippingCircle = new Cesium.ClippingCircle(position1, 100.0);
+                }
+            }
+
+            var moveDiv = document.getElementById('moveDiv');
+            moveDiv.onclick = function () {
+                var position = Cesium.Cartesian3.fromDegrees(116.04837, 30.10932, 100.0);
+                globe.clippingCircle = new Cesium.ClippingCircle(position, 100.0);
+            }
+    </script>
+
+</body>
+</html>

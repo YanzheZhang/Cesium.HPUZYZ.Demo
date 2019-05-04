@@ -85,18 +85,18 @@
 
     //二 LEFT_CLICK
     handler.setInputAction(function(movement) {
-        cartesian =   viewer.camera.pickEllipsoid(movement.position, ellipsoid);//movement.endPosition
-        if (cartesian) {
-            //将笛卡尔坐标转换为地理坐标
-             var cartographic = Cesium.Cartographic.fromCartesian(cartesian);
-             longitudeString = Cesium.Math.toDegrees(cartographic.longitude).toFixed(3);
-             latitudeString = Cesium.Math.toDegrees(cartographic.latitude).toFixed(3);
-            //获取相机高度
-            height = Math.ceil(viewer.camera.positionCartographic.height);
-            mouse_state.innerText = 'LEFT_CLICK：(' + longitudeString + ', ' + latitudeString + "," + height + ')';
-        }else {
-            mouse_state.innerText = '';
-        }
+        //cartesian =   viewer.camera.pickEllipsoid(movement.position, ellipsoid);//movement.endPosition
+        //if (cartesian) {
+        //    //将笛卡尔坐标转换为地理坐标
+        //     var cartographic = Cesium.Cartographic.fromCartesian(cartesian);
+        //     longitudeString = Cesium.Math.toDegrees(cartographic.longitude).toFixed(3);
+        //     latitudeString = Cesium.Math.toDegrees(cartographic.latitude).toFixed(3);
+        //    //获取相机高度
+        //    height = Math.ceil(viewer.camera.positionCartographic.height);
+        //    mouse_state.innerText = 'LEFT_CLICK：(' + longitudeString + ', ' + latitudeString + "," + height + ')';
+        //}else {
+        //    mouse_state.innerText = '';
+        //}
      }, Cesium.ScreenSpaceEventType.LEFT_CLICK );
 
     //三 LEFT_DOUBLE_CLICK
