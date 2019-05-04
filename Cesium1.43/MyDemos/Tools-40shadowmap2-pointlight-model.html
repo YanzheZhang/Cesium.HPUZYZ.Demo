@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>Tools-40shadowmap2-pointlight-3dtiles点光源阴影</title>
+    <link href="../Cesium/Widgets/widgets.css" rel="stylesheet" />
+    <script src="../Cesium/Cesium.js"></script>
+    <script src="1-2ImageryProvider-WebExtend.js"></script>
+    <style>
+        html, body, #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div id="cesiumContainer" class="fullSize"></div>
+    <div id="creditContainer" style="display: none;"></div>
+    <script>
+    var GoogleMap = ImageryProviderWebExtendTool.createGoogleMapsByUrl(Cesium, { url: "http://mt1.google.cn/vt/lyrs=s&hl=zh-CN&x={x}&y={y}&z={z}" });
+
+    var viewer = new Cesium.Viewer('cesiumContainer', {
+        imageryProvider: GoogleMap,
+        creditContainer: "creditContainer",
+        scene3DOnly: true,
+        baseLayerPicker: false,
+        infoBox: false,
+        selectionIndicator: false,
+        timeline: false,
+        animation: false,
+    });
+
+    var scene = viewer.scene;
+    var camera = scene.camera;
+    scene.debugShowFramesPerSecond = true;
+    viewer.shadows = true;
+    viewer.terrainShadows = true ? Cesium.ShadowMode.ENABLED : Cesium.ShadowMode.DISABLED;
+    function addShadowMap(lon, lat, height, heading) {
+        var center = Cesium.Cartesian3.fromRadians(lon + 0.00002, lat, height);
+        var lightCenter = Cesium.Cartesian3.fromRadians(lon, lat, height + 100);
+        var pointLightCamera = new Cesium.Camera(scene);
+        pointLightCamera.position = lightCenter;
+        camera.lookAt(center, new Cesium.Cartesian3(100.0, 100.0, 100.0));
+        camera.lookAtTransform(Cesium.Matrix4.IDENTITY);
+        var shadowMap = new Cesium.ShadowMap({
+            context: scene.context,
+            lightCamera: pointLightCamera,
+            maxmimumDistance: 10000.0,
+            pointLightRadius: 1000.0,
+            darkness: 0.1,
+            cascadesEnabled: false,
+            isPointLight: true,
+            softShadows: false
+        });
+        shadowMap.enabled = true;
+        var model = scene.primitives.add(Cesium.Model.fromGltf({
+            url: './sampledata/model/barrel.gltf',
+            modelMatrix: Cesium.Transforms.headingPitchRollToFixedFrame(center, new Cesium.HeadingPitchRoll(heading, 0.0, 0.0))
+        }));
+        return shadowMap;
+    }
+    var longitude = Cesium.Math.toRadians(117.16);
+    var latitude = Cesium.Math.toRadians(32.71);
+    var height = 1.0;
+    var shadowMap1 = addShadowMap(longitude + 0.00005, latitude, height, 0.0);
+    scene.shadowMap = shadowMap1;
+    </script>
+</body>
+</html>
