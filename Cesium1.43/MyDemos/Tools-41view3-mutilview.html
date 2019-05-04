@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>Tools-41view3-mutilview视图联动</title>
+    <link href="../Cesium/Widgets/widgets.css" rel="stylesheet" />
+    <script src="../Cesium/Cesium.js"></script>
+    <script src="1-2ImageryProvider-WebExtend.js"></script>
+    <style>
+        html, body, #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .left, .right {
+            width: 50%;
+            height: 100%;
+            float: left;
+        }
+    </style>
+</head>
+<body>
+    <div id="cesiumContainerL" class="left">
+        <div id="creditContainerL" style="display: none;"></div>
+    </div>
+    <div id="cesiumContainerR" class="right">
+        <div id="creditContainerR" style="display: none;"></div>
+    </div>
+    <script>
+    var GoogleMap = ImageryProviderWebExtendTool.createGoogleMapsByUrl(Cesium, { url: "http://mt1.google.cn/vt/lyrs=s&hl=zh-CN&x={x}&y={y}&z={z}" });
+
+    var viewerL = new Cesium.Viewer('cesiumContainerL', {
+        imageryProvider: GoogleMap,
+        creditContainer: "creditContainerL",
+        selectionIndicator: true,
+        animation: true,
+        baseLayerPicker: false,
+        geocoder: false,
+        timeline: true,
+        sceneModePicker: true,
+        navigationHelpButton: false,
+        infoBox: true,
+        fullscreenButton: true,
+    });
+
+    var viewerR = new Cesium.Viewer('cesiumContainerR', {
+        imageryProvider: GoogleMap,
+        creditContainer: "creditContainerR",
+        selectionIndicator: true,
+        animation: true,
+        baseLayerPicker: false,
+        geocoder: false,
+        timeline: true,
+        sceneModePicker: true,
+        navigationHelpButton: false,
+        infoBox: true,
+        fullscreenButton: true,
+    });
+
+    var sceneL = viewerL.scene;
+    var sceneR = viewerR.scene;
+
+    var handlerL = new Cesium.ScreenSpaceEventHandler(sceneL.canvas);
+    var ellipsoidL = sceneL.globe.ellipsoid;
+    var handlerR = new Cesium.ScreenSpaceEventHandler(sceneR.canvas);
+    var ellipsoidR = sceneR.globe.ellipsoid;
+
+    handlerL.setInputAction(function (movement) {
+        isLeftTrigger = true;
+        isRightTrigger = false;
+    }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+
+    handlerR.setInputAction(function (movement) {
+        isLeftTrigger = false;
+        isRightTrigger = true;
+    }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+
+    var isLeftTrigger = false;
+    var isRightTrigger = false;
+
+    var syncViewerL = function () {
+        if (isLeftTrigger) {
+            viewerR.camera.flyTo({
+                destination: viewerL.camera.position,
+                orientation: {
+                    heading: viewerL.camera.heading,
+                    pitch: viewerL.camera.pitch,
+                    roll: viewerL.camera.roll
+                },
+                duration: 0.0
+            });
+        }
+
+    }
+
+    viewerL.camera.changed.addEventListener(syncViewerL);
+    viewerL.scene.preRender.addEventListener(syncViewerL);
+
+    var syncViewerR = function () {
+        if (isRightTrigger) {
+            viewerL.camera.flyTo({
+                destination: viewerR.camera.position,
+                orientation: {
+                    heading: viewerR.camera.heading,
+                    pitch: viewerR.camera.pitch,
+                    roll: viewerR.camera.roll
+                },
+                duration: 0.0
+            });
+        }
+    }
+
+    viewerL.camera.changed.addEventListener(syncViewerR);
+    viewerL.scene.preRender.addEventListener(syncViewerR);
+    </script>
+</body>
+</html>
