@@ -63,8 +63,9 @@ This project is some demos of CESIUM. Much of them are from other people's blogs
 *[Cesium学习笔记-工具篇33-cesium雷达扫描](http://blog.sina.com.cn/s/blog_15e866bbe0102yj4e.html) </br>
 *[Cesium学习笔记-工具篇34-cesium流动纹理](http://blog.sina.com.cn/s/blog_15e866bbe0102yjaj.html) </br>
 *[Cesium学习笔记-工具篇35-cesium流动纹理-飞行路径](http://blog.sina.com.cn/s/blog_15e866bbe0102yjdy.html) </br>
-*[Cesium学习系列-挖地形、态势标绘、可视域](http://blog.sina.com.cn/s/blog_15e866bbe0102ykk1.html) </br>
-*[Cesium学习系列-风场绘制](http://blog.sina.com.cn/s/blog_15e866bbe0102ykkb.html)
+*[Cesium学习系列-工具篇36-挖地形、态势标绘、可视域](http://blog.sina.com.cn/s/blog_15e866bbe0102ykk1.html) </br>
+*[Cesium学习系列-工具篇37-风场绘制](http://blog.sina.com.cn/s/blog_15e866bbe0102ykkb.html) </br>
+*[Cesium学习系列-工具篇38-风场绘制](https://mp.weixin.qq.com/s?__biz=MzU1ODcyMjEwOA==&mid=2247484266&idx=1&sn=d72bf78f5e8799190e4f27b8bb4bc08c&chksm=fc237e39cb54f72f748908c5f877581dfba1e6b492873e928ad8d4cdec0487aa4c3d7bec5b33&scene=21#wechat_redirect)
 ### WebGL篇
 *[Cesium学习笔记-WebGL篇01-绘制圆点、闪烁点](http://blog.sina.com.cn/s/blog_15e866bbe0102yeq7.html) </br>
 *[Cesium学习笔记-WebGL篇02-选中对象](http://blog.sina.com.cn/s/blog_15e866bbe0102yfyv.html) </br>
