@@ -46,13 +46,8 @@
         infoBox: false
     });
     var layers = viewer.imageryLayers;
-    var earthAtNight = layers.addImageryProvider(GoogleMap);
-    earthAtNight.splitDirection = Cesium.ImagerySplitDirection.LEFT;  
-
-
-    // Sync the position of the slider with the split position
-    var slider = document.getElementById('slider');
-    viewer.scene.imagerySplitPosition = (slider.offsetLeft) / slider.parentElement.offsetWidth;
+    var googleLayer = layers.addImageryProvider(GoogleMap);
+    googleLayer.splitDirection = Cesium.ImagerySplitDirection.LEFT;
 
     var slider = document.getElementById('slider');
     viewer.scene.imagerySplitPosition = (slider.offsetLeft) / slider.parentElement.offsetWidth;
