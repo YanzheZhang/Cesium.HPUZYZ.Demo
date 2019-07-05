@@ -50,13 +50,13 @@
     //取消双击事件
     viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
 
-    createModel('./sampledata/model/barrel.gltf', 0.0);
+    createModel('./sampledata/model/barrel.gltf', 100000.0);
     function createModel(url, height) {
         viewer.entities.removeAll();
 
         var position = Cesium.Cartesian3.fromDegrees(-123.0744619, 44.0503706, height);
         var heading = Cesium.Math.toRadians(135);
-        var pitch = 0;
+        var pitch = Cesium.Math.toRadians(90);
         var roll = 0;
         var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
         var orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
