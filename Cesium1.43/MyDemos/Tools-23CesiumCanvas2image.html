@@ -87,38 +87,6 @@
             destination: Cesium.Cartesian3.fromDegrees(lon, lat, 300000)
         });
 
-        var callback = function (blob, fileName) {
-            var a = document.createElement('a');
-            a.download = fileName;
-            a.innerHTML = 'download';
-            // the string representation of the object URL will be small enough to workaround the browser's limitations
-            a.href = URL.createObjectURL(blob);
-            // you must revoke the object URL, 
-            //   but since we can't know when the download occured, we have to attach it on the click handler..
-
-            //a.onclick = function () {
-            //    // ..and to wait a frame
-            //    requestAnimationFrame(function () {
-            //        URL.revokeObjectURL(a.href);
-            //    });
-            //    a.removeAttribute('href')
-            //};
-
-            a.click();
-        };
-        function dataURIToBlob(dataURI, callback, fileName) {
-            var binStr = atob(dataURI.split(',')[1]),
-              len = binStr.length,
-              arr = new Uint8Array(len);
-
-            for (var i = 0; i < len; i++) {
-                arr[i] = binStr.charCodeAt(i);
-            }
-
-            callback(new Blob([arr]), fileName);
-        }
-
-        
         function setvisible(value) {
             switch (value) {
                 case 'position':
@@ -133,35 +101,6 @@
                     image.src = genimg.src;
                     break;
                 case 'load':
-                    //var canvas = viewer.scene.canvas;
-                    //var base64url = canvas.toDataURL('image/png');
-
-
-                    //var a = document.getElementById('loadimg');
-                    //a.attr("href", base64url).attr("download", '0.png');// 
-                    //a.click();
-
-                    //var triggerDownload = $('#loadimg').attr("href", base64url).attr("download", '0.png');// 
-                    //triggerDownload[0].click();
-
-                    //dataURIToBlob(base64url, callback, '0.png');
-
-
-                    //var binStr = atob(base64url.split(',')[1]),
-                    //len = binStr.length,
-                    //arr = new Uint8Array(len);
-                    //for (var i = 0; i < len; i++) {
-                    //    arr[i] = binStr.charCodeAt(i);
-                    //}
-                    //var triggerDownload = $('#loadimg');
-                    //var triggerDownload = document.getElementById('loadimg');
-                    //triggerDownload.download = '0.png';
-                    ////triggerDownload.innerHTML = 'download';
-                    //triggerDownload.href = URL.createObjectURL(new Blob([arr]));
-                    ////triggerDownload[0].click();
-                    //triggerDownload.click();
-
-
                     var canvas = viewer.scene.canvas;
                     var base64url = canvas.toDataURL('image/png');
                     var binStr = atob(base64url.split(',')[1]),

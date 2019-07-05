@@ -6,6 +6,7 @@ This project is some demos of CESIUM. Much of them are from other people's blogs
 在看了cesium源码好多天后，发现自己连三维的门都没碰到，以前觉得会调用三维引擎的接口就算三维开发了，现在想想真是感觉自己井底之蛙。看cesium源码这么些天实在看不下去，索性从webgl底层学习。我想花一部分时间先把webgl这块补起来，不求马上就掌握（掌握也不可能，三维博大精深，仅凭看几页教程就说掌握真是天方夜谭），只求再看cesium源码时能看得懂就算达到目的了。先在原理篇前面插个专题：WebGL篇。
 </br>
 </br>
+### 阅读以下文章推荐大家点击后面公众号连接，没有广告哦！
 *[Cesium学习笔记汇总](http://blog.sina.com.cn/s/blog_15e866bbe0102xu2f.html) [  *公众号阅读](https://mp.weixin.qq.com/s?__biz=MzU1ODcyMjEwOA==&mid=2247484268&idx=1&sn=861480d7108f70a2fd16000df4df2db1&chksm=fc237e3fcb54f72904a9cd57a3c2bf325e30a00de614ec3145dcb1f0310e7c0f9362d4f00742&token=1964897234&lang=zh_CN#rd)</br>
 ### 基础篇
 *[Cesium学习笔记1--环境搭建](http://blog.sina.com.cn/s/blog_15e866bbe0102xleh.html) [  *公众号阅读](https://mp.weixin.qq.com/s?__biz=MzU1ODcyMjEwOA==&mid=2247483679&idx=1&sn=80cb03643d3a211e382c10f738148272&chksm=fc237c4ccb54f55ab244a7d38489a0568ce1f33c3831b7dad680e4b02296e71f2f9beeb89a28&token=1964897234&lang=zh_CN#rd)</br>
