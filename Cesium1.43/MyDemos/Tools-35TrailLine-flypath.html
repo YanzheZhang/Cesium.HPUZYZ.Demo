@@ -108,7 +108,7 @@
         PolylineTrailLinkMaterialProperty.prototype.equals = function (other) {
             return this === other ||
                 (other instanceof PolylineTrailLinkMaterialProperty &&
-                  Property.equals(this._color, other._color))
+                  Cesium.Property.equals(this._color, other._color))
         }
         Cesium.PolylineTrailLinkMaterialProperty = PolylineTrailLinkMaterialProperty;
         Cesium.Material.PolylineTrailLinkType = 'PolylineTrailLink';
