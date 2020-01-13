@@ -122,3 +122,10 @@ This project is some demos of CESIUM. Much of them are from other people's blogs
 ![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/Assets/Tools-37CesiumWind-3d.gif) </br>
 *16-流场-2d </br>
 ![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/Assets/Tools-37Wind-2d.gif) </br>
+*17-鹰眼 </br>
+![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/Assets/Tools-41eye.png) </br>
+*18-可视域-基于shadowmap </br>
+![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/Assets/Tools-42Shadowmap.png) </br>
+*19-多区域挖地形 </br>
+![Image text](https://github.com/YanzheZhang/Cesium.HPUZYZ.Demo/blob/master/Assets/Tools-43clip.png) </br>
+
