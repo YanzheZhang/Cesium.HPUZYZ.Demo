@@ -23,16 +23,6 @@
     <span style="white-space:pre"></span>
 
     <script>
-    //自己处理瓦片数据
-    //var mtdt = new Cesium.WebMapTileServiceImageryProvider({
-    //    url: 'http://t0.tianditu.com/img_w/wmts?',
-    //    layer: 'img',
-    //    style: 'default',
-    //    format: 'tiles',
-    //    tileMatrixSetID: 'w',
-    //    credit: new Cesium.Credit('天地图全球影像服务'),
-    //    maximumLevel: 18
-        //});
         var mtdt = new Cesium.WebMapTileServiceImageryProvider({
             url: "http://{s}.tianditu.com/img_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=img&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=837264f46e683ec982d452e78d71052e",
             layer: "tdtBasicLayer",
@@ -43,9 +33,9 @@
             show: true,
             subdomains: ["t0", "t1", "t2", "t3", "t4", "t5", "t6", "t7"]
         })
-        //./sampledata/terrain/ctb-merger/  beijing30mDEM
+        //./sampledata/terrain/ctb-merger/ 
     var terrainProvider = new Cesium.CesiumTerrainProvider({
-        url: 'http://localhost:8010/anhui/anhuiDEM125/'
+        url: 'http://localhost:8010/ctb_dem_test/' 
     });
    
     var viewer = new Cesium.Viewer('cesiumContainer',{
