@@ -9,6 +9,7 @@
     <script src="../../../Cesium1.48/Cesium/Cesium.js"></script>
     <script src="./Tools-02Tooltip-div.js"></script>
     <script src="./Tools-27ChangeablePrimitiveClampGround.js"></script>
+	<script src="./turf.min.js"></script>
     <style>
         @import url(../../../Cesium1.48/Cesium/Widgets/widgets.css);
          
@@ -83,6 +84,7 @@
 
         var polyline=null;
 		var polylineentity=null;
+		var labels=[];
         function drawLine() {
             // viewer.scene.primitives.removeAll();
 			//设置编辑的节点
@@ -105,14 +107,50 @@
 				}, viewer);
 				polylineentity= viewer.scene.primitives.add(polyline);//需要加入
 				polyline.setEditable();
+				//监听编辑事件
 				polyline.addListener('onEdited', function (event) {
-				    var msg = '';
-				    if (event.objId) {
-				        msg = '编辑多段线,共' + event.positions.length + '个点-' + event.objId;
-				    } else {
-				        msg = '编辑多段线,共' + event.positions.length + '个点';
-				    }
-				    alert(msg);
+				    // var msg = '';
+				    // if (event.objId) {
+				    //     msg = '编辑多段线,共' + event.positions.length + '个点-' + event.objId;
+				    // } else {
+				    //     msg = '编辑多段线,共' + event.positions.length + '个点';
+				    // }
+				    // alert(msg);
+					
+					if(labels&&labels.length>0){
+						for(var i=0;i<labels.length;i++){
+							viewer.entities.remove(labels[i]);
+						}
+						labels=[];
+					}
+					
+					var lengthall=0;
+					for(var i=1;i<event.positions.length;i++){
+						var cartographic0 = Cesium.Cartographic.fromCartesian(new Cesium.Cartesian3(event.positions[i-1].x, event.positions[i-1].y, event.positions[i-1].z));
+						var cartographic1 = Cesium.Cartographic.fromCartesian(new Cesium.Cartesian3(event.positions[i].x, event.positions[i].y, event.positions[i].z));
+						var length = GetLength([Cesium.Math.toDegrees(cartographic0.longitude), Cesium.Math.toDegrees(cartographic0.latitude)], [Cesium.Math.toDegrees(cartographic1.longitude), Cesium.Math.toDegrees(cartographic1.latitude)]);
+						lengthall+=length;
+						
+						var lengthText = (length <= 100 ? ('长度' + (length * 1000.0).toFixed(3) + 'm') : ('长度' + length.toFixed(3) + 'km'))+"\n"+
+						                  (lengthall <= 100 ? ('乐基' + (lengthall * 1000.0).toFixed(3) + 'm') : ('累计' + lengthall.toFixed(3) + 'km'));
+						  
+						var lengthEntity = viewer.entities.add({
+						    position: Cesium.Cartesian3.fromRadians(cartographic1.longitude, cartographic1.latitude, cartographic1.height + 0.10),
+						    // point: {
+						    //     pixelSize: 6,
+						    //     color: Cesium.Color.BLUE
+						    // },
+						    label: {
+						        text: lengthText,
+						        font: '16px Helvetica',
+						        fillColor: Cesium.Color.SKYBLUE,
+						        style: Cesium.LabelStyle.FILL,
+						        pixelOffset: new Cesium.Cartesian2(0.0, -30),
+						    }
+						});
+						
+						labels.push(lengthEntity);
+					}
 				});
 				   
 			}
@@ -130,12 +168,26 @@
 			if(polyline){
 				polyline.setEditableFalse();
 			}
+			
 			if(polylineentity){
 				viewer.scene.primitives.remove(polylineentity);
 				polylineentity=null;
 			}
+			if(labels&&labels.length>0){
+				for(var i=0;i<labels.length;i++){
+					viewer.entities.remove(labels[i]);
+				}
+				labels=[];
+			}
 		}
 		
+		//获取长度
+		function GetLength(lonlat0,lonlat1) {
+		        var line = turf.lineString([lonlat0, lonlat1]);
+		        var length = turf.length(line, { units: 'kilometers' });
+		        return length;
+		}
+			
         function showDEM() {
             if (isLoadTerrain) {
                 viewer.terrainProvider = ellipsoidTerrainProvider;
