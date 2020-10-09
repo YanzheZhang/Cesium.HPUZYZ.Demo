@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <link href="./Tools-02Tooltip-div.css" rel="stylesheet" />
+    <title>ChangeablePrimitiveClampGround</title>
+    <script src="../../../Cesium1.48/Cesium/Cesium.js"></script>
+    <script src="./Tools-02Tooltip-div.js"></script>
+    <script src="./Tools-27ChangeablePrimitiveClampGround.js"></script>
+    <style>
+        @import url(../../../Cesium1.48/Cesium/Widgets/widgets.css);
+         
+        html, body, #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        #menu {
+            position: absolute;
+            top: 50px;
+            left: 50px;
+        }
+
+        #menu p {
+            background-color: #808080;
+            color: #ff0000;
+            height: 30px;
+            line-height: 30px;
+            font-size: 20px;
+            padding: 4px 10px 4px 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="cesiumContainer"></div>
+    
+    <div id="menu">
+        <p onclick="drawLine()">编辑</p>
+		<p onclick="endLine()">结束</p>
+		<p onclick="removeLine()">删除</p>
+        <p onclick="showDEM()">dem</p>
+    </div>
+    <script>
+        var lat = 42.006;
+        var lon = 128.055;
+        var width = 0.02;
+        var isLoadTerrain = false;
+        // var tdtImagerLayerProvider = new Cesium.WebMapTileServiceImageryProvider({
+        //     url: "http://t0.tianditu.com/img_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=img&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles",
+        //     layer: "tiandituImg",
+        //     style: "default",
+        //     format: "image/jpeg",
+        //     tileMatrixSetID: "tiandituImg",
+        //     show: true,
+        //     maximumLevel: 18
+        // });
+        
+        var viewer = new Cesium.Viewer('cesiumContainer', {
+            //imageryProvider: tdtImagerLayerProvider
+        });
+        var ellipsoidTerrainProvider = new Cesium.EllipsoidTerrainProvider();
+        //var terrainProvider = new Cesium.CesiumTerrainProvider({
+        //    url: './sampledata/terrain/ctb-merger/'
+        //});
+
+        //viewer.terrainProvider = terrainProvider;
+        //isLoadTerrain = true;
+        
+        viewer.scene.globe.depthTestAgainstTerrain = true;
+ 
+        viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
+        //设置homebutton的位置
+        Cesium.Camera.DEFAULT_VIEW_RECTANGLE =
+                Cesium.Rectangle.fromDegrees(lon - width, lat - width, lon + width, lat + width);
+        viewer.camera.setView({
+            destination: Cesium.Cartesian3.fromDegrees(lon, lat, 30000)
+        });
+
+        var polyline=null;
+		var polylineentity=null;
+        function drawLine() {
+            // viewer.scene.primitives.removeAll();
+			//设置编辑的节点
+            var positionWord = [];
+            positionWord.push(Cesium.Cartesian3.fromDegrees(lon, lat, 0));
+            positionWord.push(Cesium.Cartesian3.fromDegrees(lon+0.01, lat, 0));
+            positionWord.push(Cesium.Cartesian3.fromDegrees(lon + 0.01, lat + 0.01, 0));
+
+            //确定单例
+			if(polyline){
+				polyline.setEditable();
+			}else{
+				//初始化
+				polyline = new ChangeablePrimitiveTool.PolylinePrimitive({
+				    positions: positionWord,
+				    width: 5,
+				    geodesic: true,
+				    objId: new Date().getTime() + 'id',
+				    //material: materialLine
+				}, viewer);
+				polylineentity= viewer.scene.primitives.add(polyline);//需要加入
+				polyline.setEditable();
+				polyline.addListener('onEdited', function (event) {
+				    var msg = '';
+				    if (event.objId) {
+				        msg = '编辑多段线,共' + event.positions.length + '个点-' + event.objId;
+				    } else {
+				        msg = '编辑多段线,共' + event.positions.length + '个点';
+				    }
+				    alert(msg);
+				});
+				   
+			}
+           
+            
+        }
+		//结束
+		function endLine(){
+			if(polyline){
+				polyline.setEditableFalse();
+			}
+		}
+		//移除
+        function removeLine(){
+			if(polyline){
+				polyline.setEditableFalse();
+			}
+			if(polylineentity){
+				viewer.scene.primitives.remove(polylineentity);
+				polylineentity=null;
+			}
+		}
+		
+        function showDEM() {
+            if (isLoadTerrain) {
+                viewer.terrainProvider = ellipsoidTerrainProvider;
+                isLoadTerrain = false;
+            } else {
+                viewer.terrainProvider = terrainProvider;
+                isLoadTerrain = true;
+            }
+        }
+    </script>
+</body>
+</html>
