@@ -90,19 +90,21 @@
                     var cartesiansPoints = [];
                     var colors = [];
                     for (var i = 0; i < 100; i++) {
-                        var cartesianTemp = Cesium.Cartesian3.fromDegrees(lon + i * 0.01, lat + i * 0.01, i * 100);
-                        cartesiansPoints.push(cartesianTemp);
-                        //绘制点
-                        if (i%5==0) {
-                            colors.push(0);
-                            colors.push(0);
-                            colors.push(1);
-                            colors.push(1);
-                        } else {
-                            colors.push(1);
-                            colors.push(0);
-                            colors.push(0);
-                            colors.push(1);
+                        for (var j = 0; j < 500;j++) {
+                            var cartesianTemp = Cesium.Cartesian3.fromDegrees(lon + i * 0.01, lat + j * 0.01);
+                            cartesiansPoints.push(cartesianTemp);
+                            //绘制点
+                            if (i % 5 == 0) {
+                                colors.push(0);
+                                colors.push(0);
+                                colors.push(1);
+                                colors.push(1);
+                            } else {
+                                colors.push(1);
+                                colors.push(0);
+                                colors.push(0);
+                                colors.push(1);
+                            }
                         }
                     }
                     primitivePoints = new PrimitivePoints({ 'viewer': viewer, 'Cartesians': cartesiansPoints, 'Colors': colors });

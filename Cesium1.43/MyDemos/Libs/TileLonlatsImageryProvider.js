@@ -257,19 +257,19 @@ TileLonlatsImageryProvider.prototype.requestImage = function (x, y, level, reque
             //label = 'L' + level + 'E' + lon + 'S' + (-lat);
             labelLevel = 'L' + level;
             labelLon = 'E' + lon;
-            labelLat = 'N' + (-lat);
+            labelLat = 'S' + (-lat);
         }
     } else {
         if (lat > 0) {
             //label = 'L' + level + 'W' + (-lon) + 'N' + lat;
             labelLevel = 'L' + level;
-            labelLon = 'E' + (-lon);
+            labelLon = 'W' + (-lon);
             labelLat = 'N' + lat;
         } else {
             //label = 'L' + level + 'W' + (-lon) + 'S' + (-lat);
             labelLevel = 'L' + level;
-            labelLon = 'E' + (-lon);
-            labelLat = 'N' + (-lat);
+            labelLon = 'W' + (-lon);
+            labelLat = 'S' + (-lat);
         }
     }
     context.textAlign = 'center';

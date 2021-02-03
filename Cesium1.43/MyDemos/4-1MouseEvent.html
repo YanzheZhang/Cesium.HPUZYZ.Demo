@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head lang="en">
     <meta charset="UTF-8">
@@ -23,13 +23,13 @@
 <div id="creditContainer" style="display: none;"></div> 
 <div id="mouse_state" style="position:absolute;z-index:9999;top:1px;left:1px;background-color:white"></div>
 <script >
-    var esri = new Cesium.ArcGisMapServerImageryProvider({
-        url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer',
-        enablePickFeatures: false
-    });
+    // var esri = new Cesium.ArcGisMapServerImageryProvider({
+    //     url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer',
+    //     enablePickFeatures: false
+    // });
 
     var viewer = new Cesium.Viewer('cesiumContainer', {
-        imageryProvider: esri,
+        // imageryProvider: esri,
         contextOptions: {
             webgl: {
                 alpha: true
@@ -38,7 +38,7 @@
         creditContainer: "creditContainer",
         selectionIndicator: false,
         animation: false,  //是否显示动画控件
-        baseLayerPicker: false, //是否显示图层选择控件
+        baseLayerPicker: true, //是否显示图层选择控件
         geocoder: false, //是否显示地名查找控件
         timeline: false, //是否显示时间线控件
         sceneModePicker: true, //是否显示投影方式控件
@@ -85,18 +85,18 @@
 
     //二 LEFT_CLICK
     handler.setInputAction(function(movement) {
-        //cartesian =   viewer.camera.pickEllipsoid(movement.position, ellipsoid);//movement.endPosition
-        //if (cartesian) {
-        //    //将笛卡尔坐标转换为地理坐标
-        //     var cartographic = Cesium.Cartographic.fromCartesian(cartesian);
-        //     longitudeString = Cesium.Math.toDegrees(cartographic.longitude).toFixed(3);
-        //     latitudeString = Cesium.Math.toDegrees(cartographic.latitude).toFixed(3);
-        //    //获取相机高度
-        //    height = Math.ceil(viewer.camera.positionCartographic.height);
-        //    mouse_state.innerText = 'LEFT_CLICK：(' + longitudeString + ', ' + latitudeString + "," + height + ')';
-        //}else {
-        //    mouse_state.innerText = '';
-        //}
+        cartesian =   viewer.camera.pickEllipsoid(movement.position, ellipsoid);//movement.endPosition
+        if (cartesian) {
+            //将笛卡尔坐标转换为地理坐标
+             var cartographic = Cesium.Cartographic.fromCartesian(cartesian);
+             longitudeString = Cesium.Math.toDegrees(cartographic.longitude).toFixed(3);
+             latitudeString = Cesium.Math.toDegrees(cartographic.latitude).toFixed(3);
+            //获取相机高度
+            height = Math.ceil(viewer.camera.positionCartographic.height);
+            mouse_state.innerText = 'LEFT_CLICK：(' + longitudeString + ', ' + latitudeString + "," + height + ')';
+        }else {
+            mouse_state.innerText = '';
+        }
      }, Cesium.ScreenSpaceEventType.LEFT_CLICK );
 
     //三 LEFT_DOUBLE_CLICK

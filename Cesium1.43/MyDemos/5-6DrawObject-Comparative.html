@@ -54,47 +54,47 @@
             destination: Cesium.Cartesian3.fromDegrees(homePOsition[0], homePOsition[1], homePOsition[2])
         });
 
-        ////entity方式
-        //for (var lon = -180.0; lon < 180.0; lon += 4.0) {
-        //    for (var lat = -70.0; lat < 70.0; lat += 4.0) {
-        //        viewer.entities.add({
-        //            position: Cesium.Cartesian3.fromDegrees(lon, lat),
-        //            ellipse: {
-        //                semiMinorAxis: 10000.0,
-        //                semiMajorAxis: 10000.0,
-        //                //height: 200000.0,
-        //                material: Cesium.Color.GREEN
-        //            }
-        //        });
-        //    }
-        //}
-        
-
-        //primitive方式
-        var instances = [];
+        //entity方式
         for (var lon = -180.0; lon < 180.0; lon += 4.0) {
             for (var lat = -70.0; lat < 70.0; lat += 4.0) {
-                var ellipse = new Cesium.EllipseGeometry({
-                    center: Cesium.Cartesian3.fromDegrees(lon, lat),
-                    semiMajorAxis: 10000.0,
-                    semiMinorAxis: 10000.0,
-                    vertexFormat: Cesium.VertexFormat.POSITION_ONLY
-                });
-                var geometry = Cesium.EllipseGeometry.createGeometry(ellipse);
-                var ellipseInstance = new Cesium.GeometryInstance({
-                    geometry: geometry,
-                    attributes: {
-                        color: Cesium.ColorGeometryInstanceAttribute.fromColor(Cesium.Color.RED)
+                viewer.entities.add({
+                    position: Cesium.Cartesian3.fromDegrees(lon, lat),
+                    ellipse: {
+                        semiMinorAxis: 10000.0,
+                        semiMajorAxis: 10000.0,
+                        //height: 200000.0,
+                        material: Cesium.Color.GREEN
                     }
                 });
-                instances.push(ellipseInstance);
             }
         }
+        
 
-        viewer.scene.primitives.add(new Cesium.Primitive({
-            geometryInstances: instances,
-            appearance: new Cesium.PerInstanceColorAppearance()
-        }));
+        ////primitive方式
+        //var instances = [];
+        //for (var lon = -180.0; lon < 180.0; lon += 4.0) {
+        //    for (var lat = -70.0; lat < 70.0; lat += 4.0) {
+        //        var ellipse = new Cesium.EllipseGeometry({
+        //            center: Cesium.Cartesian3.fromDegrees(lon, lat),
+        //            semiMajorAxis: 10000.0,
+        //            semiMinorAxis: 10000.0,
+        //            vertexFormat: Cesium.VertexFormat.POSITION_ONLY
+        //        });
+        //        var geometry = Cesium.EllipseGeometry.createGeometry(ellipse);
+        //        var ellipseInstance = new Cesium.GeometryInstance({
+        //            geometry: geometry,
+        //            attributes: {
+        //                color: Cesium.ColorGeometryInstanceAttribute.fromColor(Cesium.Color.RED)
+        //            }
+        //        });
+        //        instances.push(ellipseInstance);
+        //    }
+        //}
+
+        //viewer.scene.primitives.add(new Cesium.Primitive({
+        //    geometryInstances: instances,
+        //    appearance: new Cesium.PerInstanceColorAppearance()
+        //}));
          
     </script>
 </body>

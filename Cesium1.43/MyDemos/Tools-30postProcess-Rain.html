@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head lang="en">
     <meta charset="utf-8" />
@@ -28,7 +28,7 @@
         var GoogleMap = ImageryProviderWebExtendTool.createGoogleMapsByUrl(Cesium, { url: "http://mt1.google.cn/vt/lyrs=s&hl=zh-CN&x={x}&y={y}&z={z}" });
 
         var viewer = new Cesium.Viewer('cesiumContainer', {
-            imageryProvider: GoogleMap,
+            // imageryProvider: GoogleMap,
             contextOptions: {
                 webgl: {
                     alpha: true,
@@ -44,7 +44,7 @@
             creditContainer: "creditContainer",
             selectionIndicator: false,
             animation: false,   
-            baseLayerPicker: false,  
+            baseLayerPicker: true,  
             geocoder: false,  
             timeline: false,  
             sceneModePicker: true,  

@@ -94,7 +94,7 @@ var PrimitiveTriangles= (
 
         function CreateAppearence(fs, vs) {
             return new Cesium.Appearance({
-                translucent:false,
+                translucent: false,//同时设置blending: Cesium.BlendingState.DISABLED,
                 renderState: { 
                     blending: Cesium.BlendingState.DISABLED,
                 },
